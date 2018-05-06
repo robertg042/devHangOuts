@@ -51,4 +51,26 @@ router.post("/register", (req, res) => {
   });
 });
 
+// @route  GET api/users/login
+// @desc   Login user
+// @access Public
+router.use("/login", (req, res) => {
+  const { email } = req.body;
+  const { password } = req.body;
+
+  User.findOne({ email }).then(user => {
+    if (!user) {
+      res.status(400).json({ error: "Invalid authentication data" });
+    } else {
+      bcrypt.compare(password, user.password).then(isMatched => {
+        if (isMatched) {
+          res.json({ message: "success" });
+        } else {
+          res.status(400).json({ error: "Invalid authentication data" });
+        }
+      });
+    }
+  });
+});
+
 module.exports = router;
