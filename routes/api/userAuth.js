@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const keys = require("../../config/keys");
 
 const User = require("../../models/User");
 
@@ -60,12 +62,31 @@ router.use("/login", (req, res) => {
 
   User.findOne({ email }).then(user => {
     if (!user) {
+      // Email not found
       res.status(400).json({ error: "Invalid authentication data" });
     } else {
       bcrypt.compare(password, user.password).then(isMatched => {
         if (isMatched) {
-          res.json({ message: "success" });
+          // User autorized
+
+          // JWT payload
+          const payload = { id: user.id, name: user.name, avatar: user.avatar };
+
+          // Sign token, expires after 24 hours
+          jwt.sign(payload,
+            keys.JWT_SECRET,
+            { expiresIn: 60 * 60 * 24 },
+            (err, token) => {
+              if (err) {
+                throw err;
+              }
+              res.json({
+                success: true,
+                token: `Bearer ${token}`
+              });
+            });
         } else {
+          // Wrong password
           res.status(400).json({ error: "Invalid authentication data" });
         }
       });
