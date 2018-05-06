@@ -4,9 +4,18 @@ module.exports = {
     node: true,
     es6: true
   },
-
-  //extends: ["eslint:recommended"],
+  plugins: [
+    "react"
+  ],
+  extends: ["eslint:recommended"],
   rules: {
+    // Enable before sending to production
+    "no-console": 0, // disallow the use of console
+    "no-warning-comments": [
+      0,
+      { terms: ["todo", "fixme", "xxx"], location: "start" }
+    ],
+
     // Possible Errors
     // These rules relate to possible syntax or logic errors in JavaScript code:
     "valid-jsdoc": 2, // enforce valid JSDoc comments
@@ -53,10 +62,6 @@ module.exports = {
     "no-useless-call": 2, // disallow unnecessary calls to .call() and .apply()
     "no-useless-concat": 2, // disallow unnecessary concatenation of literals or template literals
     "no-useless-return": 2, // disallow redundant return statements
-    "no-warning-comments": [
-      1,
-      { terms: ["todo", "fixme", "xxx"], location: "start" }
-    ],
     "no-with": 2, // disallow use of the with statement
     "prefer-promise-reject-errors": [1, { allowEmptyReject: false }], // require using Error objects as Promise rejection reasons, allowEmptyReject: false is default
     radix: 2, // require use of the second argument for parseInt()
@@ -119,7 +124,7 @@ module.exports = {
     "no-unneeded-ternary": 1, // disallow ternary operators when simpler alternatives exist
     "no-whitespace-before-property": 1, // disallow whitespace before properties
     "nonblock-statement-body-position": 1, // enforce the location of single-line statements
-    "object-curly-spacing": [1, "never"], // enforce consistent spacing inside braces
+    "object-curly-spacing": [1, "always"], // enforce consistent spacing inside braces
     "padded-blocks": [1, "never"], // enforce padding within blocks
     "padding-line-between-statements": [
       1,
@@ -134,16 +139,16 @@ module.exports = {
       { anonymous: "always", named: "never", asyncArrow: "always" }
     ], // require or disallow space before function opening parenthesis
     "space-in-parens": [1, "never"], // require or disallow spaces inside parentheses (off by default)
-    "space-infix-ops": [1, "always"], // require spaces around operators
+    "space-infix-ops": 1, // require spaces around operators
     "space-unary-ops": [1, { words: true, nonwords: false }], // Require or disallow spaces before/after unary operators (words on by default, nonwords
-    "spaced-line-comment": [1, "always"], // require or disallow a space immediately following the // in a line comment
+    "spaced-comment": 1, // require or disallow a space immediately following the // in a line comment
     "switch-colon-spacing": [1, { after: true, before: false }],
     "wrap-regex": 1, // require parenthesis around regex literals
 
     // ECMAScript 6
     // These rules relate to ES6, also known as ES2015:
     "arrow-body-style": [1, "as-needed"], // require braces around arrow function bodies
-    "arrow-parens": 1, // require parentheses around arrow function arguments
+    "arrow-parens": [1, "as-needed"], // require parentheses around arrow function arguments
     "arrow-spacing": [1, { before: true, after: true }], // enforce consistent spacing before and after the arrow in arrow functions
     "generator-star-spacing": [2, "before"], // enforce the spacing around the * in generator functions
     "no-confusing-arrow": 1, // disallow arrow functions where they could be confused with comparisons
@@ -188,6 +193,7 @@ module.exports = {
     "react/button-has-type": 2, // prevent usage of button elements without an explicit type attribute
     "react/destructuring-assignment": 1, // enforce consistent usage of destructuring assignment of props, state, and context
     "react/jsx-sort-props": 0, // enforce props alphabetical sorting
+    "react/jsx-wrap-multilines": 2, // prevent missing parentheses around multilines JSX
     "react/no-access-state-in-setstate": 2, // prevent using this.state within a this.setState
     "react/no-array-index-key": 1, // prevent using Array index in key props
     "react/no-danger": 1, // prevent usage of dangerous JSX properties
@@ -206,8 +212,7 @@ module.exports = {
     "react/self-closing-comp": 2, // prevent extra closing tags for components without children
     "react/sort-comp": 2, // enforce component methods order
     "react/style-prop-object": 2, // enforce style prop value being an object
-    "react/void-dom-elements-no-children": 2, // prevent void DOM elements (e.g. <img />, <br />) from receiving children
-    "react/wrap-multilines": 2 // prevent missing parentheses around multilines JSX
+    "react/void-dom-elements-no-children": 2 // prevent void DOM elements (e.g. <img />, <br />) from receiving children
   },
 
   settings: {
