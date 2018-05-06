@@ -9,6 +9,10 @@
     "server": "nodemon server.js"
   },
   "author": "Robert Górnicki",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/robertg042/devHangOuts.git"
+  },
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
