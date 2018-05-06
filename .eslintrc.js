@@ -4,9 +4,7 @@ module.exports = {
     node: true,
     es6: true
   },
-  plugins: [
-    "react"
-  ],
+  plugins: ["react"],
   extends: ["eslint:recommended"],
   rules: {
     // Enable before sending to production
@@ -105,7 +103,7 @@ module.exports = {
     "consistent-this": [1, "that"], // enforces consistent naming when capturing the current execution context, "that" - default
     "eol-last": 1, // require or disallow newline at the end of files
     "func-call-spacing": 1, // require or disallow spacing between function identifiers and their invocations
-    "implicit-arrow-linebreak": 1, // enforce the location of arrow function bodies
+    "implicit-arrow-linebreak": 0, // enforce the location of arrow function bodies
     indent: [1, 2], // this option sets a specific tab width for your code, 2 - two spaces
     "key-spacing": [1, { beforeColon: false, afterColon: true }], // enforces spacing between keys and values in object literal properties
     "keyword-spacing": [1, { before: true, after: true }], // enforce consistent spacing before and after keywords
