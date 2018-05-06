@@ -6,7 +6,14 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const keys = require("../../config/keys");
 
+const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
+
 const User = require("../../models/User");
+const {
+  ERROR_EMAIL_EXISTS_MESSAGE,
+  ERROR_INVALID_AUTH_DATA
+} = require("../../shared/messages");
 
 // @route  GET api/user/test
 // @desc   Testing route
@@ -17,9 +24,17 @@ router.get("/test", (req, res) => res.json({ msg: "This is a test..." }));
 // @desc   Register user
 // @access Public
 router.post("/register", (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ error: "Email already exists" });
+      errors.email = ERROR_EMAIL_EXISTS_MESSAGE;
+
+      return res.status(400).json({ errors });
     } else {
       console.log(req);
       const avatar = gravatar.url(req.body.email, {
@@ -58,13 +73,20 @@ router.post("/register", (req, res) => {
 // @desc   Login user
 // @access Public
 router.post("/login", (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   const { email } = req.body;
   const { password } = req.body;
 
   User.findOne({ email }).then(user => {
     if (!user) {
       // Email not found
-      res.status(400).json({ error: "Invalid authentication data" });
+      errors.email = ERROR_INVALID_AUTH_DATA;
+      res.status(400).json({ errors });
     } else {
       bcrypt.compare(password, user.password).then(isMatched => {
         if (isMatched) {
@@ -90,7 +112,8 @@ router.post("/login", (req, res) => {
           );
         } else {
           // Wrong password
-          res.status(400).json({ error: "Invalid authentication data" });
+          errors.password = ERROR_INVALID_AUTH_DATA;
+          res.status(400).json({ errors });
         }
       });
     }
