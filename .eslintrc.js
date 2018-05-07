@@ -89,7 +89,7 @@ module.exports = {
     "handle-callback-err": 1, // require error handling in callbacks
     "no-buffer-constructor": 2, // disallow use of the Buffer() constructor
     "no-path-concat": 2, // disallow string concatenation with __dirname and __filename
-    "no-process-exit": 2, // disallow the use of process.exit()
+    "no-process-exit": 0, // disallow the use of process.exit()
     "no-sync": 1, // disallow synchronous methods
 
     // Stylistic Issues

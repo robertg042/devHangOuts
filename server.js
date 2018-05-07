@@ -30,3 +30,10 @@ app.use("/api/users/", userAuth);
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Running on port number ${port}`));
+
+// Fix for nodemon's listen EADDRINUSE error
+if (process.env.NODE_ENV !== "production") {
+  process.on("SIGUSR2", () => {
+    process.exit(0);
+  });
+}
