@@ -11,7 +11,7 @@ const validateLoginInput = require("../../validation/login");
 
 const User = require("../../models/User");
 const {
-  ERROR_EMAIL_EXISTS_MESSAGE,
+  fieldAlreadyExists,
   ERROR_INVALID_AUTH_DATA
 } = require("../../shared/messages");
 
@@ -32,7 +32,7 @@ router.post("/register", (req, res) => {
 
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      errors.email = ERROR_EMAIL_EXISTS_MESSAGE;
+      errors.email = fieldAlreadyExists("email");
 
       return res.status(400).json({ errors });
     } else {
