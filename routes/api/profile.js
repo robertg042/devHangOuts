@@ -4,10 +4,12 @@ const passport = require("passport");
 
 const Profile = require("../../models/Profile");
 const validateProfileInput = require("../../validation/profile");
+const validateExperienceInput = require("../../validation/experience");
 const isEmpty = require("../../shared/isEmpty");
 const {
   ERROR_PROFILE_NOT_FOUND,
   ERROR_PROFILES_NOT_FOUND,
+  ERROR_INTERNAL_ERROR,
   fieldAlreadyExists
 } = require("../../shared/messages");
 
@@ -191,7 +193,16 @@ router.post(
 
                 return res.status(400).json(errors);
               } else {
-                new Profile(fields).save().then(profile => res.json(profile));
+                new Profile(fields)
+                  .save()
+                  .then(profile => res.json(profile))
+                  .catch(err => {
+                    console.log(err);
+
+                    return res
+                      .status(500)
+                      .json({ error: ERROR_INTERNAL_ERROR });
+                  });
               }
             })
             .catch(err => {
@@ -199,6 +210,56 @@ router.post(
 
               return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
             });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+
+        return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+      });
+  }
+);
+
+// @route POST api/profile/experience
+// @desc Add experience to profile
+// @access Private
+router.post(
+  "/experience",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        if (profile) {
+          console.log(req.body);
+          const { errors, isValid } = validateExperienceInput(req.body);
+
+          if (!isValid) {
+            return res.status(400).json(errors);
+          }
+
+          const newExp = {
+            title: req.body.title,
+            company: req.body.company,
+            location: req.body.location,
+            from: req.body.from,
+            to: req.body.to,
+            current: req.body.current,
+            description: req.body.description
+          };
+
+          // Add to experience array
+          profile.experience.unshift(newExp);
+
+          profile
+            .save()
+            .then(profile => res.json(profile))
+            .catch(err => {
+              console.log(err);
+
+              return res.status(500).json({ error: ERROR_INTERNAL_ERROR });
+            });
+        } else {
+          return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
         }
       })
       .catch(err => {
