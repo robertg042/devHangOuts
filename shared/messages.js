@@ -1,3 +1,4 @@
+// user
 const ERROR_EMAIL_EXISTS_MESSAGE = "Email already exists";
 const nameLengthNotValid = (min, max) =>
   `Name must be between ${min} and ${max} characters`;
@@ -11,6 +12,9 @@ const ERROR_PASSWORD_TOO_LONG = "Password is too long";
 const ERROR_PASSWORD2_FIELD_REQUIRED = "Confirm password field is required";
 const ERROR_PASSWORD2_FIELD_NOT_MATCH = "Password fields must match";
 
+// profile
+const ERROR_PROFILE_NOT_FOUND = "There is no profile for this user";
+
 module.exports = {
   ERROR_EMAIL_EXISTS_MESSAGE,
   nameLengthNotValid,
@@ -22,5 +26,6 @@ module.exports = {
   ERROR_PASSWORD_TOO_SHORT,
   ERROR_PASSWORD_TOO_LONG,
   ERROR_PASSWORD2_FIELD_REQUIRED,
-  ERROR_PASSWORD2_FIELD_NOT_MATCH
+  ERROR_PASSWORD2_FIELD_NOT_MATCH,
+  ERROR_PROFILE_NOT_FOUND
 };
