@@ -4,6 +4,7 @@ const passport = require("passport");
 
 const Profile = require("../../models/Profile");
 const validateProfileInput = require("../../validation/profile");
+const isEmpty = require("../../shared/isEmpty");
 const {
   ERROR_PROFILE_NOT_FOUND,
   ERROR_PROFILES_NOT_FOUND,
@@ -52,7 +53,7 @@ router.get("/all", (req, res) => {
   Profile.find()
     .populate("user", ["name", "avatar"])
     .then(profiles => {
-      if (!profiles) {
+      if (isEmpty(profiles)) {
         errors.noprofiles = ERROR_PROFILES_NOT_FOUND;
 
         return res.status(404).json(errors);
