@@ -86,7 +86,8 @@ router.post("/login", (req, res) => {
     if (!user) {
       // Email not found
       errors.email = ERROR_INVALID_AUTH_DATA;
-      res.status(400).json({ errors });
+
+      return res.status(400).json({ errors });
     } else {
       bcrypt.compare(password, user.password).then(isMatched => {
         if (isMatched) {
@@ -104,7 +105,8 @@ router.post("/login", (req, res) => {
               if (err) {
                 throw err;
               }
-              res.json({
+
+              return res.json({
                 success: true,
                 token: `Bearer ${token}`
               });
@@ -113,7 +115,8 @@ router.post("/login", (req, res) => {
         } else {
           // Wrong password
           errors.password = ERROR_INVALID_AUTH_DATA;
-          res.status(400).json({ errors });
+
+          return res.status(400).json({ errors });
         }
       });
     }
@@ -126,13 +129,12 @@ router.post("/login", (req, res) => {
 router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+  (req, res) =>
     res.json({
       id: req.user.id,
       name: req.user.name,
       email: req.user.email
-    });
-  }
+    })
 );
 
 module.exports = router;

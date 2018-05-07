@@ -35,9 +35,28 @@ router.get(
 
         return res.json(profile);
       })
-      .catch(err => res.status(404).json(err));
+      .catch(err => console.log(err));
   }
 );
+
+// @route GET api/profile/handle/:handle
+// @desc Get profile by handle
+// @access Public
+router.get("/handle/:handle", (req, res) => {
+  const errors = {};
+  Profile.findOne({ handle: req.params.handle })
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = ERROR_PROFILE_NOT_FOUND;
+
+        return res.status(404).json(errors);
+      } else {
+        return res.json(profile);
+      }
+    })
+    .catch(err => console.log(err));
+});
 
 // @route POST api/profile
 // @desc Create or update profile
@@ -109,7 +128,8 @@ router.post(
             .then(profile => {
               if (profile) {
                 errors.handle = fieldAlreadyExists("handle");
-                res.status(400).json(errors);
+
+                return res.status(400).json(errors);
               } else {
                 new Profile(fields).save().then(profile => res.json(profile));
               }
@@ -117,7 +137,7 @@ router.post(
             .catch(err => console.log(err));
         }
       })
-      .catch(err => res.status(404).json(err));
+      .catch(err => console.log(err));
   }
 );
 
