@@ -34,6 +34,7 @@ const ERROR_INTERNAL_ERROR = "Internal error";
 
 // profile
 const ERROR_PROFILE_NOT_FOUND = "There is no profile for this user";
+const ERROR_PROFILES_NOT_FOUND = "There are no profiles";
 const ERROR_URL_INVALID = "This is not a valid URL";
 
 module.exports = {
@@ -45,5 +46,6 @@ module.exports = {
   ERROR_PASSWORD2_FIELD_NOT_MATCH,
   ERROR_INTERNAL_ERROR,
   ERROR_PROFILE_NOT_FOUND,
+  ERROR_PROFILES_NOT_FOUND,
   ERROR_URL_INVALID
 };

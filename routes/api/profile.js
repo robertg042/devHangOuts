@@ -6,6 +6,7 @@ const Profile = require("../../models/Profile");
 const validateProfileInput = require("../../validation/profile");
 const {
   ERROR_PROFILE_NOT_FOUND,
+  ERROR_PROFILES_NOT_FOUND,
   fieldAlreadyExists
 } = require("../../shared/messages");
 
@@ -42,6 +43,29 @@ router.get(
       });
   }
 );
+
+// @route GET api/profile/all
+// @desc Get all profiles
+// @access Public
+router.get("/all", (req, res) => {
+  const errors = {};
+  Profile.find()
+    .populate("user", ["name", "avatar"])
+    .then(profiles => {
+      if (!profiles) {
+        errors.noprofiles = ERROR_PROFILES_NOT_FOUND;
+
+        return res.status(404).json(errors);
+      } else {
+        return res.json(profiles);
+      }
+    })
+    .catch(err => {
+      console.log(err);
+
+      return res.status(404).json({ error: ERROR_PROFILES_NOT_FOUND });
+    });
+});
 
 // @route GET api/profile/handle/:handle
 // @desc Get profile by handle
@@ -159,7 +183,7 @@ router.post(
           // Create
 
           // Check handle
-          Profile.findOne({ handle: req.user.handle })
+          Profile.findOne({ handle: fields.handle })
             .then(profile => {
               if (profile) {
                 errors.handle = fieldAlreadyExists("handle");
