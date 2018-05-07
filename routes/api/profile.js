@@ -35,7 +35,11 @@ router.get(
 
         return res.json(profile);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+
+        return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+      });
   }
 );
 
@@ -55,7 +59,34 @@ router.get("/handle/:handle", (req, res) => {
         return res.json(profile);
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+
+      return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+    });
+});
+
+// @route GET api/profile/user/:user_id
+// @desc Get profile by user id
+// @access Public
+router.get("/user/:user_id", (req, res) => {
+  const errors = {};
+  Profile.findOne({ user: req.params.user_id })
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = ERROR_PROFILE_NOT_FOUND;
+
+        return res.status(404).json(errors);
+      } else {
+        return res.json(profile);
+      }
+    })
+    .catch(err => {
+      console.log(err);
+
+      return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+    });
 });
 
 // @route POST api/profile
@@ -119,7 +150,11 @@ router.post(
             { new: true }
           )
             .then(profile => res.json(profile))
-            .catch(err => console.log(err));
+            .catch(err => {
+              console.log(err);
+
+              return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+            });
         } else {
           // Create
 
@@ -134,10 +169,18 @@ router.post(
                 new Profile(fields).save().then(profile => res.json(profile));
               }
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+              console.log(err);
+
+              return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+            });
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+
+        return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+      });
   }
 );
 

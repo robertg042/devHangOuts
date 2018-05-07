@@ -12,7 +12,8 @@ const validateLoginInput = require("../../validation/login");
 const User = require("../../models/User");
 const {
   fieldAlreadyExists,
-  ERROR_INVALID_AUTH_DATA
+  ERROR_INVALID_AUTH_DATA,
+  ERROR_INTERNAL_ERROR
 } = require("../../shared/messages");
 
 // @route  GET api/user/test
@@ -30,43 +31,53 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then(user => {
-    if (user) {
-      errors.email = fieldAlreadyExists("email");
+  User.findOne({ email: req.body.email })
+    .then(user => {
+      if (user) {
+        errors.email = fieldAlreadyExists("email");
 
-      return res.status(400).json({ errors });
-    } else {
-      console.log(req);
-      const avatar = gravatar.url(req.body.email, {
-        s: "200", // size
-        r: "pg", // rating
-        d: "mm" // default: generic account avatar
-      });
+        return res.status(400).json({ errors });
+      } else {
+        console.log(req);
+        const avatar = gravatar.url(req.body.email, {
+          s: "200", // size
+          r: "pg", // rating
+          d: "mm" // default: generic account avatar
+        });
 
-      const newUser = new User({
-        name: req.body.name,
-        email: req.body.email,
-        avatar: avatar,
-        password: req.body.password
-      });
+        const newUser = new User({
+          name: req.body.name,
+          email: req.body.email,
+          avatar: avatar,
+          password: req.body.password
+        });
 
-      bcrypt.genSalt(10, (err, salt) => {
-        if (err) {
-          throw err;
-        }
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
+        bcrypt.genSalt(10, (err, salt) => {
           if (err) {
             throw err;
           }
-          newUser.password = hash;
-          newUser
-            .save()
-            .then(user => res.json(user))
-            .catch(err => console.log(err));
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) {
+              throw err;
+            }
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => res.json(user))
+              .catch(err => {
+                console.log(err);
+
+                return res.status(500).json({ error: ERROR_INTERNAL_ERROR });
+              });
+          });
         });
-      });
-    }
-  });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+
+      return res.status(400).json({ error: ERROR_INVALID_AUTH_DATA });
+    });
 });
 
 // @route  POST api/users/login
@@ -82,45 +93,62 @@ router.post("/login", (req, res) => {
   const { email } = req.body;
   const { password } = req.body;
 
-  User.findOne({ email }).then(user => {
-    if (!user) {
-      // Email not found
-      errors.email = ERROR_INVALID_AUTH_DATA;
+  User.findOne({ email })
+    .then(user => {
+      if (!user) {
+        // Email not found
+        errors.email = ERROR_INVALID_AUTH_DATA;
 
-      return res.status(400).json({ errors });
-    } else {
-      bcrypt.compare(password, user.password).then(isMatched => {
-        if (isMatched) {
-          // User autorized
+        return res.status(400).json({ errors });
+      } else {
+        bcrypt
+          .compare(password, user.password)
+          .then(isMatched => {
+            if (isMatched) {
+              // User autorized
 
-          // JWT payload
-          const payload = { id: user.id, name: user.name, avatar: user.avatar };
+              // JWT payload
+              const payload = {
+                id: user.id,
+                name: user.name,
+                avatar: user.avatar
+              };
 
-          // Sign token, expires after 24 hours
-          jwt.sign(
-            payload,
-            keys.JWT_SECRET,
-            { expiresIn: 60 * 60 * 24 },
-            (err, token) => {
-              if (err) {
-                throw err;
-              }
+              // Sign token, expires after 24 hours
+              jwt.sign(
+                payload,
+                keys.JWT_SECRET,
+                { expiresIn: 60 * 60 * 24 },
+                (err, token) => {
+                  if (err) {
+                    throw err;
+                  }
 
-              return res.json({
-                success: true,
-                token: `Bearer ${token}`
-              });
+                  return res.json({
+                    success: true,
+                    token: `Bearer ${token}`
+                  });
+                }
+              );
+            } else {
+              // Wrong password
+              errors.password = ERROR_INVALID_AUTH_DATA;
+
+              return res.status(400).json({ errors });
             }
-          );
-        } else {
-          // Wrong password
-          errors.password = ERROR_INVALID_AUTH_DATA;
+          })
+          .catch(err => {
+            console.log(err);
 
-          return res.status(400).json({ errors });
-        }
-      });
-    }
-  });
+            return res.status(500).json({ error: ERROR_INTERNAL_ERROR });
+          });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+
+      return res.status(400).json({ error: ERROR_INVALID_AUTH_DATA });
+    });
 });
 
 // @route  GET api/users/current

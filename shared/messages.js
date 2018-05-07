@@ -30,6 +30,7 @@ const fieldAlreadyExists = field => {
 const ERROR_INVALID_AUTH_DATA = "Invalid authentication data";
 const ERROR_EMAIL_INVALID = "This is not a valid email address";
 const ERROR_PASSWORD2_FIELD_NOT_MATCH = "Password fields must match";
+const ERROR_INTERNAL_ERROR = "Internal error";
 
 // profile
 const ERROR_PROFILE_NOT_FOUND = "There is no profile for this user";
@@ -42,6 +43,7 @@ module.exports = {
   ERROR_INVALID_AUTH_DATA,
   ERROR_EMAIL_INVALID,
   ERROR_PASSWORD2_FIELD_NOT_MATCH,
+  ERROR_INTERNAL_ERROR,
   ERROR_PROFILE_NOT_FOUND,
   ERROR_URL_INVALID
 };
