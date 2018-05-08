@@ -331,12 +331,9 @@ router.delete(
     Profile.findOne({ user: req.user.id })
       .then(profile => {
         if (profile) {
-          // Get experience index
-          const expIndex = profile.experience
-            .map(exp => exp.id)
-            .indexOf(req.params.exp_id);
-
-          profile.experience.splice(expIndex, 1);
+          profile.experience = profile.experience.filter(
+            exp => exp.id !== req.params.exp_id
+          );
 
           profile
             .save()
@@ -368,12 +365,9 @@ router.delete(
     Profile.findOne({ user: req.user.id })
       .then(profile => {
         if (profile) {
-          // Get education index
-          const eduIndex = profile.education
-            .map(edu => edu.id)
-            .indexOf(req.params.edu_id);
-
-          profile.education.splice(eduIndex, 1);
+          profile.education = profile.education.filter(
+            edu => edu.id !== req.params.edu_id
+          );
 
           profile
             .save()
