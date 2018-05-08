@@ -26,6 +26,15 @@ const fieldAlreadyExists = field => {
   return msg;
 };
 
+const fieldNotFound = field => {
+  let msg = "";
+  if (typeof field === "string") {
+    msg = `${field.charAt(0).toUpperCase() + field.slice(1)} not found`;
+  }
+
+  return msg;
+};
+
 // user
 const ERROR_INVALID_AUTH_DATA = "Invalid authentication data";
 const ERROR_EMAIL_INVALID = "This is not a valid email address";
@@ -36,12 +45,14 @@ const ERROR_INTERNAL_ERROR = "Internal error";
 const ERROR_USER_NOT_FOUND = "User not found";
 const ERROR_PROFILE_NOT_FOUND = "There is no profile for this user";
 const ERROR_PROFILES_NOT_FOUND = "There are no profiles";
+const ERROR_POSTS_NOT_FOUND = "Posts not found";
 const ERROR_URL_INVALID = "This is not a valid URL";
 
 module.exports = {
   fieldLengthNotValid,
   fieldIsRequired,
   fieldAlreadyExists,
+  fieldNotFound,
   ERROR_INVALID_AUTH_DATA,
   ERROR_EMAIL_INVALID,
   ERROR_PASSWORD2_FIELD_NOT_MATCH,
@@ -49,5 +60,6 @@ module.exports = {
   ERROR_USER_NOT_FOUND,
   ERROR_PROFILE_NOT_FOUND,
   ERROR_PROFILES_NOT_FOUND,
+  ERROR_POSTS_NOT_FOUND,
   ERROR_URL_INVALID
 };

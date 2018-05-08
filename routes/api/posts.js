@@ -2,17 +2,48 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-const Profile = require("../../models/Profile");
-const User = require("../../models/User");
 const Post = require("../../models/Post");
 const validatePostInput = require("../../validation/post");
-const { ERROR_INTERNAL_ERROR } = require("../../shared/messages");
+const isEmpty = require("../../shared/isEmpty");
+const msg = require("../../shared/messages");
 
 // @route GET api/posts/test
 // @desc test route for posts
 // @access Public
 router.get("/test", (req, res) => {
   res.json("Hello world");
+});
+
+// @route GET api/posts
+// @desc Get all posts
+// @access Public
+router.get("/", (req, res) => {
+  Post.find().sort().then(posts => {
+    if (!isEmpty(posts)) {
+      return res.json(posts);
+    }
+  })
+    .catch(err => {
+      console.log(err);
+
+      return res.status(404).json({ error: msg.fieldNotFound("posts") });
+    });
+});
+
+// @route GET api/posts/:post_id
+// @desc Get single post
+// @access Public
+router.get("/:post_id", (req, res) => {
+  Post.findById(req.params.post_id).then(post => {
+    if (!isEmpty(post)) {
+      return res.json(post);
+    }
+  })
+    .catch(err => {
+      console.log(err);
+
+      return res.status(404).json({ error: msg.fieldNotFound("post") });
+    });
 });
 
 // @route POST api/posts
@@ -41,7 +72,7 @@ router.post(
       .catch(err => {
         console.log(err);
 
-        return res.status(500).json({ error: ERROR_INTERNAL_ERROR });
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
   }
 );
