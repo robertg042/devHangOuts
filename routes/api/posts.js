@@ -93,6 +93,46 @@ router.delete(
           // Post found
           if (post.user.toString() === req.user.id) {
             // User is the post's author and can delete it
+            post
+              .remove()
+              .then(() => res.json({ success: true }))
+              .catch(err => {
+                console.log(err);
+
+                return res
+                  .status(500)
+                  .json({ error: msg.ERROR_INTERNAL_ERROR });
+              });
+          } else {
+            return res
+              .status(401)
+              .json({ error: msg.ERROR_USER_NOT_AUTHORIZED });
+          }
+        } else {
+          return res.status(404).json({ error: msg.fieldNotFound("post") });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
+      });
+  }
+);
+
+// @route POST /api/posts/like/:like_id
+// @desc Like post
+// @access Private
+router.post(
+  "/like/:like_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Post.findById(req.params.like_id)
+      .then(post => {
+        if (post) {
+          // Post found
+          if (post.user.toString() === req.user.id) {
+            // User is the post's author and can delete it
             return res.json({ success: true });
           } else {
             return res
