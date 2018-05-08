@@ -50,6 +50,8 @@ const ERROR_URL_INVALID = "This is not a valid URL";
 
 // posts
 const ERROR_USER_NOT_AUTHORIZED = "User not authorized";
+const ERROR_USER_ALREADY_LIKED_POST = "User already liked the post";
+const ERROR_CANNOT_DISLIKE_POST = "User has not liked the post yet";
 
 module.exports = {
   fieldLengthNotValid,
@@ -65,5 +67,7 @@ module.exports = {
   ERROR_PROFILES_NOT_FOUND,
   ERROR_POSTS_NOT_FOUND,
   ERROR_URL_INVALID,
-  ERROR_USER_NOT_AUTHORIZED
+  ERROR_USER_NOT_AUTHORIZED,
+  ERROR_USER_ALREADY_LIKED_POST,
+  ERROR_CANNOT_DISLIKE_POST
 };

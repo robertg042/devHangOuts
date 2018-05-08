@@ -120,24 +120,87 @@ router.delete(
   }
 );
 
-// @route POST /api/posts/like/:like_id
+// @route POST /api/posts/like/:post_id
 // @desc Like post
 // @access Private
 router.post(
-  "/like/:like_id",
+  "/like/:post_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Post.findById(req.params.like_id)
+    Post.findById(req.params.post_id)
       .then(post => {
         if (post) {
           // Post found
-          if (post.user.toString() === req.user.id) {
-            // User is the post's author and can delete it
-            return res.json({ success: true });
+          if (
+            post.likes.filter(like => like.user.toString() === req.user.id)
+              .length === 0
+          ) {
+            // Post can be liked
+            post.likes.unshift({ user: req.user.id });
+
+            post
+              .save()
+              .then(post => res.json(post))
+              .catch(err => {
+                console.log(err);
+
+                return res
+                  .status(500)
+                  .json({ error: msg.ERROR_INTERNAL_ERROR });
+              });
           } else {
+            // Post has already been liked
             return res
-              .status(401)
-              .json({ error: msg.ERROR_USER_NOT_AUTHORIZED });
+              .status(400)
+              .json({ error: msg.ERROR_USER_ALREADY_LIKED_POST });
+          }
+        } else {
+          return res.status(404).json({ error: msg.fieldNotFound("post") });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
+      });
+  }
+);
+
+// @route DELETE /api/posts/like/:post_id
+// @desc Dislike post
+// @access Private
+router.delete(
+  "/like/:post_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Post.findById(req.params.post_id)
+      .then(post => {
+        if (post) {
+          // Post found
+          if (
+            post.likes.filter(like => like.user.toString() === req.user.id)
+              .length === 0
+          ) {
+            // Post has not been liked yet
+            return res
+              .status(400)
+              .json({ error: msg.ERROR_CANNOT_DISLIKE_POST });
+          } else {
+            // Post can be disliked
+            post.likes = post.likes.filter(
+              like => like.user.toString() !== req.user.id
+            );
+
+            post
+              .save()
+              .then(post => res.json(post))
+              .catch(err => {
+                console.log(err);
+
+                return res
+                  .status(500)
+                  .json({ error: msg.ERROR_INTERNAL_ERROR });
+              });
           }
         } else {
           return res.status(404).json({ error: msg.fieldNotFound("post") });
