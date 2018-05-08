@@ -18,11 +18,12 @@ router.get("/test", (req, res) => {
 // @desc Get all posts
 // @access Public
 router.get("/", (req, res) => {
-  Post.find().sort().then(posts => {
-    if (!isEmpty(posts)) {
-      return res.json(posts);
-    }
-  })
+  Post.find().sort()
+    .then(posts => {
+      if (!isEmpty(posts)) {
+        return res.json(posts);
+      }
+    })
     .catch(err => {
       console.log(err);
 
@@ -34,11 +35,12 @@ router.get("/", (req, res) => {
 // @desc Get single post
 // @access Public
 router.get("/:post_id", (req, res) => {
-  Post.findById(req.params.post_id).then(post => {
-    if (!isEmpty(post)) {
-      return res.json(post);
-    }
-  })
+  Post.findById(req.params.post_id)
+    .then(post => {
+      if (!isEmpty(post)) {
+        return res.json(post);
+      }
+    })
     .catch(err => {
       console.log(err);
 
@@ -76,5 +78,30 @@ router.post(
       });
   }
 );
+
+// @route DELETE /api/posts/:post_id
+// @desc Delete post
+// @access Private
+router.delete("/:post_id", passport.authenticate("jwt", { session: false }), (res, req) => {
+  Post.findById(req.params.post_id)
+    .then(post => {
+      if (post) {
+        // Post found
+        if (post.id.toString() === req.user.id) {
+          // User is the post's author and can delete it
+          return res.json({ success: true });
+        } else {
+          return res.status(401).json({ error: msg.ERROR_USER_NOT_AUTHORIZED });
+        }
+      } else {
+        return res.status(404).json({ error: msg.fieldNotFound("post") });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+
+      return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
+    });
+});
 
 module.exports = router;
