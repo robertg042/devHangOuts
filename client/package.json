@@ -1,0 +1,29 @@
+{
+  "name": "devhangoutreactssite",
+  "version": "0.1.0",
+  "description": "Site for developers for meeting and chatting",
+  "keywords": [
+    "developers",
+    "developer",
+    "programming",
+    "social",
+    "hangouts"
+  ],
+  "dependencies": {
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:5000",
+  "author": "Robert Górnicki",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/robertg042/devHangOuts.git"
+  }
+}
