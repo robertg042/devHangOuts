@@ -3,11 +3,13 @@ const router = express.Router();
 const passport = require("passport");
 
 const Profile = require("../../models/Profile");
+const User = require("../../models/User");
 const validateProfileInput = require("../../validation/profile");
 const validateExperienceInput = require("../../validation/experience");
 const validateEducationInput = require("../../validation/education");
 const isEmpty = require("../../shared/isEmpty");
 const {
+  ERROR_USER_NOT_FOUND,
   ERROR_PROFILE_NOT_FOUND,
   ERROR_PROFILES_NOT_FOUND,
   ERROR_INTERNAL_ERROR,
@@ -384,6 +386,39 @@ router.delete(
         } else {
           return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
         }
+      })
+      .catch(err => {
+        console.log(err);
+
+        return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+      });
+  }
+);
+
+// @route DELETE api/profile/
+// @desc Delete user and profile
+// @access Private
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // Delete profile if exists
+    Profile.findOneAndRemove({ user: req.user.id })
+      .then(() => {
+        // Delete user
+        User.findOneAndRemove({ _id: req.user.id })
+          .then(user => {
+            if (user) {
+              return res.json({ success: true });
+            } else {
+              return res.json({ success: false });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+
+            return res.status(404).json({ error: ERROR_USER_NOT_FOUND });
+          });
       })
       .catch(err => {
         console.log(err);
