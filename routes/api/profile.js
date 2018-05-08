@@ -5,6 +5,7 @@ const passport = require("passport");
 const Profile = require("../../models/Profile");
 const validateProfileInput = require("../../validation/profile");
 const validateExperienceInput = require("../../validation/experience");
+const validateEducationInput = require("../../validation/education");
 const isEmpty = require("../../shared/isEmpty");
 const {
   ERROR_PROFILE_NOT_FOUND,
@@ -249,6 +250,56 @@ router.post(
 
           // Add to experience array
           profile.experience.unshift(newExp);
+
+          profile
+            .save()
+            .then(profile => res.json(profile))
+            .catch(err => {
+              console.log(err);
+
+              return res.status(500).json({ error: ERROR_INTERNAL_ERROR });
+            });
+        } else {
+          return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+
+        return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+      });
+  }
+);
+
+// @route POST api/profile/education
+// @desc Add education to profile
+// @access Private
+router.post(
+  "/education",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        if (profile) {
+          console.log(req.body);
+          const { errors, isValid } = validateEducationInput(req.body);
+
+          if (!isValid) {
+            return res.status(400).json(errors);
+          }
+
+          const newEdu = {
+            school: req.body.school,
+            degree: req.body.degree,
+            fieldofstudy: req.body.fieldofstudy,
+            from: req.body.from,
+            to: req.body.to,
+            current: req.body.current,
+            description: req.body.description
+          };
+
+          // Add to experience array
+          profile.education.unshift(newEdu);
 
           profile
             .save()
