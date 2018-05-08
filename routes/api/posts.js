@@ -18,7 +18,8 @@ router.get("/test", (req, res) => {
 // @desc Get all posts
 // @access Public
 router.get("/", (req, res) => {
-  Post.find().sort()
+  Post.find()
+    .sort()
     .then(posts => {
       if (!isEmpty(posts)) {
         return res.json(posts);
@@ -82,26 +83,32 @@ router.post(
 // @route DELETE /api/posts/:post_id
 // @desc Delete post
 // @access Private
-router.delete("/:post_id", passport.authenticate("jwt", { session: false }), (res, req) => {
-  Post.findById(req.params.post_id)
-    .then(post => {
-      if (post) {
-        // Post found
-        if (post.id.toString() === req.user.id) {
-          // User is the post's author and can delete it
-          return res.json({ success: true });
+router.delete(
+  "/:post_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Post.findById(req.params.post_id)
+      .then(post => {
+        if (post) {
+          // Post found
+          if (post.user.toString() === req.user.id) {
+            // User is the post's author and can delete it
+            return res.json({ success: true });
+          } else {
+            return res
+              .status(401)
+              .json({ error: msg.ERROR_USER_NOT_AUTHORIZED });
+          }
         } else {
-          return res.status(401).json({ error: msg.ERROR_USER_NOT_AUTHORIZED });
+          return res.status(404).json({ error: msg.fieldNotFound("post") });
         }
-      } else {
-        return res.status(404).json({ error: msg.fieldNotFound("post") });
-      }
-    })
-    .catch(err => {
-      console.log(err);
+      })
+      .catch(err => {
+        console.log(err);
 
-      return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
-    });
-});
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
+      });
+  }
+);
 
 module.exports = router;
