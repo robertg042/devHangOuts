@@ -10,11 +10,7 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
 const User = require("../../models/User");
-const {
-  fieldAlreadyExists,
-  ERROR_INVALID_AUTH_DATA,
-  ERROR_INTERNAL_ERROR
-} = require("../../shared/messages");
+const msg = require("../../shared/messages");
 
 // @route  GET api/user/test
 // @desc   Testing route
@@ -34,11 +30,8 @@ router.post("/register", (req, res) => {
   User.findOne({ email: req.body.email })
     .then(user => {
       if (user) {
-        errors.email = fieldAlreadyExists("email");
-
-        return res.status(400).json({ errors });
+        return res.status(400).json({ error: msg.fieldAlreadyExists("email") });
       } else {
-        console.log(req);
         const avatar = gravatar.url(req.body.email, {
           s: "200", // size
           r: "pg", // rating
@@ -67,7 +60,9 @@ router.post("/register", (req, res) => {
               .catch(err => {
                 console.log(err);
 
-                return res.status(500).json({ error: ERROR_INTERNAL_ERROR });
+                return res
+                  .status(500)
+                  .json({ error: msg.ERROR_INTERNAL_ERROR });
               });
           });
         });
@@ -76,7 +71,7 @@ router.post("/register", (req, res) => {
     .catch(err => {
       console.log(err);
 
-      return res.status(400).json({ error: ERROR_INVALID_AUTH_DATA });
+      return res.status(400).json({ error: msg.ERROR_INVALID_AUTH_DATA });
     });
 });
 
@@ -95,17 +90,12 @@ router.post("/login", (req, res) => {
 
   User.findOne({ email })
     .then(user => {
-      if (!user) {
-        // Email not found
-        errors.email = ERROR_INVALID_AUTH_DATA;
-
-        return res.status(400).json({ errors });
-      } else {
+      if (user) {
         bcrypt
           .compare(password, user.password)
           .then(isMatched => {
             if (isMatched) {
-              // User autorized
+              // User authorized
 
               // JWT payload
               const payload = {
@@ -132,22 +122,25 @@ router.post("/login", (req, res) => {
               );
             } else {
               // Wrong password
-              errors.password = ERROR_INVALID_AUTH_DATA;
-
-              return res.status(400).json({ errors });
+              return res
+                .status(400)
+                .json({ error: msg.ERROR_INVALID_AUTH_DATA });
             }
           })
           .catch(err => {
             console.log(err);
 
-            return res.status(500).json({ error: ERROR_INTERNAL_ERROR });
+            return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
           });
+      } else {
+        // Email not found
+        return res.status(400).json({ error: msg.ERROR_INVALID_AUTH_DATA });
       }
     })
     .catch(err => {
       console.log(err);
 
-      return res.status(400).json({ error: ERROR_INVALID_AUTH_DATA });
+      return res.status(400).json({ error: msg.ERROR_INVALID_AUTH_DATA });
     });
 });
 
