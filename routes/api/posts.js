@@ -23,12 +23,14 @@ router.get("/", (req, res) => {
     .then(posts => {
       if (!isEmpty(posts)) {
         return res.json(posts);
+      } else {
+        return res.status(404).json({ error: msg.fieldNotFound("posts") });
       }
     })
     .catch(err => {
       console.log(err);
 
-      return res.status(404).json({ error: msg.fieldNotFound("posts") });
+      return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
     });
 });
 
@@ -40,12 +42,14 @@ router.get("/:post_id", (req, res) => {
     .then(post => {
       if (!isEmpty(post)) {
         return res.json(post);
+      } else {
+        return res.status(404).json({ error: msg.fieldNotFound("post") });
       }
     })
     .catch(err => {
       console.log(err);
 
-      return res.status(404).json({ error: msg.fieldNotFound("post") });
+      return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
     });
 });
 
@@ -115,7 +119,7 @@ router.delete(
       .catch(err => {
         console.log(err);
 
-        return res.status(404).json({ error: msg.fieldNotFound("post") });
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
   }
 );
@@ -161,7 +165,7 @@ router.post(
       .catch(err => {
         console.log(err);
 
-        return res.status(404).json({ error: msg.fieldNotFound("post") });
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
   }
 );
@@ -209,7 +213,7 @@ router.delete(
       .catch(err => {
         console.log(err);
 
-        return res.status(404).json({ error: msg.fieldNotFound("post") });
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
   }
 );
@@ -258,7 +262,7 @@ router.post(
       .catch(err => {
         console.log(err);
 
-        return res.status(404).json({ error: msg.fieldNotFound("post") });
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
   }
 );
@@ -309,7 +313,7 @@ router.delete(
       .catch(err => {
         console.log(err);
 
-        return res.status(404).json({ error: msg.fieldNotFound("post") });
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
   }
 );
