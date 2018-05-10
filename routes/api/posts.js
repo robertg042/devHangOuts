@@ -109,7 +109,7 @@ router.delete(
               });
           } else {
             return res
-              .status(401)
+              .status(403)
               .json({ error: msg.ERROR_USER_NOT_AUTHORIZED });
           }
         } else {
@@ -299,7 +299,7 @@ router.delete(
                     .json({ error: msg.ERROR_INTERNAL_ERROR });
                 });
             } else {
-              return res.status(401).json(msg.ERROR_USER_NOT_AUTHORIZED);
+              return res.status(403).json(msg.ERROR_USER_NOT_AUTHORIZED);
             }
           } else {
             return res
