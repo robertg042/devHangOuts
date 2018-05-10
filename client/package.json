@@ -1,5 +1,5 @@
 {
-  "name": "devhangoutreactssite",
+  "name": "devhangoutreactsclient",
   "version": "0.1.0",
   "description": "Site for developers for meeting and chatting",
   "keywords": [
@@ -25,5 +25,9 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/robertg042/devHangOuts.git"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.7.0"
   }
 }

@@ -4,6 +4,12 @@ module.exports = {
     node: true,
     es6: true
   },
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true
+    },
+    sourceType: "module"
+  },
   plugins: ["react"],
   extends: ["eslint:recommended"],
   rules: {
@@ -20,7 +26,6 @@ module.exports = {
 
     // Best Practices
     // These rules relate to better ways of doing things to help you avoid problems:
-    "class-methods-use-this": 2, // enforce that class methods utilize 'this'
     curly: 2, // enforce consistent brace style for all control statements
     "default-case": 1, // require default cases in switch statements
     "dot-location": [2, "property"], // enforce consistent newlines before and after dots, options: "object" - default or "property"

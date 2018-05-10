@@ -2,13 +2,7 @@
   "name": "devhangouts",
   "version": "0.3.0",
   "description": "Site for developers for meeting and chatting",
-  "keywords": [
-    "developers",
-    "developer",
-    "programming",
-    "social",
-    "hangouts"
-  ],
+  "keywords": ["developers", "developer", "programming", "social", "hangouts"],
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
