@@ -36,21 +36,3 @@ class Layout extends Component {
 }
 
 export default Layout;
-
-// import React, { Component } from "react";
-//
-// import classes from "./Layout.css";
-//
-// class layout extends Component {
-//   state = {
-//     showSideDrawer: true
-//   };
-//   handleClosingSideDrawer = () => {
-//     this.setState({ showSideDrawer: false });
-//   };
-//   render() {
-//     return <div className={classes.Layout}>layout</div>;
-//   }
-// }
-//
-// export default layout;

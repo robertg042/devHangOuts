@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import classes from "./Brand.css";
 
-const brand = ({ children, linkUrl }) => {
+const brand = ({ children, linkUrl, exact }) => {
   return (
     <div className={classes.Brand}>
-      <a className={classes.shing} href={linkUrl}>
+      <Link to={linkUrl} exact={exact}>
         {children}
-      </a>
+      </Link>
     </div>
   );
 };

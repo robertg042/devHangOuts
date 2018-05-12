@@ -1,22 +1,19 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 import classes from "./NavigationItem.css";
 
-const navigationItem = ({ children, linkUrl, active, floatLeft }) => {
+const navigationItem = ({ children, linkUrl, exact, floatLeft }) => {
   const navItemStyles = [classes.NavigationItem];
-  const anchorStyles = [];
-  if (active) {
-    anchorStyles.push(classes.active);
-  }
   if (floatLeft) {
     navItemStyles.push(classes.floatLeft);
   }
 
   return (
     <li className={navItemStyles.join(" ")}>
-      <a className={anchorStyles.join(" ")} href={linkUrl}>
+      <NavLink exact={exact} to={linkUrl} activeClassName={classes.active}>
         {children}
-      </a>
+      </NavLink>
     </li>
   );
 };

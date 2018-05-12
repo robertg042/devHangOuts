@@ -10,8 +10,10 @@
 }
 
 .Brand a {
+  height: 100%;
   color: white;
   text-decoration: none;
+  padding: 1rem 0;
 }
 
 .Brand a:hover {

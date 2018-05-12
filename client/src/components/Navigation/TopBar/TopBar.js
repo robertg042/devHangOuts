@@ -8,7 +8,9 @@ import ToggleButton from "../SideDrawer/ToggleButton/ToggleButton";
 const topBar = ({ toggleDrawer }) => {
   return (
     <header className={classes.TopBar}>
-      <Brand linkUrl={"/"}>devHangOuts</Brand>
+      <Brand linkUrl={"/"} exact>
+        devHangOuts
+      </Brand>
       <nav className={"MobileInvisible"}>
         <NavigationItems />
       </nav>

@@ -6,13 +6,15 @@ import NavigationItem from "./NavigationItem/NavigationItem";
 const navigationItems = () => {
   return (
     <ul className={classes.NavigationItems}>
-      <NavigationItem link={"/"} floatLeft>
+      <NavigationItem exact linkUrl={"/developers"} floatLeft>
         Developers
       </NavigationItem>
-      <NavigationItem link={"/"} active>
+      <NavigationItem exact linkUrl={"/signup"}>
         Sign up
       </NavigationItem>
-      <NavigationItem link={"/"}>Log in</NavigationItem>
+      <NavigationItem exact linkUrl={"/login"}>
+        Log in
+      </NavigationItem>
     </ul>
   );
 };
