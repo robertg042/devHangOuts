@@ -6,7 +6,8 @@
   top: 0;
   right: 0;
   z-index: 200;
-  width: 8rem;
+  width: 10rem;
+  min-width: 8.75rem;
   max-width: 70%;
   background-color: var(--dark-color);
   padding: 2rem 0;

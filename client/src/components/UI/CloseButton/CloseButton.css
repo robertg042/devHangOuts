@@ -1,0 +1,21 @@
+.CloseButton {
+  display: block;
+  color: var(--light-color);
+  font-size: 1.5rem;
+  text-align: left;
+  cursor: pointer;
+  margin: -1rem 0 0 0;
+  padding: 0.5rem 0 0.5rem 1rem;
+  line-height: 1.5rem;
+}
+
+.CloseButton:hover {
+  background-color: var(--light-color);
+  color: var(--dark-color);
+}
+
+@media (min-width: 18.75rem) {
+  .CloseButton {
+    display: none;
+  }
+}

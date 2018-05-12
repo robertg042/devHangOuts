@@ -27,6 +27,7 @@ class Layout extends Component {
         <SideDrawer
           show={this.state.showSideDrawer}
           handleClose={this.handleClosingSideDrawer}
+          toggleDrawer={this.handleToggleSideDrawer}
         />
         <main>{this.props.children}</main>
         <Footer />
