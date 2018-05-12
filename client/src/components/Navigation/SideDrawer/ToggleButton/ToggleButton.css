@@ -1,0 +1,11 @@
+.ToggleButton {
+  display: block;
+  cursor: pointer;
+  margin: 0 0 0 auto;
+}
+
+@media (min-width: 31.25rem) {
+  .ToggleButton {
+    display: none;
+  }
+}

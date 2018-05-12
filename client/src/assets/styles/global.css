@@ -1,0 +1,9 @@
+.MobileInvisible {
+  display: none;
+}
+
+@media (min-width: 31.25rem) {
+  .MobileInvisible {
+    display: block;
+  }
+}

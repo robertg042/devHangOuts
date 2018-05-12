@@ -1,0 +1,26 @@
+@import "../../../assets/styles/variables.css";
+
+.Brand {
+  display: none;
+  height: 100%;
+  margin: 0;
+  padding: 1rem 1rem 1rem 0;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.Brand a {
+  color: white;
+  text-decoration: none;
+}
+
+.Brand a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+@media (min-width: 17.1875rem) {
+  .Brand {
+    display: block;
+  }
+}
