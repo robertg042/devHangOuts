@@ -6,12 +6,14 @@ module.exports = {
     jest: true
   },
   parserOptions: {
+    ecmaVersion: "2018",
     ecmaFeatures: {
       jsx: true
     },
     sourceType: "module"
   },
   plugins: ["react"],
+  parser: "babel-eslint",
   extends: ["eslint:recommended"],
   rules: {
     // Enable before sending to production
@@ -44,7 +46,7 @@ module.exports = {
     "no-fallthrough": 2, // disallow fallthrough of case statements
     "no-floating-decimal": 2, // disallow the use of leading or trailing decimal points in numeric literals
     "no-implied-eval": 2, // disallow use of eval()-like methods
-    "no-invalid-this": 2, // disallow this keywords outside of classes or class-like objects
+    "no-invalid-this": 0, // disallow this keywords outside of classes or class-like objects
     "no-iterator": 2, // disallow usage of __iterator__ property
     "no-labels": 2, // disallow use of labeled statements
     "no-lone-blocks": 2, // disallow unnecessary nested blocks
@@ -87,7 +89,7 @@ module.exports = {
     "no-undef": 2, // disallow use of undeclared variables unless mentioned in a /*global */ block
     "no-undef-init": 2, // disallow use of undefined when initializing variables
     "no-undefined": 2, // disallow use of undefined variable
-    "no-unused-vars": 2, // disallow declaration of variables that are not used in the code
+    "no-unused-vars": 1, // disallow declaration of variables that are not used in the code
     "no-use-before-define": 2, // disallow use of variables before they are defined
 
     // Node.js and CommonJS
@@ -146,17 +148,17 @@ module.exports = {
     "space-in-parens": [1, "never"], // require or disallow spaces inside parentheses (off by default)
     "space-infix-ops": 1, // require spaces around operators
     "space-unary-ops": [1, { words: true, nonwords: false }], // Require or disallow spaces before/after unary operators (words on by default, nonwords
-    "spaced-comment": 1, // require or disallow a space immediately following the // in a line comment
+    "spaced-comment": 0, // require or disallow a space immediately following the // in a line comment
     "switch-colon-spacing": [1, { after: true, before: false }],
     "wrap-regex": 1, // require parenthesis around regex literals
 
     // ECMAScript 6
     // These rules relate to ES6, also known as ES2015:
-    "arrow-body-style": [1, "as-needed"], // require braces around arrow function bodies
+    "arrow-body-style": [0, "as-needed"], // require braces around arrow function bodies
     "arrow-parens": [1, "as-needed"], // require parentheses around arrow function arguments
     "arrow-spacing": [1, { before: true, after: true }], // enforce consistent spacing before and after the arrow in arrow functions
     "generator-star-spacing": [2, "before"], // enforce the spacing around the * in generator functions
-    "no-confusing-arrow": 1, // disallow arrow functions where they could be confused with comparisons
+    "no-confusing-arrow": 0, // disallow arrow functions where they could be confused with comparisons
     "no-duplicate-imports": 2, // disallow duplicate module imports
     "no-var": 2, // require let or const instead of var
     "object-shorthand": [1, "consistent"], // require or disallow method and property shorthand syntax for object literals
@@ -196,7 +198,7 @@ module.exports = {
     "react/require-render-return": 2, // enforce ES5 or ES6 class for returning value in render function
     // additional
     "react/button-has-type": 2, // prevent usage of button elements without an explicit type attribute
-    "react/destructuring-assignment": 1, // enforce consistent usage of destructuring assignment of props, state, and context
+    "react/destructuring-assignment": 0, // enforce consistent usage of destructuring assignment of props, state, and context
     "react/jsx-sort-props": 0, // enforce props alphabetical sorting
     "react/jsx-wrap-multilines": 2, // prevent missing parentheses around multilines JSX
     "react/no-access-state-in-setstate": 2, // prevent using this.state within a this.setState
