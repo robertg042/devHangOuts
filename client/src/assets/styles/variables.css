@@ -5,4 +5,9 @@
   --light-color: #D3E8FF;
   /*rgba(157,178,45,0)*/
   --highlight-color: #9DB22D;
+
+  --disabled-color: #dddddd;
+  --disabled-bgcolor: #666666;
+
+  --muted-color: #666666
 }

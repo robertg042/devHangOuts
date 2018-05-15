@@ -10,6 +10,11 @@ import "./assets/fonts/open-sans/opensans.global.css";
 import "./assets/fonts/lato/latofonts.global.css";
 import "./assets/styles/global.css";
 
+Object.filterKeys = (obj, predicate) =>
+  Object.assign(...Object.keys(obj)
+    .filter(key => predicate(key))
+    .map(key => ({ [key]: obj[key] })));
+
 ReactDOM.render(
   <Router>
     <App />

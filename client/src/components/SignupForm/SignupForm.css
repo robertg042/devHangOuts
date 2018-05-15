@@ -12,13 +12,14 @@
 .Title {
   width: 100%;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 3rem;
 }
 
 .InfoTip {
   width: 100%;
   display: block;
   line-height: 1rem;
-  font-size: 0.6rem;
-  padding: 0.3rem;
+  color: var(--muted-color);
+  font-size: 0.85rem;
+  padding: 1.3rem 0.5rem 0.3rem 1rem;
 }

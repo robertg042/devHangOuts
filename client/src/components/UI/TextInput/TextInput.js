@@ -48,17 +48,24 @@ class TextInput extends Component {
       labelText += "*";
     }
 
+    const elementClasses = [classes.Element];
+    if (this.props.error) {
+      elementClasses.push(classes.Invalid);
+    }
+
+
     return (
       <div className={classes.TextInput}>
         <div className={classes.ElementOuter}>
           <input
+            className={elementClasses.join(" ")}
             id={this.state.id}
-            className={classes.Element}
             type={this.props.inputType}
             onChange={event => this.handleChange(event)}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
             value={this.state.value}
+            disabled={this.props.disabled}
           />
           <label
             className={this.state.labelClasses.join(" ")}
@@ -67,7 +74,8 @@ class TextInput extends Component {
             {labelText}
           </label>
         </div>
-        {this.props.test}
+        {this.props.error && <div className={classes.ErrorFeedback}>{this.props.error}</div>}
+        {this.props.info && <div className={classes.InfoTip}>{this.props.info}</div>}
       </div>
     );
   }

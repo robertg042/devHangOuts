@@ -21,6 +21,7 @@
 }
 
 .Element {
+  position: relative;
   display: block;
   width: 100%;
   box-sizing: border-box;
@@ -30,6 +31,44 @@
   border-bottom-style: solid;
   font-size: 1rem;
   line-height: 1rem;
+}
+
+.Invalid {
+  background: linear-gradient(105deg, white, rgba(0,0,0,0) 30%),
+  linear-gradient(-105deg, white, rgba(0,0,0,0) 30%),
+  linear-gradient(to top, #bb0000, white 30%)
+}
+
+.ErrorFeedback {
+  width: 100%;
+  display: block;
+  color: #bb0000;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.5rem;
+}
+
+.InfoTip {
+  width: 100%;
+  display: block;
+  color: var(--muted-color);
+  font-size: 0.85rem;
+  padding: 0.3rem 0.5rem;
+}
+
+.Element:disabled {
+  background: linear-gradient(105deg, white, rgba(0,0,0,0) 30%),
+  linear-gradient(-105deg, white, rgba(0,0,0,0) 30%),
+  linear-gradient(to top, #bbbbbb, white 60%)
+}
+
+.Element:disabled:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  height: 1.5rem;
+  width: 10rem;
+  content: "";
 }
 
 .Element:focus {

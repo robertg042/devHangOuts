@@ -197,7 +197,7 @@ module.exports = {
     "react/react-in-jsx-scope": 2, // prevent missing React when using JSX
     "react/require-render-return": 2, // enforce ES5 or ES6 class for returning value in render function
     // additional
-    "react/button-has-type": 2, // prevent usage of button elements without an explicit type attribute
+    "react/button-has-type": 0, // prevent usage of button elements without an explicit type attribute
     "react/destructuring-assignment": 0, // enforce consistent usage of destructuring assignment of props, state, and context
     "react/jsx-sort-props": 0, // enforce props alphabetical sorting
     "react/jsx-wrap-multilines": 2, // prevent missing parentheses around multilines JSX
