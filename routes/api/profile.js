@@ -8,13 +8,7 @@ const validateProfileInput = require("../../validation/profile");
 const validateExperienceInput = require("../../validation/experience");
 const validateEducationInput = require("../../validation/education");
 const isEmpty = require("../../shared/isEmpty");
-const {
-  ERROR_USER_NOT_FOUND,
-  ERROR_PROFILE_NOT_FOUND,
-  ERROR_PROFILES_NOT_FOUND,
-  ERROR_INTERNAL_ERROR,
-  fieldAlreadyExists
-} = require("../../shared/messages");
+const msg = require("../../shared/messages");
 
 // @route GET api/profile/test
 // @desc test route for profile
@@ -30,22 +24,20 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const errors = {};
     Profile.findOne({ user: req.user.id })
       .populate("user", ["name", "avatar"])
       .then(profile => {
-        if (!profile) {
-          errors.noprofile = ERROR_PROFILE_NOT_FOUND;
-
-          return res.status(404).json(errors);
+        if (profile) {
+          // Profile found
+          return res.json(profile);
+        } else {
+          return res.status(404).json({ error: msg.fieldNotFound("profile") });
         }
-
-        return res.json(profile);
       })
       .catch(err => {
         console.log(err);
 
-        return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
   }
 );
@@ -54,22 +46,19 @@ router.get(
 // @desc Get all profiles
 // @access Public
 router.get("/all", (req, res) => {
-  const errors = {};
   Profile.find()
     .populate("user", ["name", "avatar"])
     .then(profiles => {
-      if (isEmpty(profiles)) {
-        errors.noprofiles = ERROR_PROFILES_NOT_FOUND;
-
-        return res.status(404).json(errors);
-      } else {
+      if (!isEmpty(profiles)) {
         return res.json(profiles);
+      } else {
+        return res.status(404).json({ error: msg.fieldNotFound("profiles") });
       }
     })
     .catch(err => {
       console.log(err);
 
-      return res.status(404).json({ error: ERROR_PROFILES_NOT_FOUND });
+      return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
     });
 });
 
@@ -77,22 +66,19 @@ router.get("/all", (req, res) => {
 // @desc Get profile by handle
 // @access Public
 router.get("/handle/:handle", (req, res) => {
-  const errors = {};
   Profile.findOne({ handle: req.params.handle })
     .populate("user", ["name", "avatar"])
     .then(profile => {
-      if (!profile) {
-        errors.noprofile = ERROR_PROFILE_NOT_FOUND;
-
-        return res.status(404).json(errors);
-      } else {
+      if (profile) {
         return res.json(profile);
+      } else {
+        return res.status(404).json({ error: msg.fieldNotFound("profile") });
       }
     })
     .catch(err => {
       console.log(err);
 
-      return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+      return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
     });
 });
 
@@ -100,22 +86,19 @@ router.get("/handle/:handle", (req, res) => {
 // @desc Get profile by user id
 // @access Public
 router.get("/user/:user_id", (req, res) => {
-  const errors = {};
   Profile.findOne({ user: req.params.user_id })
     .populate("user", ["name", "avatar"])
     .then(profile => {
-      if (!profile) {
-        errors.noprofile = ERROR_PROFILE_NOT_FOUND;
-
-        return res.status(404).json(errors);
-      } else {
+      if (profile) {
         return res.json(profile);
+      } else {
+        return res.status(404).json({ error: msg.fieldNotFound("profile") });
       }
     })
     .catch(err => {
       console.log(err);
 
-      return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+      return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
     });
 });
 
@@ -183,7 +166,7 @@ router.post(
             .catch(err => {
               console.log(err);
 
-              return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+              return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
             });
         } else {
           // Create
@@ -192,9 +175,9 @@ router.post(
           Profile.findOne({ handle: fields.handle })
             .then(profile => {
               if (profile) {
-                errors.handle = fieldAlreadyExists("handle");
-
-                return res.status(400).json(errors);
+                return res
+                  .status(400)
+                  .json({ error: msg.fieldAlreadyExists("handle") });
               } else {
                 new Profile(fields)
                   .save()
@@ -204,21 +187,21 @@ router.post(
 
                     return res
                       .status(500)
-                      .json({ error: ERROR_INTERNAL_ERROR });
+                      .json({ error: msg.ERROR_INTERNAL_ERROR });
                   });
               }
             })
             .catch(err => {
               console.log(err);
 
-              return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+              return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
             });
         }
       })
       .catch(err => {
         console.log(err);
 
-        return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
   }
 );
@@ -258,16 +241,16 @@ router.post(
             .catch(err => {
               console.log(err);
 
-              return res.status(500).json({ error: ERROR_INTERNAL_ERROR });
+              return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
             });
         } else {
-          return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+          return res.status(404).json({ error: msg.fieldNotFound("profile") });
         }
       })
       .catch(err => {
         console.log(err);
 
-        return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
   }
 );
@@ -307,16 +290,16 @@ router.post(
             .catch(err => {
               console.log(err);
 
-              return res.status(500).json({ error: ERROR_INTERNAL_ERROR });
+              return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
             });
         } else {
-          return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+          return res.status(404).json({ error: msg.fieldNotFound("profile") });
         }
       })
       .catch(err => {
         console.log(err);
 
-        return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
   }
 );
@@ -331,12 +314,9 @@ router.delete(
     Profile.findOne({ user: req.user.id })
       .then(profile => {
         if (profile) {
-          // Get experience index
-          const expIndex = profile.experience
-            .map(exp => exp.id)
-            .indexOf(req.params.exp_id);
-
-          profile.experience.splice(expIndex, 1);
+          profile.experience = profile.experience.filter(
+            exp => exp.id !== req.params.exp_id
+          );
 
           profile
             .save()
@@ -344,16 +324,16 @@ router.delete(
             .catch(err => {
               console.log(err);
 
-              return res.status(500).json({ error: ERROR_INTERNAL_ERROR });
+              return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
             });
         } else {
-          return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+          return res.status(404).json({ error: msg.fieldNotFound("profile") });
         }
       })
       .catch(err => {
         console.log(err);
 
-        return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
   }
 );
@@ -368,12 +348,9 @@ router.delete(
     Profile.findOne({ user: req.user.id })
       .then(profile => {
         if (profile) {
-          // Get education index
-          const eduIndex = profile.education
-            .map(edu => edu.id)
-            .indexOf(req.params.edu_id);
-
-          profile.education.splice(eduIndex, 1);
+          profile.education = profile.education.filter(
+            edu => edu.id !== req.params.edu_id
+          );
 
           profile
             .save()
@@ -381,16 +358,16 @@ router.delete(
             .catch(err => {
               console.log(err);
 
-              return res.status(500).json({ error: ERROR_INTERNAL_ERROR });
+              return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
             });
         } else {
-          return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+          return res.status(404).json({ error: msg.fieldNotFound("profile") });
         }
       })
       .catch(err => {
         console.log(err);
 
-        return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
   }
 );
@@ -417,13 +394,13 @@ router.delete(
           .catch(err => {
             console.log(err);
 
-            return res.status(404).json({ error: ERROR_USER_NOT_FOUND });
+            return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
           });
       })
       .catch(err => {
         console.log(err);
 
-        return res.status(404).json({ error: ERROR_PROFILE_NOT_FOUND });
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
   }
 );

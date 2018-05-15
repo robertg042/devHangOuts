@@ -1,12 +1,21 @@
 {
   "name": "devhangouts",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Site for developers for meeting and chatting",
-  "keywords": ["developers", "developer", "programming", "social", "hangouts"],
+  "keywords": [
+    "developers",
+    "developer",
+    "programming",
+    "social",
+    "hangouts"
+  ],
   "main": "server.js",
   "scripts": {
+    "client-install": "npm install --prefix client",
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Robert Górnicki",
   "repository": {
@@ -17,6 +26,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
+    "concurrently": "^3.5.1",
     "express": "^4.16.3",
     "gravatar": "^1.6.0",
     "jsonwebtoken": "^8.2.1",
@@ -26,8 +36,10 @@
     "validator": "^10.1.0"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.3",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.7.0",
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.3",
+    "prettier": "^1.12.1"
   }
 }

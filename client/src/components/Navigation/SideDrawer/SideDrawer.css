@@ -1,0 +1,30 @@
+@import "../../../assets/styles/variables.css";
+
+.SideDrawer {
+  display: block;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 200;
+  width: 10rem;
+  min-width: 8.75rem;
+  max-width: 70%;
+  background-color: var(--dark-color);
+  padding: 2rem 0;
+  transition: transform 0.3s ease-out;
+  height: 100vh;
+}
+
+@media (min-width: 31.25rem) {
+  .SideDrawer {
+    display: none;
+  }
+}
+
+.Opened {
+  transform: translateX(0);
+}
+
+.Closed {
+  transform: translateX(100%);
+}

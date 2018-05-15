@@ -1,0 +1,11 @@
+html {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+body {
+  padding: 0;
+  font-family: "LatoWeb", "OpenSansRegular", sans-serif;
+  min-width: 15rem;
+  min-height: 100vh;
+}

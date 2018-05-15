@@ -1,0 +1,45 @@
+@import "../../../assets/styles/variables.css";
+
+.Brand {
+  display: none;
+  height: 100%;
+  margin: 0;
+  padding: 1rem 1rem 1rem 0;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.Brand.Side {
+  display: block;
+  padding: 0 0 1rem 0;
+}
+
+.Brand.Side a {
+  display: block;
+  text-align: center;
+}
+
+.Brand a {
+  height: 100%;
+  color: white;
+  text-decoration: none;
+  padding: 1rem 0;
+  /*text-align: center;*/
+}
+
+.Brand a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+@media (min-width: 18.75rem) {
+  .Brand.Top {
+    display: block;
+  }
+}
+
+@media (min-width: 18.75rem) {
+  .Brand.Side {
+    display: none;
+  }
+}

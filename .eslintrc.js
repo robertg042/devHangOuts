@@ -4,7 +4,6 @@ module.exports = {
     node: true,
     es6: true
   },
-  plugins: ["react"],
   extends: ["eslint:recommended"],
   rules: {
     // Enable before sending to production
@@ -20,7 +19,6 @@ module.exports = {
 
     // Best Practices
     // These rules relate to better ways of doing things to help you avoid problems:
-    "class-methods-use-this": 2, // enforce that class methods utilize 'this'
     curly: 2, // enforce consistent brace style for all control statements
     "default-case": 1, // require default cases in switch statements
     "dot-location": [2, "property"], // enforce consistent newlines before and after dots, options: "object" - default or "property"
@@ -161,61 +159,6 @@ module.exports = {
     "prefer-template": 1, // require template literals instead of string concatenation
     "rest-spread-spacing": 1, // enforce spacing between rest and spread operators and their expressions
     "symbol-description": 1, // require symbol descriptions
-    "template-curly-spacing": 1, // require or disallow spacing around embedded expressions of template strings
-
-    // eslint-plugin-react
-    // React specific linting rules for ESLint
-    // important
-    "react/display-name": 0, // prevent missing displayName in a React component definition
-    "react/jsx-key": 2, // detect missing key prop
-    "react/jsx-no-comment-textnodes": 2, // prevent comments from being inserted as text nodes
-    "react/jsx-no-duplicate-props": 2, // prevent duplicate properties in JSX
-    "react/jsx-no-target-blank": 2, // prevent usage of unsafe target='_blank'
-    "react/jsx-no-undef": 2, // disallow undeclared variables in JSX
-    "react/jsx-uses-react": 2, // prevent React to be incorrectly marked as unused
-    "react/jsx-uses-vars": 2, // prevent variables used in JSX to be incorrectly marked as unused
-    "react/no-children-prop": 2, // prevent passing of children as props
-    "react/no-danger-with-children": 2, // prevent problem with children and props.dangerouslySetInnerHTML
-    "react/no-deprecated": 2, // prevent usage of deprecated methods
-    "react/no-direct-mutation-state": 2, // prevent direct mutation of this.state
-    "react/no-find-dom-node": 2, // prevent usage of findDOMNode
-    "react/no-is-mounted": 2, // prevent usage of isMounted
-    "react/no-render-return-value": 2, // prevent usage of the return value of React.render
-    "react/no-string-refs": 2, // prevent using string references
-    "react/no-unescaped-entities": 2, // prevent invalid characters from appearing in markup
-    "react/no-unknown-property": 2, // prevent usage of unknown DOM property
-    "react/prop-types": 0, // prevent missing props validation in a React component definition
-    "react/react-in-jsx-scope": 2, // prevent missing React when using JSX
-    "react/require-render-return": 2, // enforce ES5 or ES6 class for returning value in render function
-    // additional
-    "react/button-has-type": 2, // prevent usage of button elements without an explicit type attribute
-    "react/destructuring-assignment": 1, // enforce consistent usage of destructuring assignment of props, state, and context
-    "react/jsx-sort-props": 0, // enforce props alphabetical sorting
-    "react/jsx-wrap-multilines": 2, // prevent missing parentheses around multilines JSX
-    "react/no-access-state-in-setstate": 2, // prevent using this.state within a this.setState
-    "react/no-array-index-key": 1, // prevent using Array index in key props
-    "react/no-danger": 1, // prevent usage of dangerous JSX properties
-    "react/no-multi-comp": 2, // prevent multiple component definition per file
-    "react/no-did-mount-set-state": 2, // prevent usage of setState in componentDidMount
-    "react/no-did-update-set-state": 2, // prevent usage of setState in componentDidUpdate
-    "react/no-redundant-should-component-update": 2, // prevent usage of shouldComponentUpdate when extending React.PureComponent
-    "react/no-this-in-sfc": 2, // prevent using this in stateless functional components
-    "react/no-typos": 1, // prevents common typos
-    "react/no-unused-prop-types": 2, // prevent definitions of unused prop types
-    "react/no-unused-state": 2, // prevent definitions of unused state properties
-    "react/no-will-update-set-state": 2, // prevent usage of setState in componentWillUpdate
-    "react/prefer-es6-class": 2, // enforce ES5 or ES6 class for React Components
-    "react/prefer-stateless-function": 1, // enforce stateless React Components to be written as a pure function
-    "react/require-default-props": 1, // enforce a defaultProps definition for every prop that is not a required prop
-    "react/self-closing-comp": 2, // prevent extra closing tags for components without children
-    "react/sort-comp": 2, // enforce component methods order
-    "react/style-prop-object": 2, // enforce style prop value being an object
-    "react/void-dom-elements-no-children": 2 // prevent void DOM elements (e.g. <img />, <br />) from receiving children
-  },
-
-  settings: {
-    react: {
-      version: "16.3"
-    }
+    "template-curly-spacing": 1 // require or disallow spacing around embedded expressions of template strings
   }
 };

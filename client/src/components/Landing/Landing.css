@@ -1,0 +1,16 @@
+.Landing {
+  position: relative;
+  /*height: 100%;*/
+  height: calc(100vh - 6rem);
+  background: black url(../../assets/images/showcase.jpg) no-repeat center;
+  background-size: cover;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}

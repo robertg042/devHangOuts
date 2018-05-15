@@ -42,10 +42,6 @@ const ERROR_PASSWORD2_FIELD_NOT_MATCH = "Password fields must match";
 const ERROR_INTERNAL_ERROR = "Internal error";
 
 // profile
-const ERROR_USER_NOT_FOUND = "User not found";
-const ERROR_PROFILE_NOT_FOUND = "There is no profile for this user";
-const ERROR_PROFILES_NOT_FOUND = "There are no profiles";
-const ERROR_POSTS_NOT_FOUND = "Posts not found";
 const ERROR_URL_INVALID = "This is not a valid URL";
 
 // posts
@@ -62,10 +58,6 @@ module.exports = {
   ERROR_EMAIL_INVALID,
   ERROR_PASSWORD2_FIELD_NOT_MATCH,
   ERROR_INTERNAL_ERROR,
-  ERROR_USER_NOT_FOUND,
-  ERROR_PROFILE_NOT_FOUND,
-  ERROR_PROFILES_NOT_FOUND,
-  ERROR_POSTS_NOT_FOUND,
   ERROR_URL_INVALID,
   ERROR_USER_NOT_AUTHORIZED,
   ERROR_USER_ALREADY_LIKED_POST,

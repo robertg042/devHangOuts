@@ -23,12 +23,14 @@ router.get("/", (req, res) => {
     .then(posts => {
       if (!isEmpty(posts)) {
         return res.json(posts);
+      } else {
+        return res.status(404).json({ error: msg.fieldNotFound("posts") });
       }
     })
     .catch(err => {
       console.log(err);
 
-      return res.status(404).json({ error: msg.fieldNotFound("posts") });
+      return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
     });
 });
 
@@ -40,12 +42,14 @@ router.get("/:post_id", (req, res) => {
     .then(post => {
       if (!isEmpty(post)) {
         return res.json(post);
+      } else {
+        return res.status(404).json({ error: msg.fieldNotFound("post") });
       }
     })
     .catch(err => {
       console.log(err);
 
-      return res.status(404).json({ error: msg.fieldNotFound("post") });
+      return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
     });
 });
 
@@ -105,7 +109,7 @@ router.delete(
               });
           } else {
             return res
-              .status(401)
+              .status(403)
               .json({ error: msg.ERROR_USER_NOT_AUTHORIZED });
           }
         } else {
@@ -201,6 +205,106 @@ router.delete(
                   .status(500)
                   .json({ error: msg.ERROR_INTERNAL_ERROR });
               });
+          }
+        } else {
+          return res.status(404).json({ error: msg.fieldNotFound("post") });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
+      });
+  }
+);
+
+// @route POST /api/posts/comment/:post_id
+// @desc Add comment to post
+// @access Private
+router.post(
+  "/comment/:post_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validatePostInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    Post.findById(req.params.post_id)
+      .then(post => {
+        if (post) {
+          // Post found, validate
+
+          // Create comment
+          const newComment = {
+            user: res.user.id,
+            text: req.body.text,
+            name: req.body.name,
+            avatar: req.body.avatar
+          };
+
+          post.comments.unshift(newComment);
+
+          post
+            .save()
+            .then(post => res.json(post))
+            .catch(err => {
+              console.log(err);
+
+              return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
+            });
+        } else {
+          // Post not found
+          return res.status(404).json({ error: msg.fieldNotFound("post") });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+
+        return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
+      });
+  }
+);
+
+// @route DELETE /api/posts/comment/:post_id/:comment_id
+// @desc Delete comment
+// @access Private
+router.delete(
+  "/comment/:post_id/:comment_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Post.findById(req.params.post_id)
+      .then(post => {
+        if (post) {
+          // Post found
+          const indexToRemove = post.comments.findIndex(
+            comment => comment.id.toString() === req.params.comment_id
+          );
+
+          if (indexToRemove !== -1) {
+            // Comment found
+            if (post.comments[indexToRemove].user.toString() === req.user.id) {
+              // Requesting user is the comment's author - delete comment
+              post.comments.splice(indexToRemove, 1);
+
+              post
+                .save()
+                .then(post => res.json(post))
+                .catch(err => {
+                  console.log(err);
+
+                  return res
+                    .status(500)
+                    .json({ error: msg.ERROR_INTERNAL_ERROR });
+                });
+            } else {
+              return res.status(403).json(msg.ERROR_USER_NOT_AUTHORIZED);
+            }
+          } else {
+            return res
+              .status(404)
+              .json({ error: msg.fieldNotFound("comment") });
           }
         } else {
           return res.status(404).json({ error: msg.fieldNotFound("post") });
