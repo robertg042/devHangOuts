@@ -9,3 +9,9 @@ body {
   min-width: 15rem;
   min-height: 100vh;
 }
+
+@media (min-width: 1440px) {
+  html {
+    font-size: 22px;
+  }
+}

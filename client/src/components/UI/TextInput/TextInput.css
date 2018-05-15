@@ -1,0 +1,53 @@
+.TextInput {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+
+.ElementOuter {
+  position: relative;
+}
+
+.Label {
+  position: absolute;
+  top: 1.4rem;
+  left: 0.5rem;
+  line-height: 1rem;
+  font-size: 1rem;
+  transform-origin: left;
+  transition: all 0.3s ease-out;
+}
+
+.Element {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1.3rem 0.5rem 0.3rem 0.5rem;
+  outline: 0;
+  border: 1px none var(--highlight-color);
+  border-bottom-style: solid;
+  font-size: 1rem;
+  line-height: 1rem;
+}
+
+.Element:focus {
+  outline: 0;
+  border-color: var(--highlight-color);
+  box-shadow: 0 4px 2px -2px var(--highlight-color);
+}
+
+
+.LabelLow {
+  color: #777;
+  cursor: text;
+  transform: translateY(0) scale(1);
+}
+
+.LabelHigh {
+  color: black;
+  cursor: default;
+  transform: translateY(-1rem) scale(0.6);
+}
+

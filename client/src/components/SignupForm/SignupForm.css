@@ -1,3 +1,24 @@
-.signupForm {
+.SignupForm {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  padding: 2rem;
+  font-size: 2rem;
+}
 
+.Title {
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.InfoTip {
+  width: 100%;
+  display: block;
+  line-height: 1rem;
+  font-size: 0.6rem;
+  padding: 0.3rem;
 }
