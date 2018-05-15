@@ -18,7 +18,7 @@ const sideDrawer = ({ handleClose, show }) => {
       <div className={sideDrawerClasses.join(" ")}>
         <CloseButton handleClick={handleClose} />
         <nav>
-          <Brand linkUrl={"/"} exact location={"side"}>
+          <Brand linkUrl={"/"} location={"side"}>
             devHangOuts
           </Brand>
           <NavigationItems />

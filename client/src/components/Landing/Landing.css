@@ -1,9 +1,32 @@
 .Landing {
   position: relative;
-  /*height: 100%;*/
   height: calc(100vh - 6rem);
   background: black url(../../assets/images/showcase.jpg) no-repeat center;
   background-size: cover;
+}
+
+.Content {
+  height: 100%;
+  text-align: center;
+  color: white;
+  /*color: var(--light-color);*/
+  display: grid;
+  grid: "header"  1fr
+        "leading" 1fr
+        "signup"  1fr /
+        auto;
+}
+
+.Header {
+  grid-area: header;
+}
+
+.Leading {
+  grid-area: leading;
+}
+
+.Signup {
+  grid-area: signup;
 }
 
 .overlay {

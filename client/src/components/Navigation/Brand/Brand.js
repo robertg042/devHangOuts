@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import classes from "./Brand.css";
 
-const brand = ({ children, linkUrl, exact, location }) => {
+const brand = ({ children, linkUrl, location }) => {
   let brandClasses = [classes.Brand];
   if (location === "top") {
     brandClasses = [classes.Brand, classes.Top];
@@ -14,9 +14,7 @@ const brand = ({ children, linkUrl, exact, location }) => {
 
   return (
     <div className={brandClasses.join(" ")}>
-      <Link to={linkUrl} exact={exact}>
-        {children}
-      </Link>
+      <Link to={linkUrl}>{children}</Link>
     </div>
   );
 };
