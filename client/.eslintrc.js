@@ -113,7 +113,7 @@ module.exports = {
     "eol-last": 1, // require or disallow newline at the end of files
     "func-call-spacing": 1, // require or disallow spacing between function identifiers and their invocations
     "implicit-arrow-linebreak": 0, // enforce the location of arrow function bodies
-    indent: [1, 2], // this option sets a specific tab width for your code, 2 - two spaces
+    indent: [1, 2, { SwitchCase: 1 }], // this option sets a specific tab width for your code, 2 - two spaces
     "key-spacing": [1, { beforeColon: false, afterColon: true }], // enforces spacing between keys and values in object literal properties
     "keyword-spacing": [1, { before: true, after: true }], // enforce consistent spacing before and after keywords
     "lines-between-class-members": 1, // require or disallow an empty line between class members

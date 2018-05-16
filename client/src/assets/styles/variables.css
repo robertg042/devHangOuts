@@ -9,5 +9,7 @@
   --disabled-color: #dddddd;
   --disabled-bgcolor: #666666;
 
-  --muted-color: #666666
+  --muted-color: #666666;
+
+  --error-color: #bb0000;
 }

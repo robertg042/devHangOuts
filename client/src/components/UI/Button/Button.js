@@ -8,31 +8,33 @@ class Button extends Component {
     const buttonClasses = [classes.Button];
 
     switch (this.props.colorType) {
-    case "primary":
-      buttonClasses.push(classes.Primary);
-      break;
-    case "secondary":
-      buttonClasses.push(classes.Secondary);
-      break;
-    case "highlight":
-      buttonClasses.push(classes.Highlight);
-      break;
-    default:
-      buttonClasses.push(classes.Primary);
+      case "primary":
+        buttonClasses.push(classes.Primary);
+        break;
+      case "secondary":
+        buttonClasses.push(classes.Secondary);
+        break;
+      case "highlight":
+        buttonClasses.push(classes.Highlight);
+        break;
+      default:
+        buttonClasses.push(classes.Primary);
     }
 
     const keysToRemove = ["colorType"];
     const buttonProps = Object.filterKeys(
-      this.props, key => !keysToRemove.includes(key)
+      this.props,
+      key => !keysToRemove.includes(key)
     );
 
     return (
-      <div>
-        <button className={buttonClasses.join(" ")}
-          { ...buttonProps }
-          onClick={this.props.handleClick}
-        >{this.props.children}</button>
-      </div>
+      <button
+        className={buttonClasses.join(" ")}
+        {...buttonProps}
+        onClick={this.props.handleClick}
+      >
+        {this.props.children}
+      </button>
     );
   }
 }

@@ -3,6 +3,7 @@
   box-sizing: border-box;
   width: 100%;
   padding: 0.5rem;
+  font-size: 1.5rem;
 }
 
 
@@ -11,13 +12,18 @@
 }
 
 .Label {
+  width: 100%;
   position: absolute;
   top: 1.4rem;
-  left: 0.5rem;
+  left: 0;
+  padding: 0 0.5rem;
   line-height: 1rem;
   font-size: 1rem;
   transform-origin: left;
   transition: all 0.3s ease-out;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .Element {
@@ -36,23 +42,29 @@
 .Invalid {
   background: linear-gradient(105deg, white, rgba(0,0,0,0) 30%),
   linear-gradient(-105deg, white, rgba(0,0,0,0) 30%),
-  linear-gradient(to top, #bb0000, white 30%)
+  linear-gradient(to top, rgba(255,0,0,0.6), white 20%)
+}
+
+.Invalid ~ label {
+  color: var(--error-color);
 }
 
 .ErrorFeedback {
   width: 100%;
   display: block;
-  color: #bb0000;
+  box-sizing: border-box;
+  color: var(--error-color);
   font-size: 0.85rem;
-  padding: 0.3rem 0.5rem;
+  padding: 0.3rem 0.5rem 0.1rem 0.5rem;
 }
 
 .InfoTip {
   width: 100%;
   display: block;
+  box-sizing: border-box;
   color: var(--muted-color);
   font-size: 0.85rem;
-  padding: 0.3rem 0.5rem;
+  padding: 0.2rem 0.5rem;
 }
 
 .Element:disabled {
@@ -87,6 +99,7 @@
 .LabelHigh {
   color: black;
   cursor: default;
-  transform: translateY(-1rem) scale(0.6);
+  transform: translateY(-1.1rem) scale(0.8);
+  padding: 0 0.63rem;
 }
 

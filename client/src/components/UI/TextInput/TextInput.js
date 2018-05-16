@@ -53,7 +53,6 @@ class TextInput extends Component {
       elementClasses.push(classes.Invalid);
     }
 
-
     return (
       <div className={classes.TextInput}>
         <div className={classes.ElementOuter}>
@@ -74,8 +73,12 @@ class TextInput extends Component {
             {labelText}
           </label>
         </div>
-        {this.props.error && <div className={classes.ErrorFeedback}>{this.props.error}</div>}
-        {this.props.info && <div className={classes.InfoTip}>{this.props.info}</div>}
+        {this.props.error && (
+          <div className={classes.ErrorFeedback}>{this.props.error}</div>
+        )}
+        {this.props.info && (
+          <small className={classes.InfoTip}>{this.props.info}</small>
+        )}
       </div>
     );
   }
@@ -84,12 +87,18 @@ class TextInput extends Component {
 TextInput.propTypes = {
   inputType: PropTypes.oneOf(["text", "email", "password"]),
   name: PropTypes.string.isRequired,
-  isRequired: PropTypes.bool.isRequired
+  info: PropTypes.string,
+  error: PropTypes.string,
+  isRequired: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool
   // handleChange: PropTypes.func.isRequired
 };
 
 TextInput.defaultProps = {
-  inputType: "text"
+  inputType: "text",
+  info: "",
+  error: "",
+  disabled: false
 };
 
 export default TextInput;
