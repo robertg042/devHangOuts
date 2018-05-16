@@ -50,17 +50,16 @@ class SignupForm extends Component {
     this.setState({ form: updatedForm });
   };
 
-  handleSubmit = () => {
-  };
+  handleSubmit = () => {};
 
   checkForRequired = () => {
-    const test = Object.keys(this.state.form)
+    const arrayOfTruth = Object.keys(this.state.form)
       .map(key => {
         return this.state.form[key].isRequired;
-      });
-      // .find(element => element === true);
+      })
+      .find(element => element === true);
 
-    return test;
+    return arrayOfTruth || false;
   };
 
   render() {
@@ -70,8 +69,6 @@ class SignupForm extends Component {
     }
 
     console.log(`Check: ${this.checkForRequired()}`);
-
-
 
     const formElements = [];
     for (const key in this.state.form) {
@@ -87,19 +84,17 @@ class SignupForm extends Component {
       <div className={classes.SignupFormWrapper}>
         <div className={classes.SignupForm}>
           <div className={classes.Title}>Sign up</div>
-          {formElements.map(
-            element => (
-              <TextInput
-                key={element.id}
-                name={element.config.name}
-                inputType={element.config.inputType}
-                labelText={element.config.labelText}
-                value={element.config.value}
-                handleChange={event => this.handleChange(event)}
-                isRequired={element.config.isRequired}
-              />
-            )
-          )}
+          {formElements.map(element => (
+            <TextInput
+              key={element.id}
+              name={element.config.name}
+              inputType={element.config.inputType}
+              labelText={element.config.labelText}
+              value={element.config.value}
+              handleChange={event => this.handleChange(event)}
+              isRequired={element.config.isRequired}
+            />
+          ))}
           {requiredInfoTip}
         </div>
         <Button

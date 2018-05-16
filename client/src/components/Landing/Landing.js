@@ -31,7 +31,11 @@ class Landing extends Component {
   }
 
   render() {
-    let signup = (<Button handleClick={this.navigateToSignupForm.bind(this)}>Sign up</Button>);
+    let signup = (
+      <Button handleClick={this.navigateToSignupForm.bind(this)}>
+        Sign up
+      </Button>
+    );
 
     if (this.state.displayForm) {
       signup = <SignupForm hasRequiredFields />;
@@ -45,11 +49,11 @@ class Landing extends Component {
             <span className={"lato700"}>devHangOuts</span>
           </div>
           <div className={classes.Leading}>
-            <span className={"lato400i"}>THE social site for developers</span>
+            <span className={"lato400i"}>
+              <em className={"lato500"}>THE</em> social site for developers
+            </span>
           </div>
-          <div className={classes.Signup}>
-            {signup}
-          </div>
+          <div className={classes.Signup}>{signup}</div>
         </div>
       </div>
     );
