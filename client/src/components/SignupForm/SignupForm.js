@@ -7,15 +7,60 @@ import Button from "../UI/Button/Button";
 
 class SignupForm extends Component {
   state = {
-    buttonDisabled: true
+    form: {
+      name: {
+        name: "name",
+        inputType: "text",
+        labelText: "Name",
+        isRequired: true,
+        value: ""
+      },
+      email: {
+        name: "email",
+        inputType: "email",
+        labelText: "Email address",
+        isRequired: true,
+        value: ""
+      },
+      password: {
+        name: "password",
+        inputType: "password",
+        labelText: "Password",
+        isRequired: true,
+        value: ""
+      },
+      passwordRepeat: {
+        name: "passwordRepeat",
+        inputType: "password",
+        labelText: "Confirm password",
+        isRequired: true,
+        value: ""
+      }
+    }
   };
 
-  toggleDisabled = e => {
-    e.preventDefault();
+  handleChange = event => {
+    // eslint-disable-next-line
+    const updatedForm = { ...this.state.form };
+    const updatedElement = {
+      ...updatedForm[event.target.name]
+    };
+    updatedElement.value = event.target.value;
+    updatedForm[event.target.name] = updatedElement;
+    this.setState({ form: updatedForm });
+  };
 
-    this.setState(prevState => ({
-      buttonDisabled: !prevState.buttonDisabled
-    }));
+  handleSubmit = () => {
+  };
+
+  checkForRequired = () => {
+    const test = Object.keys(this.state.form)
+      .map(key => {
+        return this.state.form[key].isRequired;
+      });
+      // .find(element => element === true);
+
+    return test;
   };
 
   render() {
@@ -24,54 +69,46 @@ class SignupForm extends Component {
       requiredInfoTip = <div className={classes.InfoTip}>* field required</div>;
     }
 
-    let toggledButton = (
-      <Button
-        handleClick={this.toggleDisabled}
-        type={"button"}
-        colorType={"primary"}
-      >
-        Disabled or not
-      </Button>
-    );
-    if (this.state.buttonDisabled) {
-      toggledButton = (
-        <Button
-          handleClick={this.toggleDisabled}
-          disabled
-          type={"button"}
-          colorType={"primary"}
-        >
-          Disabled or not
-        </Button>
-      );
+    console.log(`Check: ${this.checkForRequired()}`);
+
+
+
+    const formElements = [];
+    for (const key in this.state.form) {
+      if (Object.prototype.hasOwnProperty.call(this.state.form, key)) {
+        formElements.push({
+          id: key,
+          config: this.state.form[key]
+        });
+      }
     }
 
     return (
       <div className={classes.SignupFormWrapper}>
         <div className={classes.SignupForm}>
           <div className={classes.Title}>Sign up</div>
-          <TextInput
-            name={"Name"}
-            inputType="text"
-            labelText={"Name"}
-            isRequired
-          />
-          <TextInput
-            name={"Password"}
-            inputType="password"
-            labelText={"Password"}
-            isRequired
-          />
+          {formElements.map(
+            element => (
+              <TextInput
+                key={element.id}
+                name={element.config.name}
+                inputType={element.config.inputType}
+                labelText={element.config.labelText}
+                value={element.config.value}
+                handleChange={event => this.handleChange(event)}
+                isRequired={element.config.isRequired}
+              />
+            )
+          )}
           {requiredInfoTip}
         </div>
         <Button
-          handleClick={this.toggleDisabled}
+          handleClick={this.handleSubmit}
           type={"submit"}
           colorType={"primary"}
         >
-          Toggle
+          Sign up
         </Button>
-        {toggledButton}
       </div>
     );
   }

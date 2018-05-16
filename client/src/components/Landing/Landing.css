@@ -1,39 +1,79 @@
 .Landing {
   position: relative;
   height: calc(100vh - 6rem);
+  width: 100%;
   background: black url(../../assets/images/showcase.jpg) no-repeat center;
   background-size: cover;
 }
 
 .Content {
+  position: relative;
   height: 100%;
+  width: 100%;
+  z-index: 20;
   text-align: center;
-  color: white;
-  /*color: var(--light-color);*/
+  color: var(--light-color);
+  overflow-y: auto;
   display: grid;
-  grid: "header"  1fr
-        "leading" 1fr
-        "signup"  1fr /
-        auto;
+  align-items: center;
+  grid: "header"  5rem
+        "leading" 2rem
+        "signup"  auto /
+          100%;
 }
 
 .Header {
   grid-area: header;
+  font-size: 2rem;
+  line-height: 2rem;
+  padding: 1.5rem;
 }
 
 .Leading {
   grid-area: leading;
+  font-size: 1rem;
+  line-height: 1rem;
+  padding-bottom: 1rem
 }
 
 .Signup {
   grid-area: signup;
 }
 
-.overlay {
+.Overlay {
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
+  z-index: 10;
+}
+
+@media (min-width: 900px) {
+  .Content {
+    grid: "header header" 10rem "leading signup" 100% /
+       50% 50%;
+  }
+
+  .Header {
+    font-size: 4rem;
+    line-height: 4rem;
+    padding: 3rem;
+  }
+
+  .Leading {
+    font-size: 2rem;
+    line-height: 2rem;
+    justify-self: center;
+    padding: 1rem 0 1rem 2rem;
+    position: fixed;
+    width: 50%;
+    /*text-wrap: normal;*/
+    top: calc(50vh - 2rem);
+  }
+}
+
+@media (min-height: 43.75rem) {
+
 }

@@ -27,7 +27,7 @@ class TextInput extends Component {
     } else {
       this.setState({ labelHigh: true });
     }
-    // this.props.handleChange(event);
+    this.props.handleChange(event);
   };
 
   handleFocus = () => {
@@ -60,6 +60,7 @@ class TextInput extends Component {
             className={elementClasses.join(" ")}
             id={this.state.id}
             type={this.props.inputType}
+            name={this.props.name}
             onChange={event => this.handleChange(event)}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}

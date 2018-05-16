@@ -35,7 +35,7 @@ module.exports = {
     "dot-location": [2, "property"], // enforce consistent newlines before and after dots, options: "object" - default or "property"
     "dot-notation": 2, // enforce dot notation whenever possible
     eqeqeq: 2, // require the use of === and !==
-    "guard-for-in": 2, // make sure for-in loops have an if statement
+    "guard-for-in": 1, // make sure for-in loops have an if statement
     "no-alert": 2, // disallow the use of alert, confirm, and prompt
     "no-caller": 2, // disallow use of arguments.caller or arguments.callee
     "no-div-regex": 2, // disallow division operators explicitly at beginning of regular expression
@@ -201,7 +201,7 @@ module.exports = {
     "react/destructuring-assignment": 0, // enforce consistent usage of destructuring assignment of props, state, and context
     "react/jsx-sort-props": 0, // enforce props alphabetical sorting
     "react/jsx-wrap-multilines": 2, // prevent missing parentheses around multilines JSX
-    "react/no-access-state-in-setstate": 2, // prevent using this.state within a this.setState
+    "react/no-access-state-in-setstate": 1, // prevent using this.state within a this.setState
     "react/no-array-index-key": 1, // prevent using Array index in key props
     "react/no-danger": 1, // prevent usage of dangerous JSX properties
     "react/no-multi-comp": 2, // prevent multiple component definition per file

@@ -1,9 +1,9 @@
 .SignupFormWrapper {
+  color: black;
+  background-color: white;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-items: center;
-  align-items: center;
   margin: 0 auto;
   padding: 2rem;
   font-size: 2rem;
@@ -13,8 +13,6 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-items: center;
-  align-items: center;
   margin: 0 auto;
   padding-bottom: 2rem;
   font-size: 2rem;
@@ -33,6 +31,7 @@
   color: var(--muted-color);
   font-size: 0.85rem;
   padding: 1.3rem 0.5rem 0.3rem 1rem;
+  text-align: left;
 }
 
 @media (min-width: 400px) {
@@ -41,11 +40,11 @@
   }
 }
 
-/*@media (min-width: 31.25rem) {*/
-  /*button {*/
-    /*display: inline;*/
-  /*}*/
-/*}*/
+@media (min-width: 31.25rem) {
+  .SignupFormWrapper {
+    align-items: center;
+  }
+}
 
 @media (min-width: 768px) {
   .SignupFormWrapper {
@@ -53,14 +52,8 @@
   }
 }
 
-@media (min-width: 1440px) {
-  .SignupFormWrapper {
-    width: 50%;
-  }
-}
-
 @media (min-width: 2100px) {
   .SignupFormWrapper {
-    width: 30%;
+    width: 50%;
   }
 }

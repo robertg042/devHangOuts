@@ -21,7 +21,7 @@ class Button extends Component {
         buttonClasses.push(classes.Primary);
     }
 
-    const keysToRemove = ["colorType"];
+    const keysToRemove = ["colorType", "handleClick"];
     const buttonProps = Object.filterKeys(
       this.props,
       key => !keysToRemove.includes(key)

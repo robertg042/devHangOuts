@@ -24,6 +24,7 @@
   overflow-x: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-align: left;
 }
 
 .Element {
@@ -42,7 +43,8 @@
 .Invalid {
   background: linear-gradient(105deg, white, rgba(0,0,0,0) 30%),
   linear-gradient(-105deg, white, rgba(0,0,0,0) 30%),
-  linear-gradient(to top, rgba(255,0,0,0.6), white 20%)
+  linear-gradient(to top, rgba(255,0,0,0.6), white 20%);
+  text-align: left;
 }
 
 .Invalid ~ label {
@@ -65,6 +67,7 @@
   color: var(--muted-color);
   font-size: 0.85rem;
   padding: 0.2rem 0.5rem;
+  text-align: left;
 }
 
 .Element:disabled {
@@ -91,7 +94,7 @@
 
 
 .LabelLow {
-  color: #777;
+  color: var(--muted-color);
   cursor: text;
   transform: translateY(0) scale(1);
 }
