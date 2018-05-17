@@ -121,7 +121,7 @@ module.exports = {
     "new-cap": [1, { newIsCap: true, capIsNew: false }], // require a capital letter for constructors
     "new-parens": 1, // disallow the omission of parentheses when invoking a constructor with no arguments
     "no-array-constructor": 1, // disallow use of the Array constructor
-    "no-lonely-if": 1, // disallow if as the only statement in an else block
+    "no-lonely-if": 0, // disallow if as the only statement in an else block
     "no-mixed-spaces-and-tabs": 1, // disallow mixed spaces and tabs for indentation
     "no-multiple-empty-lines": [1, { max: 2 }], // disallow multiple empty lines (off by default)
     "no-nested-ternary": 1, // disallow nested ternary expressions (off by default)

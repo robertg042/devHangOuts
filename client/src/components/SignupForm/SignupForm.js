@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 import classes from "./SignupForm.css";
 import TextInput from "../UI/TextInput/TextInput";
@@ -49,7 +50,8 @@ class SignupForm extends Component {
         value: ""
       }
     },
-    formId: ""
+    formId: "",
+    displayRequiredInfo: false
   };
 
   componentWillMount() {
@@ -59,6 +61,20 @@ class SignupForm extends Component {
       this.setState({ formId: formId });
     }
   }
+
+  componentDidMount() {
+    this.checkForRequired();
+  }
+
+  checkForRequired = () => {
+    const atLeastOneRequired = Object.keys(this.state.form)
+      .map(key => {
+        return this.state.form[key].isRequired;
+      })
+      .find(element => element === true);
+
+    this.setState({ displayRequiredInfo: atLeastOneRequired || false });
+  };
 
   handleChange = event => {
     // eslint-disable-next-line
@@ -81,22 +97,57 @@ class SignupForm extends Component {
       password2: this.state.form.passwordRepeat.value
     };
 
-    console.log(newUser);
-  };
+    axios
+      .post("/api/users/register", newUser)
+      .then(response => console.log(response.data))
+      .catch(error => {
+        // eslint-disable-next-line
+        const updatedForm = { ...this.state.form };
+        const formKeys = Object.keys(updatedForm);
+        const newElements = formKeys.map(key => {
+          const updatedElement = { ...this.state.form[key] };
+          if (key !== "passwordRepeat") {
+            if (error.response.data.hasOwnProperty(key)) {
+              // there's an error message that can be displayed
+              updatedElement.error = error.response.data[key];
+            } else {
+              // no error message in response: clear message for input in component's state
+              updatedElement.error = "";
+            }
+          } else {
+            if (error.response.data.hasOwnProperty("password2")) {
+              // there's an error message that can be displayed
+              updatedElement.error = error.response.data.password2.replace(
+                "Password2",
+                "Confirm password"
+              );
+            } else {
+              // no error message in response: clear message for input in component's state
+              updatedElement.error = "";
+            }
+          }
 
-  checkForRequired = () => {
-    const arrayOfTruth = Object.keys(this.state.form)
-      .map(key => {
-        return this.state.form[key].isRequired;
-      })
-      .find(element => element === true);
+          return updatedElement;
+        });
 
-    return arrayOfTruth || false;
+        formKeys.forEach(key => {
+          if (key !== "password2") {
+            updatedForm[key] = newElements.find(element => {
+              return element.name === key;
+            });
+          } else {
+            updatedForm.passwordRepeat = newElements.find(element => {
+              return element.name === "passwordRepeat";
+            });
+          }
+        });
+        this.setState({ form: updatedForm });
+      });
   };
 
   render() {
     let requiredInfoTip = null;
-    if (this.checkForRequired()) {
+    if (this.state.displayRequiredInfo) {
       requiredInfoTip = <div className={classes.InfoTip}>* field required</div>;
     }
 
@@ -114,7 +165,7 @@ class SignupForm extends Component {
       <div className={classes.SignupFormWrapper}>
         <form
           id={this.state.formId}
-          onSubmit={this.handleSubmit.bind(this, event)}
+          onSubmit={() => this.handleSubmit()}
           className={classes.SignupForm}
         >
           <div className={classes.Title}>Sign up</div>

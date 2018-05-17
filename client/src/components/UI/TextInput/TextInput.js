@@ -66,6 +66,10 @@ class TextInput extends Component {
             onBlur={this.handleBlur}
             value={this.state.value}
             disabled={this.props.disabled}
+            spellCheck="false"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
           />
           <label
             className={this.state.labelClasses.join(" ")}

@@ -73,7 +73,7 @@ class LoginForm extends Component {
       <div className={classes.LoginFormWrapper}>
         <form
           id={this.state.formId}
-          onSubmit={this.handleSubmit.bind(this, event)}
+          onSubmit={() => this.handleSubmit()}
           className={classes.LoginForm}
         >
           <div className={classes.Title}>Log in</div>
