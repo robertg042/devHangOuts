@@ -1,5 +1,5 @@
 html {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.4;
 }
 
@@ -10,14 +10,56 @@ body {
   min-height: 100vh;
 }
 
+@media (min-width: 375px) {
+  html {
+    font-size: 16px;
+  }
+}
+
 @media (min-width: 900px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1600px) {
   html {
     font-size: 20px;
   }
 }
 
-@media (min-width: 1601px) {
+@media (min-width: 2560px) {
   html {
-    font-size: 24px;
+    font-size: 22px;
+  }
+}
+
+@media (min-width: 3260px) {
+  html {
+    font-size: 26px;
+  }
+}
+
+@media (min-width: 4060px) {
+  html {
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 4860px) {
+  html {
+    font-size: 34px;
+  }
+}
+
+@media (min-width: 5660px) {
+  html {
+    font-size: 38px;
+  }
+}
+
+@media (min-width: 6460px) {
+  html {
+    font-size: 70px;
   }
 }

@@ -11,7 +11,11 @@ class SignupForm extends Component {
       name: {
         name: "name",
         inputType: "text",
-        labelText: "Name",
+        labelText:
+          "Name Bardzo długi bardzo długi Bardzo długi bardzo długi Bardzo długi bardzo długi",
+        info: "",
+        error: "",
+        disabled: false,
         isRequired: true,
         value: ""
       },
@@ -19,6 +23,9 @@ class SignupForm extends Component {
         name: "email",
         inputType: "email",
         labelText: "Email address",
+        info: "Info 3",
+        error: "",
+        disabled: false,
         isRequired: true,
         value: ""
       },
@@ -26,6 +33,9 @@ class SignupForm extends Component {
         name: "password",
         inputType: "password",
         labelText: "Password",
+        info: "",
+        error: "Error 2",
+        disabled: false,
         isRequired: true,
         value: ""
       },
@@ -33,6 +43,9 @@ class SignupForm extends Component {
         name: "passwordRepeat",
         inputType: "password",
         labelText: "Confirm password",
+        info: "Info 1",
+        error: "Error 1",
+        disabled: true,
         isRequired: true,
         value: ""
       }
@@ -90,6 +103,9 @@ class SignupForm extends Component {
               name={element.config.name}
               inputType={element.config.inputType}
               labelText={element.config.labelText}
+              info={element.config.info}
+              error={element.config.error}
+              disabled={element.config.disabled}
               value={element.config.value}
               handleChange={event => this.handleChange(event)}
               isRequired={element.config.isRequired}

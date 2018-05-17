@@ -16,28 +16,80 @@
   overflow-y: auto;
   display: grid;
   align-items: center;
-  grid: "header"  5rem
-        "leading" 2rem
-        "signup"  auto /
+  grid: "header" 8rem "leading" 5rem "signup" auto /
           100%;
 }
 
 .Header {
   grid-area: header;
-  font-size: 2rem;
-  line-height: 2rem;
-  padding: 1.5rem;
+  font-size: 3rem;
+  line-height: 3rem;
+  padding: 0 0 2rem 0;
+  align-self: end;
 }
 
 .Leading {
   grid-area: leading;
-  font-size: 1rem;
-  line-height: 1rem;
-  padding-bottom: 1rem
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  padding: 1rem;
 }
 
 .Signup {
   grid-area: signup;
+  align-self: start;
+  padding: 2rem 0;
+}
+
+@media (min-width: 430px) {
+  .Content {
+    grid: "header" 9rem "leading" 7rem "signup" auto /
+          100%;
+  }
+  .Header {
+    font-size: 4rem;
+    line-height: 4rem;
+    padding: 0 0 2rem 0;
+  }
+
+  .Leading {
+    font-size: 2rem;
+    line-height: 2rem;
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 530px) {
+  .Content {
+    grid: "header" 11rem "leading" 8rem "signup" auto /
+          100%;
+  }
+  .Header {
+    font-size: 5rem;
+    line-height: 5rem;
+    padding: 0 0 2.5rem 0;
+  }
+
+  .Leading {
+    font-size: 3rem;
+    line-height: 3rem;
+  }
+}
+
+@media (min-width: 900px) and (min-height: 950px){
+  .Content {
+    grid: "header header" 11rem "leading signup" auto /
+          50% 50%;
+  }
+
+  .Leading {
+    font-size: 3.5rem;
+    line-height: 3.5rem;
+  }
+
+  .Signup {
+    align-self: center;
+  }
 }
 
 .Overlay {
@@ -48,32 +100,4 @@
   height: 100%;
   width: 100%;
   z-index: 10;
-}
-
-@media (min-width: 900px) {
-  .Content {
-    grid: "header header" 10rem "leading signup" 100% /
-       50% 50%;
-  }
-
-  .Header {
-    font-size: 4rem;
-    line-height: 4rem;
-    padding: 3rem;
-  }
-
-  .Leading {
-    font-size: 2rem;
-    line-height: 2rem;
-    /*justify-self: center;*/
-    padding: 1rem 0 1rem 2rem;
-    position: fixed;
-    width: 50%;
-    /*text-wrap: normal;*/
-    top: calc(50vh - 2rem);
-  }
-}
-
-@media (min-height: 43.75rem) {
-
 }

@@ -2,7 +2,7 @@
   display: block;
   box-sizing: border-box;
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
   font-size: 1.5rem;
 }
 
@@ -58,6 +58,7 @@
   color: var(--error-color);
   font-size: 0.85rem;
   padding: 0.3rem 0.5rem 0.1rem 0.5rem;
+  text-align: left;
 }
 
 .InfoTip {

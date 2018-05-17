@@ -23,7 +23,10 @@ class Landing extends Component {
   }
 
   updateDimensions() {
-    if (document.documentElement.clientHeight >= 730) {
+    if (
+      document.documentElement.clientWidth >= 400 &&
+      document.documentElement.clientHeight > 360
+    ) {
       this.setState({ displayForm: true });
     } else {
       this.setState({ displayForm: false });
@@ -33,7 +36,7 @@ class Landing extends Component {
   render() {
     let signup = (
       <Button handleClick={this.navigateToSignupForm.bind(this)}>
-        Sign up
+        Sign up <i className={"far fa-arrow-alt-circle-right"} />
       </Button>
     );
 
