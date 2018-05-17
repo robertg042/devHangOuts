@@ -42,12 +42,27 @@ class Button extends Component {
 Button.propTypes = {
   type: PropTypes.string,
   colorType: PropTypes.string,
-  handleClick: PropTypes.func.isRequired
+  form: (props, propName, componentName) => {
+    if (!props.form && !props.handleClick) {
+      return new Error(
+        `One of props 'form' or 'handleClick' is required in '${componentName}'.`
+      );
+    }
+  },
+  handleClick: (props, propName, componentName) => {
+    if (!props.form && !props.handleClick) {
+      return new Error(
+        `One of props 'form' or 'handleClick' is required in '${componentName}'.`
+      );
+    }
+  }
 };
 
 Button.defaultProps = {
   type: "submit",
-  colorType: "primary"
+  colorType: "primary",
+  form: null,
+  handleClick: null
 };
 
 export default Button;

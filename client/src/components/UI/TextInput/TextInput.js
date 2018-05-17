@@ -90,16 +90,18 @@ TextInput.propTypes = {
   name: PropTypes.string.isRequired,
   info: PropTypes.string,
   error: PropTypes.string,
-  isRequired: PropTypes.bool.isRequired,
-  disabled: PropTypes.bool
-  // handleChange: PropTypes.func.isRequired
+  isRequired: PropTypes.bool,
+  disabled: PropTypes.bool,
+  handleChange: PropTypes.func
 };
 
 TextInput.defaultProps = {
   inputType: "text",
   info: "",
   error: "",
-  disabled: false
+  isRequired: false,
+  disabled: false,
+  handleChange: null
 };
 
 export default TextInput;

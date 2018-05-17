@@ -14,11 +14,7 @@ class App extends Component {
       <div className={classes.App}>
         <Layout>
           <Route exact path={"/login"} component={LoginForm} />
-          <Route
-            exact
-            path={"/signup"}
-            render={props => <SignupForm hasRequiredFields {...props} />}
-          />
+          <Route exact path={"/signup"} component={SignupForm} />
           <Route exact path={"/developers"} component={ProfilesList} />
           <Route exact path={"/"} component={Landing} />
         </Layout>

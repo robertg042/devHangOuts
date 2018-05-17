@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 
 import classes from "./SignupForm.css";
 import TextInput from "../UI/TextInput/TextInput";
 import Button from "../UI/Button/Button";
+import { makeId } from "../../shared/utils";
 
 class SignupForm extends Component {
   state = {
@@ -11,8 +11,7 @@ class SignupForm extends Component {
       name: {
         name: "name",
         inputType: "text",
-        labelText:
-          "Name Bardzo długi bardzo długi Bardzo długi bardzo długi Bardzo długi bardzo długi",
+        labelText: "Name",
         info: "",
         error: "",
         disabled: false,
@@ -23,7 +22,7 @@ class SignupForm extends Component {
         name: "email",
         inputType: "email",
         labelText: "Email address",
-        info: "Info 3",
+        info: "",
         error: "",
         disabled: false,
         isRequired: true,
@@ -34,7 +33,7 @@ class SignupForm extends Component {
         inputType: "password",
         labelText: "Password",
         info: "",
-        error: "Error 2",
+        error: "",
         disabled: false,
         isRequired: true,
         value: ""
@@ -43,14 +42,23 @@ class SignupForm extends Component {
         name: "passwordRepeat",
         inputType: "password",
         labelText: "Confirm password",
-        info: "Info 1",
-        error: "Error 1",
-        disabled: true,
+        info: "",
+        error: "",
+        disabled: false,
         isRequired: true,
         value: ""
       }
-    }
+    },
+    formId: ""
   };
+
+  componentWillMount() {
+    if (this.state.formId === "") {
+      let formId = "signupForm";
+      formId += `_${makeId()}`;
+      this.setState({ formId: formId });
+    }
+  }
 
   handleChange = event => {
     // eslint-disable-next-line
@@ -63,7 +71,18 @@ class SignupForm extends Component {
     this.setState({ form: updatedForm });
   };
 
-  handleSubmit = () => {};
+  handleSubmit = event => {
+    event.preventDefault();
+
+    const newUser = {
+      name: this.state.form.name.value,
+      email: this.state.form.email.value,
+      password: this.state.form.password.value,
+      password2: this.state.form.passwordRepeat.value
+    };
+
+    console.log(newUser);
+  };
 
   checkForRequired = () => {
     const arrayOfTruth = Object.keys(this.state.form)
@@ -77,11 +96,9 @@ class SignupForm extends Component {
 
   render() {
     let requiredInfoTip = null;
-    if (this.props.hasRequiredFields) {
+    if (this.checkForRequired()) {
       requiredInfoTip = <div className={classes.InfoTip}>* field required</div>;
     }
-
-    console.log(`Check: ${this.checkForRequired()}`);
 
     const formElements = [];
     for (const key in this.state.form) {
@@ -95,7 +112,11 @@ class SignupForm extends Component {
 
     return (
       <div className={classes.SignupFormWrapper}>
-        <div className={classes.SignupForm}>
+        <form
+          id={this.state.formId}
+          onSubmit={this.handleSubmit.bind(this, event)}
+          className={classes.SignupForm}
+        >
           <div className={classes.Title}>Sign up</div>
           {formElements.map(element => (
             <TextInput
@@ -112,8 +133,9 @@ class SignupForm extends Component {
             />
           ))}
           {requiredInfoTip}
-        </div>
+        </form>
         <Button
+          form={this.state.formId}
           handleClick={this.handleSubmit}
           type={"submit"}
           colorType={"primary"}
@@ -124,9 +146,5 @@ class SignupForm extends Component {
     );
   }
 }
-
-SignupForm.propTypes = {
-  hasRequiredFields: PropTypes.bool.isRequired
-};
 
 export default SignupForm;

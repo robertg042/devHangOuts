@@ -1,3 +1,60 @@
-.LoginForm {
+.LoginFormWrapper {
+  color: black;
+  background-color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 2rem;
+  font-size: 2rem;
+}
 
+.LoginForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.Title {
+  width: 100%;
+  text-align: center;
+  font-size: 3rem;
+  line-height: 3rem;
+}
+
+.InfoTip {
+  width: 100%;
+  display: block;
+  color: var(--muted-color);
+  font-size: 0.85rem;
+  line-height: 0.85rem;
+  padding: 1rem 0.5rem 0.3rem 0.5rem;
+  text-align: left;
+}
+
+@media (min-width: 400px) {
+  .LoginFormWrapper {
+    width: 85%;
+  }
+}
+
+@media (min-width: 31.25rem) {
+  .LoginFormWrapper {
+    align-items: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .LoginFormWrapper {
+    width: 70%;
+  }
+}
+
+@media (min-width: 2100px) {
+  .LoginFormWrapper {
+    width: 50%;
+  }
 }
