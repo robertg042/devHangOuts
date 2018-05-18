@@ -21,9 +21,9 @@ export const savePasswordValue = value => {
   };
 };
 
-export const savePasswordRepeatValue = value => {
+export const savePassword2Value = value => {
   return {
-    type: actionsTypes.SAVE_PASSWORD_REPEAT_VALUE,
+    type: actionsTypes.SAVE_PASSWORD2_VALUE,
     value: value
   };
 };

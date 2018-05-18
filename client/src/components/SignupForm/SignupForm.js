@@ -9,13 +9,13 @@ import * as actionCreators from "../../store/actions/index";
 import { makeId } from "../../shared/utils";
 
 class SignupForm extends Component {
-  // eslint-disable-next-line
   constructor(props) {
     super(props);
     this.checkForRequired = this.checkForRequired.bind(this);
     this.state = {
       form: {
         name: {
+          id: `name_${makeId()}`,
           name: "name",
           inputType: "text",
           labelText: "Name",
@@ -26,6 +26,7 @@ class SignupForm extends Component {
           value: this.props.nameValue
         },
         email: {
+          id: `email_${makeId()}`,
           name: "email",
           inputType: "email",
           labelText: "Email address",
@@ -36,6 +37,7 @@ class SignupForm extends Component {
           value: this.props.emailValue
         },
         password: {
+          id: `password_${makeId()}`,
           name: "password",
           inputType: "password",
           labelText: "Password",
@@ -45,15 +47,16 @@ class SignupForm extends Component {
           isRequired: true,
           value: this.props.passwordValue
         },
-        passwordRepeat: {
-          name: "passwordRepeat",
+        password2: {
+          id: `password2_${makeId()}`,
+          name: "password2",
           inputType: "password",
           labelText: "Confirm password",
           info: "",
           error: "",
           disabled: false,
           isRequired: true,
-          value: this.props.passwordRepeatValue
+          value: this.props.password2Value
         }
       },
       formId: `signupForm_${makeId()}`,
@@ -63,7 +66,7 @@ class SignupForm extends Component {
     this.state.form.name.value = this.props.nameValue;
     this.state.form.email.value = this.props.emailValue;
     this.state.form.password.value = this.props.passwordValue;
-    this.state.form.passwordRepeat.value = this.props.passwordRepeatValue;
+    this.state.form.password2.value = this.props.password2Value;
   }
 
   checkForRequired = () => {
@@ -88,6 +91,23 @@ class SignupForm extends Component {
     this.setState({
       form: updatedForm
     });
+
+    // update redux state
+    switch (name) {
+      case "name":
+        this.props.saveNameValue(value);
+        break;
+      case "email":
+        this.props.saveEmailValue(value);
+        break;
+      case "password":
+        this.props.savePasswordValue(value);
+        break;
+      case "password2":
+        this.props.savePassword2Value(value);
+        break;
+      default:
+    }
   };
 
   handleSubmit = event => {
@@ -97,7 +117,7 @@ class SignupForm extends Component {
       name: this.state.form.name.value,
       email: this.state.form.email.value,
       password: this.state.form.password.value,
-      password2: this.state.form.passwordRepeat.value
+      password2: this.state.form.password2.value
     };
 
     axios
@@ -115,10 +135,10 @@ class SignupForm extends Component {
     // eslint-disable-next-line
     const updatedForm = { ...this.state.form };
     const formKeys = Object.keys(updatedForm);
-    // create an array of updated element (with new error messages
-    const newElements = formKeys.map(key => {
+    // create an array of updated elements (with new error messages)
+    const updatedElements = formKeys.map(key => {
       const updatedElement = { ...this.state.form[key] };
-      if (key !== "passwordRepeat") {
+      if (key !== "password2") {
         if (data.hasOwnProperty(key)) {
           // there's an error message that can be displayed
           updatedElement.error = data[key];
@@ -127,7 +147,8 @@ class SignupForm extends Component {
           updatedElement.error = "";
         }
       } else {
-        if (data.hasOwnProperty("password2")) {
+        // key === "password2"
+        if (data.hasOwnProperty(key)) {
           // there's an error message that can be displayed, modify it
           updatedElement.error = data.password2.replace(
             "Password2",
@@ -144,15 +165,9 @@ class SignupForm extends Component {
 
     // apply updated elements to copied form object
     formKeys.forEach(key => {
-      if (key !== "password2") {
-        updatedForm[key] = newElements.find(element => {
-          return element.name === key;
-        });
-      } else {
-        updatedForm.passwordRepeat = newElements.find(element => {
-          return element.name === "passwordRepeat";
-        });
-      }
+      updatedForm[key] = updatedElements.find(element => {
+        return element.name === key;
+      });
     });
 
     this.setState({ form: updatedForm });
@@ -167,10 +182,7 @@ class SignupForm extends Component {
     const formElements = [];
     for (const key in this.state.form) {
       if (Object.prototype.hasOwnProperty.call(this.state.form, key)) {
-        formElements.push({
-          id: key,
-          config: this.state.form[key]
-        });
+        formElements.push(this.state.form[key]);
       }
     }
 
@@ -185,13 +197,15 @@ class SignupForm extends Component {
           {formElements.map(element => (
             <TextInput
               key={element.id}
-              name={element.config.name}
-              inputType={element.config.inputType}
-              labelText={element.config.labelText}
-              info={element.config.info}
-              error={element.config.error}
-              disabled={element.config.disabled}
-              isRequired={element.config.isRequired}
+              id={element.id}
+              name={element.name}
+              inputType={element.inputType}
+              labelText={element.labelText}
+              info={element.info}
+              error={element.error}
+              disabled={element.disabled}
+              isRequired={element.isRequired}
+              value={element.value}
               updateParent={this.handleUpdateFromInput}
             />
           ))}
@@ -215,15 +229,17 @@ const mapStateToProps = state => {
     nameValue: state.signup.name,
     emailValue: state.signup.email,
     passwordValue: state.signup.password,
-    passwordRepeatValue: state.signup.passwordRepeat
+    password2Value: state.signup.password2
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveNameValue: value => dispatch(actionCreators.saveNameValue(value))
+    saveNameValue: value => dispatch(actionCreators.saveNameValue(value)),
+    saveEmailValue: value => dispatch(actionCreators.saveEmailValue(value)),
+    savePasswordValue: value => dispatch(actionCreators.savePasswordValue(value)),
+    savePassword2Value: value => dispatch(actionCreators.savePassword2Value(value))
   };
 };
 
-// export default SignupForm;
 export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);

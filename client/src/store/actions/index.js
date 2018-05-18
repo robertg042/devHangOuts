@@ -1,1 +1,1 @@
-export { saveNameValue, saveEmailValue, savePasswordValue, savePasswordRepeatValue } from "./signupFormActions";
+export { saveNameValue, saveEmailValue, savePasswordValue, savePassword2Value } from "./signupFormActions";

@@ -4,7 +4,7 @@ const initialState = {
   name: "1",
   email: "2",
   password: "33",
-  passwordRepeat: "444"
+  password2: "444"
 };
 
 const reducer = (state = initialState, action) => {
@@ -24,10 +24,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         password: action.value
       };
-    case actionTypes.SAVE_PASSWORD_REPEAT_VALUE:
+    case actionTypes.SAVE_PASSWORD2_VALUE:
       return {
         ...state,
-        passwordRepeat: action.value
+        password2: action.value
       };
     default:
       return state;
