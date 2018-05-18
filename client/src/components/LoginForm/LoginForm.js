@@ -25,16 +25,8 @@ class LoginForm extends Component {
         value: ""
       }
     },
-    formId: ""
+    formId: `loginForm_${makeId()}`
   };
-
-  componentWillMount() {
-    if (this.state.formId === "") {
-      let formId = "loginForm";
-      formId += `_${makeId()}`;
-      this.setState({ formId: formId });
-    }
-  }
 
   handleChange = event => {
     // eslint-disable-next-line

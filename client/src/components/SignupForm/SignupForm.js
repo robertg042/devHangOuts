@@ -1,69 +1,99 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import axios from "axios";
 
 import classes from "./SignupForm.css";
 import TextInput from "../UI/TextInput/TextInput";
 import Button from "../UI/Button/Button";
+import * as actionCreators from "../../store/actions/index";
 import { makeId } from "../../shared/utils";
 
 class SignupForm extends Component {
-  state = {
-    form: {
-      name: {
-        name: "name",
-        inputType: "text",
-        labelText: "Name",
-        info: "",
-        error: "",
-        disabled: false,
-        isRequired: true,
-        value: ""
+  // eslint-disable-next-line
+  constructor(props) {
+    super(props);
+    this.checkForRequired = this.checkForRequired.bind(this);
+    this.state = {
+      form: {
+        name: {
+          name: "name",
+          inputType: "text",
+          labelText: "Name",
+          info: "",
+          error: "",
+          disabled: false,
+          isRequired: true,
+          value: this.props.nameValue
+        },
+        email: {
+          name: "email",
+          inputType: "email",
+          labelText: "Email address",
+          info: "",
+          error: "",
+          disabled: false,
+          isRequired: true,
+          value: this.props.emailValue
+        },
+        password: {
+          name: "password",
+          inputType: "password",
+          labelText: "Password",
+          info: "",
+          error: "",
+          disabled: false,
+          isRequired: true,
+          value: this.props.passwordValue
+        },
+        passwordRepeat: {
+          name: "passwordRepeat",
+          inputType: "password",
+          labelText: "Confirm password",
+          info: "",
+          error: "",
+          disabled: false,
+          isRequired: true,
+          value: this.props.passwordRepeatValue
+        }
       },
-      email: {
-        name: "email",
-        inputType: "email",
-        labelText: "Email address",
-        info: "",
-        error: "",
-        disabled: false,
-        isRequired: true,
-        value: ""
-      },
-      password: {
-        name: "password",
-        inputType: "password",
-        labelText: "Password",
-        info: "",
-        error: "",
-        disabled: false,
-        isRequired: true,
-        value: ""
-      },
-      passwordRepeat: {
-        name: "passwordRepeat",
-        inputType: "password",
-        labelText: "Confirm password",
-        info: "",
-        error: "",
-        disabled: false,
-        isRequired: true,
-        value: ""
-      }
-    },
-    formId: "",
-    displayRequiredInfo: false
-  };
-
-  componentWillMount() {
-    if (this.state.formId === "") {
-      let formId = "signupForm";
-      formId += `_${makeId()}`;
-      this.setState({ formId: formId });
-    }
+      formId: `signupForm_${makeId()}`,
+      displayRequiredInfo: false
+    };
+    this.state.displayRequiredInfo = this.checkForRequired();
   }
 
-  componentDidMount() {
-    this.checkForRequired();
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log("nextprops:");
+    console.log(nextProps);
+    console.log("prevstate");
+    console.log(prevState);
+
+    return {
+      ...prevState,
+      form: {
+        ...prevState.form,
+        name: {
+          ...prevState.form.name,
+          value: nextProps.nameValue
+        },
+        email: {
+          ...prevState.form.email,
+          value: nextProps.emailValue
+        },
+        password: {
+          ...prevState.form.password,
+          value: nextProps.passwordValue
+        },
+        passwordRepeat: {
+          ...prevState.form.passwordRepeat,
+          value: nextProps.passwordRepeatValue
+        }
+      }
+    };
+  }
+
+  componentWillUnmount() {
+    this.props.saveNameValue(this.state.form.name.value);
   }
 
   checkForRequired = () => {
@@ -73,7 +103,7 @@ class SignupForm extends Component {
       })
       .find(element => element === true);
 
-    this.setState({ displayRequiredInfo: atLeastOneRequired || false });
+    return atLeastOneRequired || false;
   };
 
   handleChange = event => {
@@ -104,6 +134,7 @@ class SignupForm extends Component {
         // eslint-disable-next-line
         const updatedForm = { ...this.state.form };
         const formKeys = Object.keys(updatedForm);
+        // create an array of updated element (with new error messages
         const newElements = formKeys.map(key => {
           const updatedElement = { ...this.state.form[key] };
           if (key !== "passwordRepeat") {
@@ -116,7 +147,7 @@ class SignupForm extends Component {
             }
           } else {
             if (error.response.data.hasOwnProperty("password2")) {
-              // there's an error message that can be displayed
+              // there's an error message that can be displayed, modify it
               updatedElement.error = error.response.data.password2.replace(
                 "Password2",
                 "Confirm password"
@@ -130,6 +161,7 @@ class SignupForm extends Component {
           return updatedElement;
         });
 
+        // apply updated elements to copied form object
         formKeys.forEach(key => {
           if (key !== "password2") {
             updatedForm[key] = newElements.find(element => {
@@ -141,6 +173,7 @@ class SignupForm extends Component {
             });
           }
         });
+
         this.setState({ form: updatedForm });
       });
   };
@@ -198,4 +231,19 @@ class SignupForm extends Component {
   }
 }
 
-export default SignupForm;
+const mapStateToProps = state => {
+  return {
+    nameValue: state.signup.name,
+    emailValue: state.signup.email,
+    passwordValue: state.signup.password,
+    passwordRepeatValue: state.signup.passwordRepeat
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    saveNameValue: value => dispatch(actionCreators.saveNameValue(value))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);

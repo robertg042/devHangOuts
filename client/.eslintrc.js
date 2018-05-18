@@ -94,7 +94,7 @@ module.exports = {
 
     // Node.js and CommonJS
     // These rules relate to code running in Node.js, or in browsers with CommonJS:
-    "callback-return": 2, // require return statements after callbacks
+    "callback-return": 1, // require return statements after callbacks
     "handle-callback-err": 1, // require error handling in callbacks
     "no-buffer-constructor": 2, // disallow use of the Buffer() constructor
     "no-path-concat": 2, // disallow string concatenation with __dirname and __filename

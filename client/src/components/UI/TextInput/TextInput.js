@@ -5,37 +5,35 @@ import classes from "./TextInput.css";
 import { makeId } from "../../../shared/utils";
 
 class TextInput extends Component {
-  state = {
-    id: "",
-    labelHigh: false,
-    labelClasses: [classes.Label, classes.LabelLow],
-    value: ""
-  };
-
-  componentWillMount() {
-    if (this.state.id === "") {
-      let inputId = this.props.name;
-      inputId += `_${makeId()}`;
-      this.setState({ id: inputId });
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: `${props.name}_${makeId()}`,
+      labelClasses: [classes.Label, classes.LabelLow],
+      value: props.value
+    };
+    if (props.value) {
+      this.state.labelClasses = [classes.Label, classes.LabelHigh];
     }
   }
 
   handleChange = event => {
     this.setState({ value: event.target.value });
-    if (event.target.value === "") {
-      this.setState({ labelHigh: false });
-    } else {
-      this.setState({ labelHigh: true });
-    }
+    this.setLabelState(event.target.value !== "");
+
     this.props.handleChange(event);
   };
 
   handleFocus = () => {
-    this.setState({ labelClasses: [classes.Label, classes.LabelHigh] });
+    this.setLabelState(true);
   };
 
   handleBlur = () => {
-    if (this.state.labelHigh) {
+    this.setLabelState(this.state.value);
+  };
+
+  setLabelState = condition => {
+    if (condition) {
       this.setState({ labelClasses: [classes.Label, classes.LabelHigh] });
     } else {
       this.setState({ labelClasses: [classes.Label, classes.LabelLow] });

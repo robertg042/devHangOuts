@@ -1,0 +1,1 @@
+export const SAVE_NAME_VALUE = "SAVE_NAME_VALUE";
