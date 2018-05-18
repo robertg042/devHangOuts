@@ -1,27 +1,117 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 import classes from "./TextInput.css";
 import { makeId } from "../../../shared/utils";
+import * as actionCreators from "../../../store/actions";
 
 class TextInput extends Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    // if (nextProps.name === "name") {
+    //   console.log("nextprops:");
+    //   console.log(nextProps);
+    //   console.log("prevstate");
+    //   console.log(prevState);
+    //
+    //   return {
+    //     ...prevState,
+    //     value: nextProps.nameValue
+    //   };
+    // }
+
+    switch (nextProps.name) {
+      case "name":
+        return {
+          ...prevState,
+          value: nextProps.nameValue
+        };
+      case "email":
+        return {
+          ...prevState,
+          value: nextProps.emailValue
+        };
+      case "password":
+        return {
+          ...prevState,
+          value: nextProps.passwordValue
+        };
+      case "passwordRepeat":
+        return {
+          ...prevState,
+          value: nextProps.passwordRepeatValue
+        };
+      default:
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       id: `${props.name}_${makeId()}`,
       labelClasses: [classes.Label, classes.LabelLow],
-      value: props.value
+      value: ""
     };
-    if (props.value) {
+    switch (this.props.name) {
+      case "name":
+        this.state.value = this.props.nameValue;
+        break;
+      case "email":
+        this.state.value = this.props.emailValue;
+        break;
+      case "password":
+        this.state.value = this.props.passwordValue;
+        break;
+      case "passwordRepeat":
+        this.state.value = this.props.passwordRepeatValue;
+        break;
+      default:
+    }
+    if (this.state.value) {
       this.state.labelClasses = [classes.Label, classes.LabelHigh];
     }
   }
 
+  componentWillUnmount() {
+    // switch (this.props.name) {
+    //   case "name":
+    //     this.props.saveNameValue(this.state.value);
+    //     break;
+    //   case "email":
+    //     this.props.saveEmailValue(this.state.value);
+    //     break;
+    //   case "password":
+    //     this.props.savePasswordValue(this.state.value);
+    //     break;
+    //   case "passwordRepeat":
+    //     this.props.savePasswordRepeatValue(this.state.value);
+    //     break;
+    //   default:
+    // }
+  }
+
   handleChange = event => {
+    switch (this.props.name) {
+      case "name":
+        this.props.saveNameValue(event.target.value);
+        break;
+      case "email":
+        this.props.saveEmailValue(event.target.value);
+        break;
+      case "password":
+        this.props.savePasswordValue(event.target.value);
+        break;
+      case "passwordRepeat":
+        this.props.savePasswordRepeatValue(event.target.value);
+        break;
+      default:
+    }
+
     this.setState({ value: event.target.value });
     this.setLabelState(event.target.value !== "");
+    this.props.updateParent(this.props.name, event.target.value);
 
-    this.props.handleChange(event);
+    // this.props.handleChange(event);
   };
 
   handleFocus = () => {
@@ -93,8 +183,8 @@ TextInput.propTypes = {
   info: PropTypes.string,
   error: PropTypes.string,
   isRequired: PropTypes.bool,
-  disabled: PropTypes.bool,
-  handleChange: PropTypes.func
+  disabled: PropTypes.bool
+  // handleChange: PropTypes.func
 };
 
 TextInput.defaultProps = {
@@ -106,4 +196,22 @@ TextInput.defaultProps = {
   handleChange: null
 };
 
-export default TextInput;
+const mapStateToProps = state => {
+  return {
+    nameValue: state.signup.name,
+    emailValue: state.signup.email,
+    passwordValue: state.signup.password,
+    passwordRepeatValue: state.signup.passwordRepeat
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    saveNameValue: value => dispatch(actionCreators.saveNameValue(value)),
+    saveEmailValue: value => dispatch(actionCreators.saveEmailValue(value)),
+    savePasswordValue: value => dispatch(actionCreators.savePasswordValue(value)),
+    savePasswordRepeatValue: value => dispatch(actionCreators.savePasswordRepeatValue(value))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TextInput);

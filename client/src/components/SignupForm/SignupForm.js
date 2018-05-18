@@ -60,40 +60,10 @@ class SignupForm extends Component {
       displayRequiredInfo: false
     };
     this.state.displayRequiredInfo = this.checkForRequired();
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    console.log("nextprops:");
-    console.log(nextProps);
-    console.log("prevstate");
-    console.log(prevState);
-
-    return {
-      ...prevState,
-      form: {
-        ...prevState.form,
-        name: {
-          ...prevState.form.name,
-          value: nextProps.nameValue
-        },
-        email: {
-          ...prevState.form.email,
-          value: nextProps.emailValue
-        },
-        password: {
-          ...prevState.form.password,
-          value: nextProps.passwordValue
-        },
-        passwordRepeat: {
-          ...prevState.form.passwordRepeat,
-          value: nextProps.passwordRepeatValue
-        }
-      }
-    };
-  }
-
-  componentWillUnmount() {
-    this.props.saveNameValue(this.state.form.name.value);
+    this.state.form.name.value = this.props.nameValue;
+    this.state.form.email.value = this.props.emailValue;
+    this.state.form.password.value = this.props.passwordValue;
+    this.state.form.passwordRepeat.value = this.props.passwordRepeatValue;
   }
 
   checkForRequired = () => {
@@ -106,15 +76,18 @@ class SignupForm extends Component {
     return atLeastOneRequired || false;
   };
 
-  handleChange = event => {
+
+  handleUpdateFromInput = (name, value) => {
+    // update form with value received from TextInput
     // eslint-disable-next-line
     const updatedForm = { ...this.state.form };
-    const updatedElement = {
-      ...updatedForm[event.target.name]
+    updatedForm[name] = {
+      ...updatedForm[name],
+      value: value
     };
-    updatedElement.value = event.target.value;
-    updatedForm[event.target.name] = updatedElement;
-    this.setState({ form: updatedForm });
+    this.setState({
+      form: updatedForm
+    });
   };
 
   handleSubmit = event => {
@@ -129,53 +102,60 @@ class SignupForm extends Component {
 
     axios
       .post("/api/users/register", newUser)
-      .then(response => console.log(response.data))
+      .then(response => {
+        // this.updateErrors(response.data.errors);
+        console.log(response.data);
+      })
       .catch(error => {
-        // eslint-disable-next-line
-        const updatedForm = { ...this.state.form };
-        const formKeys = Object.keys(updatedForm);
-        // create an array of updated element (with new error messages
-        const newElements = formKeys.map(key => {
-          const updatedElement = { ...this.state.form[key] };
-          if (key !== "passwordRepeat") {
-            if (error.response.data.hasOwnProperty(key)) {
-              // there's an error message that can be displayed
-              updatedElement.error = error.response.data[key];
-            } else {
-              // no error message in response: clear message for input in component's state
-              updatedElement.error = "";
-            }
-          } else {
-            if (error.response.data.hasOwnProperty("password2")) {
-              // there's an error message that can be displayed, modify it
-              updatedElement.error = error.response.data.password2.replace(
-                "Password2",
-                "Confirm password"
-              );
-            } else {
-              // no error message in response: clear message for input in component's state
-              updatedElement.error = "";
-            }
-          }
-
-          return updatedElement;
-        });
-
-        // apply updated elements to copied form object
-        formKeys.forEach(key => {
-          if (key !== "password2") {
-            updatedForm[key] = newElements.find(element => {
-              return element.name === key;
-            });
-          } else {
-            updatedForm.passwordRepeat = newElements.find(element => {
-              return element.name === "passwordRepeat";
-            });
-          }
-        });
-
-        this.setState({ form: updatedForm });
+        this.updateErrors(error.response.data);
       });
+  };
+
+  updateErrors = data => {
+    // eslint-disable-next-line
+    const updatedForm = { ...this.state.form };
+    const formKeys = Object.keys(updatedForm);
+    // create an array of updated element (with new error messages
+    const newElements = formKeys.map(key => {
+      const updatedElement = { ...this.state.form[key] };
+      if (key !== "passwordRepeat") {
+        if (data.hasOwnProperty(key)) {
+          // there's an error message that can be displayed
+          updatedElement.error = data[key];
+        } else {
+          // no error message in response: clear message for input in component's state
+          updatedElement.error = "";
+        }
+      } else {
+        if (data.hasOwnProperty("password2")) {
+          // there's an error message that can be displayed, modify it
+          updatedElement.error = data.password2.replace(
+            "Password2",
+            "Confirm password"
+          );
+        } else {
+          // no error message in response: clear message for input in component's state
+          updatedElement.error = "";
+        }
+      }
+
+      return updatedElement;
+    });
+
+    // apply updated elements to copied form object
+    formKeys.forEach(key => {
+      if (key !== "password2") {
+        updatedForm[key] = newElements.find(element => {
+          return element.name === key;
+        });
+      } else {
+        updatedForm.passwordRepeat = newElements.find(element => {
+          return element.name === "passwordRepeat";
+        });
+      }
+    });
+
+    this.setState({ form: updatedForm });
   };
 
   render() {
@@ -211,9 +191,8 @@ class SignupForm extends Component {
               info={element.config.info}
               error={element.config.error}
               disabled={element.config.disabled}
-              value={element.config.value}
-              handleChange={event => this.handleChange(event)}
               isRequired={element.config.isRequired}
+              updateParent={this.handleUpdateFromInput}
             />
           ))}
           {requiredInfoTip}
@@ -246,4 +225,5 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+// export default SignupForm;
 export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);
