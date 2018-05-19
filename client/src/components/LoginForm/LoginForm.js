@@ -1,14 +1,34 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import * as actionCreators from "../../store/actions/index";
 
 import classes from "./LoginForm.css";
 import TextInput from "../UI/TextInput/TextInput";
 import Button from "../UI/Button/Button";
-import { makeId } from "../../shared/utils";
+import { makeId, updateErrors } from "../../shared/utils";
+
 
 class LoginForm extends Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.isAuthenticated) {
+    // if (nextProps.isAuthenticated && nextProps.history.push) {
+      nextProps.history.push("/dashboard");
+      // console.log(nextProps);
+    }
+
+    if (nextProps.serverSideErrors) {
+      return updateErrors(nextProps, prevState);
+    }
+
+    return null;
+  }
+
   state = {
     form: {
       email: {
+        id: `name_${makeId()}`,
         name: "email",
         inputType: "email",
         labelText: "Email address",
@@ -17,6 +37,7 @@ class LoginForm extends Component {
         value: ""
       },
       password: {
+        id: `password_${makeId()}`,
         name: "password",
         inputType: "password",
         labelText: "Password",
@@ -28,29 +49,37 @@ class LoginForm extends Component {
     formId: `loginForm_${makeId()}`
   };
 
-  handleChange = event => {
+  componentWillUnmount() {
+    if (this.props.serverSideErrors) {
+      this.props.clearErrors();
+    }
+  }
+
+  handleChange = (value, name) => {
     // eslint-disable-next-line
     const updatedForm = { ...this.state.form };
     const updatedElement = {
-      ...updatedForm[event.target.name]
+      ...updatedForm[name]
     };
-    updatedElement.value = event.target.value;
-    updatedForm[event.target.name] = updatedElement;
+    updatedElement.value = value;
+    updatedForm[name] = updatedElement;
     this.setState({ form: updatedForm });
   };
 
   handleSubmit = event => {
     event.preventDefault();
 
-    const usercredentials = {
+    const userData = {
       email: this.state.form.email.value,
       password: this.state.form.password.value
     };
 
-    console.log(usercredentials);
+    // console.log(userCredentials);
+    this.props.loginUser(userData);
   };
 
   render() {
+    console.log("render");
     const formElements = [];
     for (const key in this.state.form) {
       if (Object.prototype.hasOwnProperty.call(this.state.form, key)) {
@@ -76,7 +105,7 @@ class LoginForm extends Component {
               info={element.info}
               error={element.error}
               value={element.value}
-              handleChange={event => this.handleChange(event)}
+              handleChange={this.handleChange}
             />
           ))}
         </form>
@@ -93,4 +122,25 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+LoginForm.propTypes = {
+  // loggedInUser: PropTypes.object.isRequired,
+  // eslint-disable-next-line
+  serverSideErrors: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+    serverSideErrors: state.serverErrors.errors
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loginUser: userData => dispatch(actionCreators.loginUser(userData)),
+    clearErrors: () => dispatch(actionCreators.clearServerSideErrors())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginForm));

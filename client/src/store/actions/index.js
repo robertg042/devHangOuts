@@ -1,5 +1,5 @@
 export { saveNameValue, saveEmailValue, savePasswordValue, savePassword2Value } from "./signupFormActions";
 
-export { registerUser } from "./authActions";
+export { registerUser, loginUser } from "./authActions";
 
-export { getServerSideErrors } from "./serverSideErrorActions";
+export { getServerSideErrors, clearServerSideErrors } from "./serverSideErrorActions";

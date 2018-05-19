@@ -1,11 +1,22 @@
 import * as actionTypes from "../actions/actionTypes";
+import { isEmpty } from "../../shared/utils";
 
-const initialState = {};
+const initialState = {
+  isAuthenticated: false,
+  user: null
+};
 
 const reducer = (state = initialState, action) => {
-  switch (action.Type) {
-    case actionTypes.REGISTER_USER:
-      return { ...state };
+  switch (action.type) {
+    case actionTypes.LOGIN_USER:
+      return {
+        ...state,
+        isAuthenticated: !isEmpty(action.payload),
+        user: {
+          ...state.user,
+          ...action.payload
+        }
+      };
     default:
       return state;
   }

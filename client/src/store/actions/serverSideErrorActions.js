@@ -6,3 +6,9 @@ export const getServerSideErrors = errors => {
     payload: errors
   };
 };
+
+export const clearServerSideErrors = () => {
+  return {
+    type: actionTypes.CLEAR_SERVER_SIDE_ERRORS
+  };
+};

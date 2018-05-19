@@ -20,7 +20,8 @@ class TextInput extends Component {
   handleChange = event => {
     this.setState({ value: event.target.value });
     this.setLabelState(event.target.value !== "");
-    this.props.updateParent(this.props.name, event.target.value);
+    this.props.handleChange(event.target.value, this.props.name);
+    // this.props.updateParent(this.props.name, event.target.value);
   };
 
   handleFocus = () => {
@@ -94,7 +95,7 @@ TextInput.propTypes = {
   error: PropTypes.string,
   isRequired: PropTypes.bool,
   disabled: PropTypes.bool,
-  updateParent: PropTypes.func,
+  handleChange: PropTypes.func,
   value: PropTypes.string.isRequired
 };
 
@@ -104,7 +105,7 @@ TextInput.defaultProps = {
   error: "",
   isRequired: false,
   disabled: false,
-  updateParent: null
+  handleChange: null
 };
 
 export default TextInput;

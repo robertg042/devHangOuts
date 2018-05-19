@@ -1,44 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import classes from "./SignupForm.css";
 import TextInput from "../UI/TextInput/TextInput";
 import Button from "../UI/Button/Button";
 import * as actionCreators from "../../store/actions/index";
-import { makeId } from "../../shared/utils";
+import { makeId, updateErrors } from "../../shared/utils";
 
 class SignupForm extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
-    // update errors
-    const updatedForm = { ...prevState.form };
-    const formKeys = Object.keys(updatedForm);
-    // create an array of updated elements (with new error messages)
-    const updatedElements = formKeys.map(key => {
-      const updatedElement = { ...prevState.form[key] };
-      if (key !== "password2") {
-        updatedElement.error = nextProps.serverSideErrors[key];
-      } else {
-        updatedElement.error = nextProps.serverSideErrors.password2.replace(
-          "Password2",
-          "Confirm password"
-        );
-      }
+    if (nextProps.serverSideErrors) {
+      return updateErrors(nextProps, prevState);
+    }
 
-      return updatedElement;
-    });
-
-    // apply updated elements to copied form object
-    formKeys.forEach(key => {
-      updatedForm[key] = updatedElements.find(element => {
-        return element.name === key;
-      });
-    });
-
-    return ({
-      ...prevState,
-      form: updatedForm
-    });
+    return null;
   }
 
   constructor(props) {
@@ -92,7 +69,7 @@ class SignupForm extends Component {
         }
       },
       formId: `signupForm_${makeId()}`,
-      displayRequiredInfo: false
+      displayRequiredInfo: false,
     };
     this.state.displayRequiredInfo = this.checkForRequired();
     this.state.form.name.value = this.props.nameValue;
@@ -105,6 +82,12 @@ class SignupForm extends Component {
     this.state.form.password2.error = this.props.serverSideErrors.password2;
   }
 
+  componentWillUnmount() {
+    if (this.props.serverSideErrors) {
+      this.props.clearErrors();
+    }
+  }
+
   checkForRequired = () => {
     const atLeastOneRequired = Object.keys(this.state.form)
       .map(key => {
@@ -115,8 +98,7 @@ class SignupForm extends Component {
     return atLeastOneRequired || false;
   };
 
-
-  handleUpdateFromInput = (name, value) => {
+  handleChange = (value, name) => {
     // update form with value received from TextInput
     // eslint-disable-next-line
     const updatedForm = { ...this.state.form };
@@ -159,6 +141,7 @@ class SignupForm extends Component {
   };
 
   render() {
+    console.log("render");
     let requiredInfoTip = null;
     if (this.state.displayRequiredInfo) {
       requiredInfoTip = <div className={classes.InfoTip}>* field required</div>;
@@ -167,7 +150,11 @@ class SignupForm extends Component {
     const formElements = [];
     for (const key in this.state.form) {
       if (Object.prototype.hasOwnProperty.call(this.state.form, key)) {
-        formElements.push(this.state.form[key]);
+        const serverSideError = this.props.serverSideErrors[key] || "";
+        formElements.push({
+          ...this.state.form[key],
+          errors: serverSideError
+        });
       }
     }
 
@@ -191,7 +178,7 @@ class SignupForm extends Component {
               value={element.value}
               disabled={element.disabled}
               isRequired={element.isRequired}
-              updateParent={this.handleUpdateFromInput}
+              handleChange={this.handleChange}
             />
           ))}
           {requiredInfoTip}
@@ -214,7 +201,12 @@ SignupForm.propTypes = {
   emailValue: PropTypes.string.isRequired,
   passwordValue: PropTypes.string.isRequired,
   password2Value: PropTypes.string.isRequired,
-  serverSideErrors: PropTypes.object.isRequired
+  serverSideErrors: PropTypes.object.isRequired,
+  saveNameValue: PropTypes.func.isRequired,
+  saveEmailValue: PropTypes.func.isRequired,
+  savePasswordValue: PropTypes.func.isRequired,
+  savePassword2Value: PropTypes.func.isRequired,
+  registerUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -233,8 +225,10 @@ const mapDispatchToProps = dispatch => {
     saveEmailValue: value => dispatch(actionCreators.saveEmailValue(value)),
     savePasswordValue: value => dispatch(actionCreators.savePasswordValue(value)),
     savePassword2Value: value => dispatch(actionCreators.savePassword2Value(value)),
-    registerUser: (userData, history) => dispatch(actionCreators.registerUser(userData, history))
+    registerUser: (userData, history) => dispatch(actionCreators.registerUser(userData, history)),
+    clearErrors: () => dispatch(actionCreators.clearServerSideErrors())
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SignupForm));
+
