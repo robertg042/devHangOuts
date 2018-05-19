@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
+import PropTypes from "prop-types";
 
 import classes from "./SignupForm.css";
 import TextInput from "../UI/TextInput/TextInput";
@@ -9,6 +9,38 @@ import * as actionCreators from "../../store/actions/index";
 import { makeId } from "../../shared/utils";
 
 class SignupForm extends Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    // update errors
+    const updatedForm = { ...prevState.form };
+    const formKeys = Object.keys(updatedForm);
+    // create an array of updated elements (with new error messages)
+    const updatedElements = formKeys.map(key => {
+      const updatedElement = { ...prevState.form[key] };
+      if (key !== "password2") {
+        updatedElement.error = nextProps.serverSideErrors[key];
+      } else {
+        updatedElement.error = nextProps.serverSideErrors.password2.replace(
+          "Password2",
+          "Confirm password"
+        );
+      }
+
+      return updatedElement;
+    });
+
+    // apply updated elements to copied form object
+    formKeys.forEach(key => {
+      updatedForm[key] = updatedElements.find(element => {
+        return element.name === key;
+      });
+    });
+
+    return ({
+      ...prevState,
+      form: updatedForm
+    });
+  }
+
   constructor(props) {
     super(props);
     this.checkForRequired = this.checkForRequired.bind(this);
@@ -67,6 +99,10 @@ class SignupForm extends Component {
     this.state.form.email.value = this.props.emailValue;
     this.state.form.password.value = this.props.passwordValue;
     this.state.form.password2.value = this.props.password2Value;
+    this.state.form.name.error = this.props.serverSideErrors.name;
+    this.state.form.email.error = this.props.serverSideErrors.email;
+    this.state.form.password.error = this.props.serverSideErrors.password;
+    this.state.form.password2.error = this.props.serverSideErrors.password2;
   }
 
   checkForRequired = () => {
@@ -119,58 +155,7 @@ class SignupForm extends Component {
       password: this.state.form.password.value,
       password2: this.state.form.password2.value
     };
-
-    axios
-      .post("/api/users/register", newUser)
-      .then(response => {
-        // this.updateErrors(response.data.errors);
-        console.log(response.data);
-      })
-      .catch(error => {
-        this.updateErrors(error.response.data);
-      });
-  };
-
-  updateErrors = data => {
-    // eslint-disable-next-line
-    const updatedForm = { ...this.state.form };
-    const formKeys = Object.keys(updatedForm);
-    // create an array of updated elements (with new error messages)
-    const updatedElements = formKeys.map(key => {
-      const updatedElement = { ...this.state.form[key] };
-      if (key !== "password2") {
-        if (data.hasOwnProperty(key)) {
-          // there's an error message that can be displayed
-          updatedElement.error = data[key];
-        } else {
-          // no error message in response: clear message for input in component's state
-          updatedElement.error = "";
-        }
-      } else {
-        // key === "password2"
-        if (data.hasOwnProperty(key)) {
-          // there's an error message that can be displayed, modify it
-          updatedElement.error = data.password2.replace(
-            "Password2",
-            "Confirm password"
-          );
-        } else {
-          // no error message in response: clear message for input in component's state
-          updatedElement.error = "";
-        }
-      }
-
-      return updatedElement;
-    });
-
-    // apply updated elements to copied form object
-    formKeys.forEach(key => {
-      updatedForm[key] = updatedElements.find(element => {
-        return element.name === key;
-      });
-    });
-
-    this.setState({ form: updatedForm });
+    this.props.registerUser(newUser, this.props.history);
   };
 
   render() {
@@ -203,9 +188,9 @@ class SignupForm extends Component {
               labelText={element.labelText}
               info={element.info}
               error={element.error}
+              value={element.value}
               disabled={element.disabled}
               isRequired={element.isRequired}
-              value={element.value}
               updateParent={this.handleUpdateFromInput}
             />
           ))}
@@ -224,12 +209,21 @@ class SignupForm extends Component {
   }
 }
 
+SignupForm.propTypes = {
+  nameValue: PropTypes.string.isRequired,
+  emailValue: PropTypes.string.isRequired,
+  passwordValue: PropTypes.string.isRequired,
+  password2Value: PropTypes.string.isRequired,
+  serverSideErrors: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => {
   return {
     nameValue: state.signup.name,
     emailValue: state.signup.email,
     passwordValue: state.signup.password,
-    password2Value: state.signup.password2
+    password2Value: state.signup.password2,
+    serverSideErrors: state.serverErrors.errors
   };
 };
 
@@ -238,7 +232,8 @@ const mapDispatchToProps = dispatch => {
     saveNameValue: value => dispatch(actionCreators.saveNameValue(value)),
     saveEmailValue: value => dispatch(actionCreators.saveEmailValue(value)),
     savePasswordValue: value => dispatch(actionCreators.savePasswordValue(value)),
-    savePassword2Value: value => dispatch(actionCreators.savePassword2Value(value))
+    savePassword2Value: value => dispatch(actionCreators.savePassword2Value(value)),
+    registerUser: (userData, history) => dispatch(actionCreators.registerUser(userData, history))
   };
 };
 

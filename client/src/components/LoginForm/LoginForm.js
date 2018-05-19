@@ -54,10 +54,7 @@ class LoginForm extends Component {
     const formElements = [];
     for (const key in this.state.form) {
       if (Object.prototype.hasOwnProperty.call(this.state.form, key)) {
-        formElements.push({
-          id: key,
-          config: this.state.form[key]
-        });
+        formElements.push(this.state.form[key]);
       }
     }
 
@@ -72,12 +69,13 @@ class LoginForm extends Component {
           {formElements.map(element => (
             <TextInput
               key={element.id}
-              name={element.config.name}
-              inputType={element.config.inputType}
-              labelText={element.config.labelText}
-              info={element.config.info}
-              error={element.config.error}
-              value={element.config.value}
+              id={element.id}
+              name={element.name}
+              inputType={element.inputType}
+              labelText={element.labelText}
+              info={element.info}
+              error={element.error}
+              value={element.value}
               handleChange={event => this.handleChange(event)}
             />
           ))}

@@ -1,8 +1,12 @@
 import { combineReducers } from "redux";
-import signupFormInput from "./signupFormReducer";
+import signupFormReducer from "./signupFormReducer";
+import authReducer from "./authReducer";
+import serverSideErrorReducer from "./serverSideErrorReducer";
 
 const rootReducer = combineReducers({
-  signup: signupFormInput
+  signup: signupFormReducer,
+  auth: authReducer,
+  serverErrors: serverSideErrorReducer
 });
 
 export default rootReducer;

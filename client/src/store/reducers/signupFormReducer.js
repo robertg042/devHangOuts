@@ -1,10 +1,10 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  name: "1",
-  email: "2",
-  password: "33",
-  password2: "444"
+  name: "",
+  email: "",
+  password: "",
+  password2: ""
 };
 
 const reducer = (state = initialState, action) => {
