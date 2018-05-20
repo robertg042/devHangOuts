@@ -17,6 +17,13 @@ class TextInput extends Component {
     }
   }
 
+  inputToFocus = React.createRef();
+
+  // called parent component through ref
+  focus = () => {
+    this.inputToFocus.current.focus();
+  };
+
   handleChange = event => {
     this.setState({ value: event.target.value });
     this.setLabelState(event.target.value !== "");
@@ -65,9 +72,11 @@ class TextInput extends Component {
             value={this.state.value}
             disabled={this.props.disabled}
             spellCheck="false"
+            ref={this.inputToFocus}
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
+            // autoFocus={this.props.autoFocus}
           />
           <label
             className={this.state.labelClasses.join(" ")}

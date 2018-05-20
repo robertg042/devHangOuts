@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import * as actionCreators from "../../store/actions/index";
+import * as actionCreators from "../../store/actions";
 
 import classes from "./LoginForm.css";
 import TextInput from "../UI/TextInput/TextInput";
@@ -13,9 +13,7 @@ import { makeId, updateErrors } from "../../shared/utils";
 class LoginForm extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.isAuthenticated) {
-    // if (nextProps.isAuthenticated && nextProps.history.push) {
       nextProps.history.push("/dashboard");
-      // console.log(nextProps);
     }
 
     if (nextProps.serverSideErrors) {
@@ -49,11 +47,17 @@ class LoginForm extends Component {
     formId: `loginForm_${makeId()}`
   };
 
+  componentDidMount() {
+    this.inputRef.current.focus();
+  }
+
   componentWillUnmount() {
     if (this.props.serverSideErrors) {
       this.props.clearErrors();
     }
   }
+
+  inputRef = React.createRef();
 
   handleChange = (value, name) => {
     // eslint-disable-next-line
@@ -74,12 +78,10 @@ class LoginForm extends Component {
       password: this.state.form.password.value
     };
 
-    // console.log(userCredentials);
     this.props.loginUser(userData);
   };
 
   render() {
-    console.log("render");
     const formElements = [];
     for (const key in this.state.form) {
       if (Object.prototype.hasOwnProperty.call(this.state.form, key)) {
@@ -100,6 +102,7 @@ class LoginForm extends Component {
               key={element.id}
               id={element.id}
               name={element.name}
+              ref={element.name === "email" ? this.inputRef : null}
               inputType={element.inputType}
               labelText={element.labelText}
               info={element.info}
@@ -123,7 +126,6 @@ class LoginForm extends Component {
 }
 
 LoginForm.propTypes = {
-  // loggedInUser: PropTypes.object.isRequired,
   // eslint-disable-next-line
   serverSideErrors: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired

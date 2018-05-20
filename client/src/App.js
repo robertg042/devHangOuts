@@ -8,27 +8,32 @@ import Landing from "./components/Landing/Landing";
 import LoginForm from "./components/LoginForm/LoginForm";
 import SignupForm from "./components/SignupForm/SignupForm";
 import ProfilesList from "./components/ProfilesList/ProfilesList";
+import Logout from "./components/Logout/Logout";
 import store from "./store/store";
 import { setAuthToken } from "./shared/utils";
-import { setAuthenticatedUser } from "./store/actions/authActions";
+import { setAuthenticatedUser, logoutUser } from "./store/actions/authActions";
 
 if (localStorage.jwtToken) {
   // set token to axios' Authorization header
   setAuthToken(localStorage.jwtToken);
   const userFromToken = jwt_decode(localStorage.jwtToken);
   store.dispatch(setAuthenticatedUser(userFromToken));
-
+} else {
+  store.dispatch(logoutUser);
 }
 
 class App extends Component {
+  // const checkToken = () => store.dispatch(logoutUser);
   render() {
     return (
       <div className={classes.App}>
         <Layout>
-          <Route exact path={"/login"} component={LoginForm} />
-          <Route exact path={"/signup"} component={SignupForm} />
-          <Route exact path={"/developers"} component={ProfilesList} />
-          <Route exact path={"/"} component={Landing} />
+          {/*<Route exact path={"/login"} component={LoginForm} onEnter={checkToken}/>*/}
+          <Route exact path={"/login"} component={LoginForm}/>
+          <Route exact path={"/signup"} component={SignupForm}/>
+          <Route exact path={"/developers"} component={ProfilesList}/>
+          <Route exact path={"/logout"} component={Logout}/>
+          <Route exact path={"/"} component={Landing}/>
         </Layout>
       </div>
     );

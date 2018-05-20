@@ -69,7 +69,7 @@ class SignupForm extends Component {
         }
       },
       formId: `signupForm_${makeId()}`,
-      displayRequiredInfo: false,
+      displayRequiredInfo: false
     };
     this.state.displayRequiredInfo = this.checkForRequired();
     this.state.form.name.value = this.props.nameValue;
@@ -141,7 +141,6 @@ class SignupForm extends Component {
   };
 
   render() {
-    console.log("render");
     let requiredInfoTip = null;
     if (this.state.displayRequiredInfo) {
       requiredInfoTip = <div className={classes.InfoTip}>* field required</div>;

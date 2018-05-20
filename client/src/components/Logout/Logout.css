@@ -1,0 +1,25 @@
+.Logout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 6rem);
+}
+
+.InfoHeader {
+  font-size: 2rem;
+  line-height: 2rem;
+  margin: 2rem 1rem 8rem 1rem;
+}
+
+.InfoRedirect {
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  margin: 0 1rem 1rem 1rem;
+}
+
+.Counter {
+  font-size: 1.7rem;
+  line-height: 1.7rem;
+  margin: 1rem 1rem;
+}

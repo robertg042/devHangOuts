@@ -8,7 +8,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.LOGIN_USER:
+    case actionTypes.SET_USER:
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),

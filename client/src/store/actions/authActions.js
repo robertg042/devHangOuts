@@ -7,7 +7,7 @@ import { getServerSideErrors } from "./serverSideErrorActions";
 
 export const setAuthenticatedUser = userData => {
   return {
-    type: actionsTypes.LOGIN_USER,
+    type: actionsTypes.SET_USER,
     payload: userData
   };
 };
@@ -40,4 +40,12 @@ export const loginUser = userData => dispatch => {
     .catch(error => {
       dispatch(getServerSideErrors(error.response.data));
     });
+};
+
+export const logoutUser = () => dispatch => {
+  if (localStorage.jwtToken) {
+    localStorage.removeItem("jwtToken");
+  }
+  setAuthToken(null);
+  dispatch(setAuthenticatedUser({}));
 };
