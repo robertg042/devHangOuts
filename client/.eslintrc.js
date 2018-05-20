@@ -18,6 +18,7 @@ module.exports = {
   rules: {
     // Enable before sending to production
     "no-console": 0, // disallow the use of console
+    "no-debugger": 0,
     "no-warning-comments": [
       0,
       { terms: ["todo", "fixme", "xxx"], location: "start" }

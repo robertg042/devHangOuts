@@ -82,11 +82,17 @@ class SignupForm extends Component {
     this.state.form.password2.error = this.props.serverSideErrors.password2;
   }
 
+  componentDidMount() {
+    this.inputRef.current.focus();
+  }
+
   componentWillUnmount() {
     if (this.props.serverSideErrors) {
       this.props.clearErrors();
     }
   }
+
+  inputRef = React.createRef();
 
   checkForRequired = () => {
     const atLeastOneRequired = Object.keys(this.state.form)
@@ -165,11 +171,14 @@ class SignupForm extends Component {
           className={classes.SignupForm}
         >
           <div className={classes.Title}>Sign up</div>
-          {formElements.map(element => (
-            <TextInput
+          {formElements.map(element => {
+            // debugger;
+
+            return (<TextInput
               key={element.id}
               id={element.id}
               name={element.name}
+              ref={element.name === "name" ? this.inputRef : null}
               inputType={element.inputType}
               labelText={element.labelText}
               info={element.info}
@@ -178,8 +187,8 @@ class SignupForm extends Component {
               disabled={element.disabled}
               isRequired={element.isRequired}
               handleChange={this.handleChange}
-            />
-          ))}
+            />);
+          })}
           {requiredInfoTip}
         </form>
         <Button
