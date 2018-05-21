@@ -7,6 +7,7 @@ import NavigationItem from "./NavigationItem/NavigationItem";
 
 class NavigationItems extends Component {
   render() {
+    const { user, isAuthenticated } = this.props.auth;
     let links = (
       <Fragment>
         <NavigationItem exact linkUrl={"/signup"}>
@@ -17,10 +18,10 @@ class NavigationItems extends Component {
         </NavigationItem>
       </Fragment>
     );
-    if (this.props.isAuthenticated) {
+    if (isAuthenticated) {
       links = (
         <NavigationItem exact linkUrl={"/logout"}>
-          Log out
+          <img src={user.avatar} alt="User's avatar. Part of logout link"/>Log out
         </NavigationItem>
       );
     }
@@ -37,12 +38,12 @@ class NavigationItems extends Component {
 }
 
 NavigationItems.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    auth: state.auth
   };
 };
 

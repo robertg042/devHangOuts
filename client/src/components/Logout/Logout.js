@@ -15,6 +15,10 @@ class Logout extends Component {
     this.timer = setInterval(() => this.countDown(), 1000);
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
   timer = null;
 
   countDown = () => {
