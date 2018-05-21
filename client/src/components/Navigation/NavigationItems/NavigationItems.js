@@ -46,4 +46,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(NavigationItems);
+export default connect(mapStateToProps, null, null, { pure: false })(NavigationItems);
