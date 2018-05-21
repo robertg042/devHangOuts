@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 import classes from "./App.css";
@@ -13,22 +13,29 @@ import store from "./store/store";
 import { setAuthToken } from "./shared/utils";
 import { setAuthenticatedUser, logoutUser } from "./store/actions/authActions";
 
-if (localStorage.jwtToken) {
-  // set token to axios' Authorization header
-  setAuthToken(localStorage.jwtToken);
-  const userFromToken = jwt_decode(localStorage.jwtToken);
-  store.dispatch(setAuthenticatedUser(userFromToken));
-} else {
-  store.dispatch(logoutUser);
-}
 
 class App extends Component {
-  // const checkToken = () => store.dispatch(logoutUser);
+  componentDidMount() {
+    if (localStorage.jwtToken) {
+      const userFromToken = jwt_decode(localStorage.jwtToken);
+      // check if token has expired
+      if (userFromToken.exp < Date.now() / 1000) {
+        store.dispatch(logoutUser());
+        this.props.history.push("/login");
+      } else {
+        // set token to axios' Authorization header
+        setAuthToken(localStorage.jwtToken);
+        store.dispatch(setAuthenticatedUser(userFromToken));
+      }
+    } else {
+      store.dispatch(logoutUser());
+    }
+  }
+
   render() {
     return (
       <div className={classes.App}>
         <Layout>
-          {/*<Route exact path={"/login"} component={LoginForm} onEnter={checkToken}/>*/}
           <Route exact path={"/login"} component={LoginForm}/>
           <Route exact path={"/signup"} component={SignupForm}/>
           <Route exact path={"/developers"} component={ProfilesList}/>
@@ -40,4 +47,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
