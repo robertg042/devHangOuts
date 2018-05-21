@@ -1,6 +1,6 @@
 .Landing {
   position: relative;
-  height: calc(100vh - 6rem);
+  height: 100%;
   width: 100%;
   background: black url(../../assets/images/showcase.jpg) no-repeat center;
   background-size: cover;

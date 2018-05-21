@@ -33,10 +33,12 @@ class Logout extends Component {
 
   render() {
     return (
-      <div className={classes.Logout}>
-        <div className={classes.InfoHeader}>You have been successfully logged out <i className="far fa-smile"/></div>
-        <div className={[classes.InfoRedirect, "lato300i"].join(" ")}>Redirecting to home page in...</div>
-        <div className={classes.Counter}>{this.state.secondsLeft}</div>
+      <div className={classes.LogoutWrapper}>
+        <div className={classes.Logout}>
+          <div className={classes.InfoHeader}>You have been successfully logged out <i className="far fa-smile"/></div>
+          <div className={[classes.InfoRedirect, "lato300i"].join(" ")}>Redirecting to home page in...</div>
+          <div className={classes.Counter}>{this.state.secondsLeft}</div>
+        </div>
       </div>
     );
   }

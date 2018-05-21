@@ -1,25 +1,49 @@
+.LogoutWrapper {
+  height: 100%;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
 .Logout {
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 6rem);
+  overflow-y: auto;
 }
 
 .InfoHeader {
   font-size: 2rem;
   line-height: 2rem;
-  margin: 2rem 1rem 8rem 1rem;
+  margin: auto auto 2rem auto;
 }
 
 .InfoRedirect {
   font-size: 1.2rem;
   line-height: 1.2rem;
-  margin: 0 1rem 1rem 1rem;
+  margin: 0 auto 1rem auto;
 }
 
 .Counter {
   font-size: 1.7rem;
   line-height: 1.7rem;
-  margin: 1rem 1rem;
+  margin: 1rem auto auto auto ;
+}
+
+@media (min-height: 500px) {
+  .InfoHeader {
+    margin-bottom: 4rem;
+  }
+}
+
+@media (min-height: 700px) {
+  .InfoHeader {
+    margin-bottom: 6rem;
+  }
+}
+
+@media (min-height: 900px) {
+  .InfoHeader {
+    margin-bottom: 8rem;
+  }
 }
