@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Route, withRouter, Switch } from "react-router-dom";
+import { Route, withRouter, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import jwt_decode from "jwt-decode";
 
 import classes from "./App.css";
@@ -7,8 +8,9 @@ import Layout from "./components/Layout/Layout";
 import Landing from "./components/Landing/Landing";
 import LoginForm from "./components/LoginForm/LoginForm";
 import SignupForm from "./components/SignupForm/SignupForm";
+import Logout from "./components/Logout/Logout";
 import ProfilesList from "./components/ProfilesList/ProfilesList";
-import RedirectComponent from "./components/Redirect/Redirect";
+import RedirectComponent from "./components/RedirectComponent/RedirectComponent";
 import store from "./store/store";
 import { setAuthToken } from "./shared/utils";
 import { setAuthenticatedUser, logoutUser } from "./store/actions/authActions";
@@ -33,18 +35,37 @@ class App extends Component {
   }
 
   render() {
+    let routes = (
+      <Switch>
+        <Route exact path={"/developers"} component={ProfilesList}/>
+        <Route exact path={"/redirect"} component={RedirectComponent}/>
+        <Route exact path={"/login"} component={LoginForm}/>
+        <Route exact path={"/signup"} component={SignupForm}/>
+        <Route exact path={"/"} component={Landing}/>
+        <Route render={() => {
+          return <RedirectComponent message={"Not found."} to={"home page"} url={"/"} />;
+        }}/>
+      </Switch>);
+    if (this.props.isAuthenticated) {
+      routes = (
+        <Switch>
+          <Route exact path={"/developers"} component={ProfilesList}/>
+          <Route exact path={"/logout"} component={Logout}/>
+          <Route exact path={"/redirect"} component={RedirectComponent}/>
+          <Redirect exact from={"/login"} to={"/developers"}/>
+          <Redirect exact from={"/signup"} to={"/developers"}/>
+          <Redirect exact from={"/"} to={"/developers"}/>
+          <Route render={() => {
+            return <RedirectComponent message={"Not found."} to={"home page"} url={"/"} />;
+          }}/>
+        </Switch>);
+    }
+
     return (
       <div className={classes.App}>
         <Layout>
           <Switch>
-            <Route exact path={"/login"} component={LoginForm}/>
-            <Route exact path={"/signup"} component={SignupForm}/>
-            <Route exact path={"/developers"} component={ProfilesList}/>
-            <Route exact path={"/redirect"} component={RedirectComponent}/>
-            <Route exact path={"/"} component={Landing}/>
-            <Route render={() => {
-              return <RedirectComponent message={"Not found."} to={"home page"} url={"/"} />;
-            }}/>
+            {routes}
           </Switch>
         </Layout>
       </div>
@@ -52,4 +73,10 @@ class App extends Component {
   }
 }
 
-export default withRouter(App);
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  };
+};
+
+export default withRouter(connect(mapStateToProps)(App));
