@@ -9,6 +9,7 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import SignupForm from "./components/SignupForm/SignupForm";
 import ProfilesList from "./components/ProfilesList/ProfilesList";
 import Logout from "./components/Logout/Logout";
+import Redirect from "./components/Redirect/Redirect";
 import store from "./store/store";
 import { setAuthToken } from "./shared/utils";
 import { setAuthenticatedUser, logoutUser } from "./store/actions/authActions";
@@ -21,7 +22,7 @@ class App extends Component {
       // check if token has expired
       if (userFromToken.exp < Date.now() / 1000) {
         store.dispatch(logoutUser());
-        this.props.history.push("/login");
+        this.props.history.push("/redirect", { message: "Your authorization token has expired. Please login again", to: "log in page", url: "/login" });
       } else {
         // set token to axios' Authorization header
         setAuthToken(localStorage.jwtToken);
@@ -39,7 +40,7 @@ class App extends Component {
           <Route exact path={"/login"} component={LoginForm}/>
           <Route exact path={"/signup"} component={SignupForm}/>
           <Route exact path={"/developers"} component={ProfilesList}/>
-          <Route exact path={"/logout"} component={Logout}/>
+          <Route exact path={"/redirect"} component={Redirect}/>
           <Route exact path={"/"} component={Landing}/>
         </Layout>
       </div>

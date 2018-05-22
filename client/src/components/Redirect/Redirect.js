@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 
-import classes from "./Logout.css";
+import classes from "./Redirect.css";
 
-class Logout extends Component {
+class Redirect extends Component {
   state = {
     secondsLeft: 5
   };
@@ -24,7 +24,7 @@ class Logout extends Component {
   countDown = () => {
     if (this.state.secondsLeft === 1) {
       clearInterval(this.timer);
-      this.props.history.push("/");
+      this.props.history.push(this.props.location.state.url);
 
       return;
     }
@@ -36,11 +36,18 @@ class Logout extends Component {
   };
 
   render() {
+    let path = null;
+    let msg = null;
+    if (this.props.location.state) {
+      path = this.props.location.state.to;
+      msg = this.props.location.state.message;
+    }
+
     return (
-      <div className={classes.LogoutWrapper}>
-        <div className={classes.Logout}>
-          <div className={classes.InfoHeader}>You have been successfully logged out <i className="far fa-smile"/></div>
-          <div className={[classes.InfoRedirect, "lato300i"].join(" ")}>Redirecting to home page in...</div>
+      <div className={classes.RedirectWrapper}>
+        <div className={classes.Redirect}>
+          <div className={classes.InfoHeader}>{msg}</div>
+          <div className={[classes.InfoRedirect, "lato300i"].join(" ")}>Redirecting to {path} in...</div>
           <div className={classes.Counter}>{this.state.secondsLeft}</div>
         </div>
       </div>
@@ -48,8 +55,12 @@ class Logout extends Component {
   }
 }
 
-Logout.propTypes = {
+Redirect.propTypes = {
   logoutUser: PropTypes.func.isRequired
+};
+
+Redirect.defaultProps = {
+  children: null
 };
 
 const mapDispatchToProps = dispatch => {
@@ -58,4 +69,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Logout);
+export default connect(null, mapDispatchToProps)(Redirect);
