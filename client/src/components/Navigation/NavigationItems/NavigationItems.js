@@ -20,13 +20,13 @@ class NavigationItems extends Component {
     );
     if (isAuthenticated) {
       const location = { pathname: "/redirect", state: {
-        message: "You have been successfully logged out",
+        message: "You have been successfully logged out.",
         to: "home page",
         url: "/"
       } };
       links = (
         <NavigationItem exact location={location}>
-          <img src={user.avatar} alt="User's avatar. Part of logout link"/>Log out
+          <img src={user.avatar} alt="User's avatar. Part of logout link."/>Log out
         </NavigationItem>
       );
     }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, withRouter } from "react-router-dom";
+import { Route, withRouter, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 import classes from "./App.css";
@@ -8,8 +8,7 @@ import Landing from "./components/Landing/Landing";
 import LoginForm from "./components/LoginForm/LoginForm";
 import SignupForm from "./components/SignupForm/SignupForm";
 import ProfilesList from "./components/ProfilesList/ProfilesList";
-import Logout from "./components/Logout/Logout";
-import Redirect from "./components/Redirect/Redirect";
+import RedirectComponent from "./components/Redirect/Redirect";
 import store from "./store/store";
 import { setAuthToken } from "./shared/utils";
 import { setAuthenticatedUser, logoutUser } from "./store/actions/authActions";
@@ -22,7 +21,7 @@ class App extends Component {
       // check if token has expired
       if (userFromToken.exp < Date.now() / 1000) {
         store.dispatch(logoutUser());
-        this.props.history.push("/redirect", { message: "Your authorization token has expired. Please login again", to: "log in page", url: "/login" });
+        this.props.history.push("/redirect", { message: "Your authorization token has expired. Please login again.", to: "log in page", url: "/login" });
       } else {
         // set token to axios' Authorization header
         setAuthToken(localStorage.jwtToken);
@@ -37,11 +36,16 @@ class App extends Component {
     return (
       <div className={classes.App}>
         <Layout>
-          <Route exact path={"/login"} component={LoginForm}/>
-          <Route exact path={"/signup"} component={SignupForm}/>
-          <Route exact path={"/developers"} component={ProfilesList}/>
-          <Route exact path={"/redirect"} component={Redirect}/>
-          <Route exact path={"/"} component={Landing}/>
+          <Switch>
+            <Route exact path={"/login"} component={LoginForm}/>
+            <Route exact path={"/signup"} component={SignupForm}/>
+            <Route exact path={"/developers"} component={ProfilesList}/>
+            <Route exact path={"/redirect"} component={RedirectComponent}/>
+            <Route exact path={"/"} component={Landing}/>
+            <Route render={() => {
+              return <RedirectComponent message={"Not found."} to={"home page"} url={"/"} />;
+            }}/>
+          </Switch>
         </Layout>
       </div>
     );

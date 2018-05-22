@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
@@ -24,7 +25,11 @@ class Redirect extends Component {
   countDown = () => {
     if (this.state.secondsLeft === 1) {
       clearInterval(this.timer);
-      this.props.history.push(this.props.location.state.url);
+      if (this.props.location && this.props.location.state) {
+        this.props.history.push(this.props.location.state.url);
+      } else if (this.props.url) {
+        this.props.history.push(this.props.url);
+      }
 
       return;
     }
@@ -38,9 +43,12 @@ class Redirect extends Component {
   render() {
     let path = null;
     let msg = null;
-    if (this.props.location.state) {
+    if (this.props.location && this.props.location.state) {
       path = this.props.location.state.to;
-      msg = this.props.location.state.message;
+      msg = this.props.location.state.message || "Redirecting...";
+    } else if (this.props.to) {
+      path = this.props.to;
+      msg = this.props.message || "Redirecting...";
     }
 
     return (
@@ -69,4 +77,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Redirect);
+export default withRouter(connect(null, mapDispatchToProps)(Redirect));
