@@ -13,18 +13,29 @@ export const setAuthenticatedUser = userData => {
   };
 };
 
+export const setAuthLoading = isLoading => {
+  return {
+    type: actionsTypes.AUTH_LOADING,
+    isLoading: isLoading
+  };
+};
+
 export const registerUser = (userData, history) => dispatch => {
+  dispatch(setAuthLoading(true));
   axios
     .post("/api/users/register", userData)
     .then(() => {
+      dispatch(setAuthLoading(false));
       history.push("/login");
     })
     .catch(error => {
       dispatch(getServerSideErrors(error.response.data));
+      dispatch(setAuthLoading(false));
     });
 };
 
 export const loginUser = userData => dispatch => {
+  dispatch(setAuthLoading(true));
   axios
     .post("/api/users/login", userData)
     .then(res => {
@@ -37,9 +48,11 @@ export const loginUser = userData => dispatch => {
       const userFromToken = jwt_decode(token);
 
       dispatch(setAuthenticatedUser(userFromToken));
+      dispatch(setAuthLoading(false));
     })
     .catch(error => {
       dispatch(getServerSideErrors(error.response.data));
+      dispatch(setAuthLoading(false));
     });
 };
 

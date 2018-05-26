@@ -1,3 +1,44 @@
-.Dashboard {
+.DashboardWrapper {
+  color: black;
+  background-color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 2rem;
+  font-size: 2rem;
+  text-align: center;
+}
 
+.Dashboard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+@media (min-width: 400px) {
+  .DashboardWrapper {
+    width: 85%;
+  }
+}
+
+@media (min-width: 31.25rem) {
+  .DashboardWrapper {
+    align-items: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .DashboardWrapper {
+    width: 70%;
+  }
+}
+
+@media (min-width: 2100px) {
+  .DashboardWrapper {
+    width: 50%;
+  }
 }

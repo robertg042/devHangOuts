@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import classes from "./SignupForm.css";
 import TextInput from "../UI/TextInput/TextInput";
 import Button from "../UI/Button/Button";
+import Spinner from "../UI/Spinner/Spinner";
 import * as actionCreators from "../../store/actions/index";
 import { makeId, updateErrors } from "../../shared/utils";
 
@@ -191,14 +192,14 @@ class SignupForm extends Component {
           })}
           {requiredInfoTip}
         </form>
-        <Button
+        {this.props.loading ? <Spinner/> : <Button
           form={this.state.formId}
           handleClick={this.handleSubmit}
           type={"submit"}
           colorType={"primary"}
         >
           Sign up
-        </Button>
+        </Button>}
       </div>
     );
   }
@@ -214,7 +215,8 @@ SignupForm.propTypes = {
   saveEmailValue: PropTypes.func.isRequired,
   savePasswordValue: PropTypes.func.isRequired,
   savePassword2Value: PropTypes.func.isRequired,
-  registerUser: PropTypes.func.isRequired
+  registerUser: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => {
@@ -223,7 +225,8 @@ const mapStateToProps = state => {
     emailValue: state.signup.email,
     passwordValue: state.signup.password,
     password2Value: state.signup.password2,
-    serverSideErrors: state.serverErrors.errors
+    serverSideErrors: state.serverErrors.errors,
+    loading: state.auth.loading
   };
 };
 

@@ -1,6 +1,6 @@
 export { saveNameValue, saveEmailValue, savePasswordValue, savePassword2Value } from "./signupFormActions";
 
-export { registerUser, loginUser, logoutUser } from "./authActions";
+export { registerUser, loginUser, logoutUser, setAuthLoading } from "./authActions";
 
 export { getServerSideErrors, clearServerSideErrors } from "./serverSideErrorActions";
 

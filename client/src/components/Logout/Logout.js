@@ -29,7 +29,6 @@ Logout.propTypes = {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // clearCurrentProfile: () => dispatch(actionCreators.clearCurrentProfile()),
     logoutUser: () => dispatch(actionCreators.logoutUser())
   };
 };

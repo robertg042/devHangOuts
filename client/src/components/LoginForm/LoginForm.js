@@ -7,6 +7,7 @@ import * as actionCreators from "../../store/actions";
 import classes from "./LoginForm.css";
 import TextInput from "../UI/TextInput/TextInput";
 import Button from "../UI/Button/Button";
+import Spinner from "../UI/Spinner/Spinner";
 import { makeId, updateErrors } from "../../shared/utils";
 
 
@@ -112,28 +113,29 @@ class LoginForm extends Component {
             />
           ))}
         </form>
-        <Button
+        {this.props.loading ? <Spinner/> : <Button
           form={this.state.formId}
           handleClick={this.handleSubmit}
           type={"submit"}
           colorType={"primary"}
         >
           Log in
-        </Button>
+        </Button>}
       </div>
     );
   }
 }
 
 LoginForm.propTypes = {
-  // eslint-disable-next-line
   serverSideErrors: PropTypes.object.isRequired,
-  loginUser: PropTypes.func.isRequired
+  loginUser: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
+    loading: state.auth.loading,
     serverSideErrors: state.serverErrors.errors
   };
 };

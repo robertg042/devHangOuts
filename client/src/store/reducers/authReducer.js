@@ -3,7 +3,8 @@ import { isEmpty } from "../../shared/utils";
 
 const initialState = {
   isAuthenticated: false,
-  user: null
+  user: null,
+  loading: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -15,7 +16,13 @@ const reducer = (state = initialState, action) => {
         user: {
           ...state.user,
           ...action.payload
-        }
+        },
+        loading: false
+      };
+    case actionTypes.AUTH_LOADING:
+      return {
+        ...state,
+        loading: action.isLoading
       };
     default:
       return state;
