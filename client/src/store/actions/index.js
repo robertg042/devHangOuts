@@ -3,3 +3,5 @@ export { saveNameValue, saveEmailValue, savePasswordValue, savePassword2Value } 
 export { registerUser, loginUser, logoutUser } from "./authActions";
 
 export { getServerSideErrors, clearServerSideErrors } from "./serverSideErrorActions";
+
+export { setProfileLoading, getCurrentProfile, clearCurrentProfile } from "./profileActions";

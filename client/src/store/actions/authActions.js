@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 
 import { setAuthToken } from "../../shared/utils";
 import { getServerSideErrors } from "./serverSideErrorActions";
+import { clearCurrentProfile } from "./profileActions";
 
 export const setAuthenticatedUser = userData => {
   return {
@@ -43,6 +44,7 @@ export const loginUser = userData => dispatch => {
 };
 
 export const logoutUser = () => dispatch => {
+  dispatch(clearCurrentProfile());
   if (localStorage.jwtToken) {
     localStorage.removeItem("jwtToken");
   }
