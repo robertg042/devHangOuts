@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import classes from "./Dashboard.css";
 import * as actionCreators from "../../store/actions/index";
+import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
 
 class dashboard extends Component {
@@ -11,8 +13,12 @@ class dashboard extends Component {
     this.props.getCurrentProfile();
   }
 
+  handleClick = () => {
+    this.props.history.push("/create-profile");
+  };
+
   render() {
-    // const { user } = this.props.auth;
+    const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
 
     let content = null;
@@ -20,7 +26,20 @@ class dashboard extends Component {
     if (profile === null || loading) {
       content = <Spinner/>;
     } else {
-      content = <h4>Dashboard</h4>;
+      if (Object.keys(profile).length > 0) {
+        // profile exists
+        content = <h4>Users profile</h4>;
+      } else {
+        // there's no profile for logged in user
+        content = (
+          <div>
+            <p>Hi, {user.name} <i className={"fas fa-heart"}/></p>
+            <p>You have no profile yet.</p>
+            <p><i className={"fas fa-fire"}/> Please, create one <i className={"fas fa-fire"}/></p>
+            <Button colorType={"secondary"} handleClick={this.handleClick}>Create profile</Button>
+          </div>
+        );
+      }
     }
 
     return (
@@ -34,7 +53,7 @@ class dashboard extends Component {
 }
 
 dashboard.propTypes = {
-  // auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired
 };
@@ -52,4 +71,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(dashboard));
