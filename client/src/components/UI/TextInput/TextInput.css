@@ -6,6 +6,9 @@
   font-size: 1.5rem;
 }
 
+i {
+  margin-right: 0.3rem;
+}
 
 .ElementOuter {
   position: relative;

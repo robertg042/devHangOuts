@@ -47,10 +47,10 @@ class TextInput extends Component {
   };
 
   render() {
-    const { labelText } = this.props;
-    let requiredLabelText = labelText;
-    if (this.props.isRequired) {
-      requiredLabelText = `*${labelText}`;
+    const { labelText, isRequired, icon } = this.props;
+    let changedLabelText = labelText;
+    if (isRequired) {
+      changedLabelText = `*${changedLabelText}`;
     }
 
     const elementClasses = [classes.Element];
@@ -81,7 +81,8 @@ class TextInput extends Component {
             className={this.state.labelClasses.join(" ")}
             htmlFor={this.state.id}
           >
-            {requiredLabelText}
+            {icon ? <i className={icon}/> : null}
+            {changedLabelText}
           </label>
         </div>
         {this.props.error && (
@@ -104,6 +105,7 @@ TextInput.propTypes = {
   isRequired: PropTypes.bool,
   disabled: PropTypes.bool,
   handleChange: PropTypes.func,
+  icon: PropTypes.string,
   value: PropTypes.string.isRequired
 };
 
@@ -113,7 +115,8 @@ TextInput.defaultProps = {
   error: "",
   isRequired: false,
   disabled: false,
-  handleChange: null
+  handleChange: null,
+  icon: ""
 };
 
 export default TextInput;

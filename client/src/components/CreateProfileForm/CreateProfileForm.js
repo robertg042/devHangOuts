@@ -20,8 +20,9 @@ class CreateProfileForm extends Component {
         handle: {
           id: `handle_${makeId()}`,
           name: "handle",
-          inputType: "handle",
+          inputType: "text",
           labelText: "Profile handle",
+          icon: null,
           info: "A unique handle for your profile URL, which cannot be changed later",
           error: "",
           disabled: false,
@@ -31,8 +32,9 @@ class CreateProfileForm extends Component {
         company: {
           id: `company_${makeId()}`,
           name: "company",
-          inputType: "company",
+          inputType: "text",
           labelText: "Company",
+          icon: null,
           info: "",
           error: "",
           disabled: false,
@@ -42,8 +44,9 @@ class CreateProfileForm extends Component {
         website: {
           id: `website_${makeId()}`,
           name: "website",
-          inputType: "website",
+          inputType: "text",
           labelText: "Website",
+          icon: null,
           info: "",
           error: "",
           disabled: false,
@@ -53,8 +56,9 @@ class CreateProfileForm extends Component {
         location: {
           id: `location_${makeId()}`,
           name: "location",
-          inputType: "location",
+          inputType: "text",
           labelText: "Location",
+          icon: null,
           info: "",
           error: "",
           disabled: false,
@@ -64,8 +68,9 @@ class CreateProfileForm extends Component {
         skills: {
           id: `skills_${makeId()}`,
           name: "skills",
-          inputType: "skills",
+          inputType: "text",
           labelText: "Skills",
+          icon: null,
           info: "",
           error: "",
           disabled: false,
@@ -75,8 +80,9 @@ class CreateProfileForm extends Component {
         githubUsername: {
           id: `githubUsername_${makeId()}`,
           name: "githubUsername",
-          inputType: "githubUsername",
+          inputType: "text",
           labelText: "Github username",
+          icon: null,
           info: "",
           error: "",
           disabled: false,
@@ -86,8 +92,67 @@ class CreateProfileForm extends Component {
         bio: {
           id: `bio_${makeId()}`,
           name: "bio",
-          inputType: "bio",
           labelText: "Bio",
+          info: "",
+          error: "",
+          disabled: false,
+          isRequired: false,
+          value: ""
+        },
+        twitter: {
+          id: `twitter_${makeId()}`,
+          name: "twitter",
+          inputType: "text",
+          labelText: "Twitter profile URL",
+          icon: "fab fa-twitter",
+          info: "",
+          error: "",
+          disabled: false,
+          isRequired: false,
+          value: ""
+        },
+        facebook: {
+          id: `facebook_${makeId()}`,
+          name: "facebook",
+          inputType: "text",
+          labelText: "Facebook profile URL",
+          icon: "fab fa-facebook",
+          info: "",
+          error: "",
+          disabled: false,
+          isRequired: false,
+          value: ""
+        },
+        linkedIn: {
+          id: `linkedIn_${makeId()}`,
+          name: "linkedIn",
+          inputType: "text",
+          labelText: "LinkedIn profile URL",
+          icon: "fab fa-linkedin",
+          info: "",
+          error: "",
+          disabled: false,
+          isRequired: false,
+          value: ""
+        },
+        youtube: {
+          id: `youtube_${makeId()}`,
+          name: "youtube",
+          inputType: "text",
+          labelText: "Youtube profile URL",
+          icon: "fab fa-youtube",
+          info: "",
+          error: "",
+          disabled: false,
+          isRequired: false,
+          value: ""
+        },
+        instagram: {
+          id: `instagram_${makeId()}`,
+          name: "instagram",
+          inputType: "text",
+          labelText: "Instagram profile URL",
+          icon: "fab fa-instagram",
           info: "",
           error: "",
           disabled: false,
@@ -175,6 +240,7 @@ class CreateProfileForm extends Component {
                 ref={element.name === "handle" ? this.inputRef : null}
                 inputType={element.inputType}
                 labelText={element.labelText}
+                icon={element.icon}
                 info={element.info}
                 error={element.error}
                 value={element.value}
