@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import * as actionCreators from "../../store/actions";
 
 import classes from "./LoginForm.css";
+import * as actionCreators from "../../store/actions";
 import TextInput from "../UI/TextInput/TextInput";
 import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
@@ -129,6 +129,7 @@ class LoginForm extends Component {
 LoginForm.propTypes = {
   serverSideErrors: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired
 };
 

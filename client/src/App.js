@@ -10,12 +10,12 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import SignupForm from "./components/SignupForm/SignupForm";
 import Logout from "./components/Logout/Logout";
 import Dashboard from "./components/Dashboard/Dashboard";
+import CreateProfileForm from "./components/CreateProfileForm/CreateProfileForm";
 import ProfilesList from "./components/ProfilesList/ProfilesList";
 import RedirectComponent from "./components/RedirectComponent/RedirectComponent";
 import store from "./store/store";
 import { setAuthToken } from "./shared/utils";
 import { setAuthenticatedUser, logoutUser } from "./store/actions/authActions";
-
 
 class App extends Component {
   componentDidMount() {
@@ -52,6 +52,7 @@ class App extends Component {
         <Switch>
           <Route exact path={"/developers"} component={ProfilesList}/>
           <Route exact path={"/dashboard"} component={Dashboard}/>
+          <Route exact path={"/create-profile"} component={CreateProfileForm}/>
           <Route exact path={"/logout"} component={Logout}/>
           <Route exact path={"/redirect"} component={RedirectComponent}/>
           <Redirect exact from={"/login"} to={"/dashboard"}/>

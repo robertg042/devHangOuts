@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import classes from "./TextInput.css";
+import classes from "./TextAreaInput.css";
 
-class TextInput extends Component {
+class TextAreaInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +17,11 @@ class TextInput extends Component {
     }
   }
 
+  componentDidMount() {
+    // fix initial height
+    this.autoGrow(this.inputToFocus.current);
+  }
+
   inputToFocus = React.createRef();
 
   // called in parent component through ref
@@ -27,6 +32,7 @@ class TextInput extends Component {
   handleChange = event => {
     this.setState({ value: event.target.value });
     this.setLabelState(event.target.value !== "");
+    this.autoGrow(event.target);
     this.props.handleChange(event.target.value, this.props.name);
   };
 
@@ -46,6 +52,11 @@ class TextInput extends Component {
     }
   };
 
+  autoGrow = element => {
+    element.style.height = "5px";
+    element.style.height = `${element.scrollHeight}px`;
+  };
+
   render() {
     const { labelText } = this.props;
     let requiredLabelText = labelText;
@@ -59,12 +70,11 @@ class TextInput extends Component {
     }
 
     return (
-      <div className={classes.TextInput}>
+      <div className={classes.TextAreaInput}>
         <div className={classes.ElementOuter}>
-          <input
+          <textarea
             className={elementClasses.join(" ")}
             id={this.state.id}
-            type={this.props.inputType}
             name={this.props.name}
             onChange={event => this.handleChange(event)}
             onFocus={this.handleFocus}
@@ -95,8 +105,7 @@ class TextInput extends Component {
   }
 }
 
-TextInput.propTypes = {
-  inputType: PropTypes.oneOf(["text", "email", "password"]),
+TextAreaInput.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   info: PropTypes.string,
@@ -107,7 +116,7 @@ TextInput.propTypes = {
   value: PropTypes.string.isRequired
 };
 
-TextInput.defaultProps = {
+TextAreaInput.defaultProps = {
   inputType: "text",
   info: "",
   error: "",
@@ -116,4 +125,4 @@ TextInput.defaultProps = {
   handleChange: null
 };
 
-export default TextInput;
+export default TextAreaInput;

@@ -173,8 +173,6 @@ class SignupForm extends Component {
         >
           <div className={classes.Title}>Sign up</div>
           {formElements.map(element => {
-            // debugger;
-
             return (<TextInput
               key={element.id}
               id={element.id}
@@ -216,6 +214,7 @@ SignupForm.propTypes = {
   savePasswordValue: PropTypes.func.isRequired,
   savePassword2Value: PropTypes.func.isRequired,
   registerUser: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired
 };
 
