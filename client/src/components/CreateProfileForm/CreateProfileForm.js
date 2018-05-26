@@ -94,139 +94,6 @@ class CreateProfileForm extends Component {
           isRequired: false,
           value: ""
         }
-        // },
-        // handle2: {
-        //   id: `handle_${makeId()}`,
-        //   name: "handle",
-        //   inputType: "handle",
-        //   labelText: "Profile handle",
-        //   info: "A unique handle for your profile URL, which cannot be changed later",
-        //   error: "",
-        //   disabled: false,
-        //   isRequired: true,
-        //   value: ""
-        // },
-        // company2: {
-        //   id: `company_${makeId()}`,
-        //   name: "company",
-        //   inputType: "company",
-        //   labelText: "Company",
-        //   info: "",
-        //   error: "",
-        //   disabled: false,
-        //   isRequired: false,
-        //   value: ""
-        // },
-        // website2: {
-        //   id: `website_${makeId()}`,
-        //   name: "website",
-        //   inputType: "website",
-        //   labelText: "Website",
-        //   info: "",
-        //   error: "",
-        //   disabled: false,
-        //   isRequired: false,
-        //   value: ""
-        // },
-        // location2: {
-        //   id: `location_${makeId()}`,
-        //   name: "location",
-        //   inputType: "location",
-        //   labelText: "Location",
-        //   info: "",
-        //   error: "",
-        //   disabled: false,
-        //   isRequired: false,
-        //   value: ""
-        // },
-        // skills2: {
-        //   id: `skills_${makeId()}`,
-        //   name: "skills",
-        //   inputType: "skills",
-        //   labelText: "Skills",
-        //   info: "",
-        //   error: "",
-        //   disabled: false,
-        //   isRequired: false,
-        //   value: ""
-        // },
-        // githubUsername2: {
-        //   id: `githubUsername_${makeId()}`,
-        //   name: "githubUsername",
-        //   inputType: "githubUsername",
-        //   labelText: "Github username",
-        //   info: "",
-        //   error: "",
-        //   disabled: false,
-        //   isRequired: false,
-        //   value: ""
-        // },
-        // handle3: {
-        //   id: `handle_${makeId()}`,
-        //   name: "handle",
-        //   inputType: "handle",
-        //   labelText: "Profile handle",
-        //   info: "A unique handle for your profile URL, which cannot be changed later",
-        //   error: "",
-        //   disabled: false,
-        //   isRequired: true,
-        //   value: ""
-        // },
-        // company3: {
-        //   id: `company_${makeId()}`,
-        //   name: "company",
-        //   inputType: "company",
-        //   labelText: "Company",
-        //   info: "",
-        //   error: "",
-        //   disabled: false,
-        //   isRequired: false,
-        //   value: ""
-        // },
-        // website3: {
-        //   id: `website_${makeId()}`,
-        //   name: "website",
-        //   inputType: "website",
-        //   labelText: "Website",
-        //   info: "",
-        //   error: "",
-        //   disabled: false,
-        //   isRequired: false,
-        //   value: ""
-        // },
-        // location3: {
-        //   id: `location_${makeId()}`,
-        //   name: "location",
-        //   inputType: "location",
-        //   labelText: "Location",
-        //   info: "",
-        //   error: "",
-        //   disabled: false,
-        //   isRequired: false,
-        //   value: ""
-        // },
-        // skills3: {
-        //   id: `skills_${makeId()}`,
-        //   name: "skills",
-        //   inputType: "skills",
-        //   labelText: "Skills",
-        //   info: "",
-        //   error: "",
-        //   disabled: false,
-        //   isRequired: false,
-        //   value: ""
-        // },
-        // githubUsername3: {
-        //   id: `githubUsername_${makeId()}`,
-        //   name: "githubUsername",
-        //   inputType: "githubUsername",
-        //   labelText: "Github username",
-        //   info: "",
-        //   error: "",
-        //   disabled: false,
-        //   isRequired: false,
-        //   value: ""
-        // }
       },
       formId: `createProfileForm_${makeId()}`,
       displayRequiredInfo: false
@@ -293,12 +160,12 @@ class CreateProfileForm extends Component {
 
     return (
       <div className={classes.CreateProfileFormWrapper}>
+        <div className={classes.Title}>Create profile</div>
         <form
           id={this.state.formId}
           onSubmit={() => this.handleSubmit()}
           className={classes.CreateProfileForm}
         >
-          <div className={classes.Title}>Create profile</div>
           {formElements.map(element => {
             if (element.name !== "bio") {
               return (<TextInput
@@ -338,7 +205,7 @@ class CreateProfileForm extends Component {
           form={this.state.formId}
           handleClick={this.handleSubmit}
           type={"submit"}
-          colorType={"primary"}
+          colorType={"secondary"}
         >
           Create profile
         </Button>}

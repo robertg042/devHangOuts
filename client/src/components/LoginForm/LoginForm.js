@@ -92,12 +92,12 @@ class LoginForm extends Component {
 
     return (
       <div className={classes.LoginFormWrapper}>
+        <div className={classes.Title}>Log in</div>
         <form
           id={this.state.formId}
           onSubmit={() => this.handleSubmit()}
           className={classes.LoginForm}
         >
-          <div className={classes.Title}>Log in</div>
           {formElements.map(element => (
             <TextInput
               key={element.id}

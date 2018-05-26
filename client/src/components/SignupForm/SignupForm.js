@@ -166,12 +166,12 @@ class SignupForm extends Component {
 
     return (
       <div className={classes.SignupFormWrapper}>
+        <div className={classes.Title}>Sign up</div>
         <form
           id={this.state.formId}
           onSubmit={() => this.handleSubmit()}
           className={classes.SignupForm}
         >
-          <div className={classes.Title}>Sign up</div>
           {formElements.map(element => {
             return (<TextInput
               key={element.id}
