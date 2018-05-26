@@ -15,7 +15,8 @@
 .NavigationItem img {
   height: 1.5rem;
   border-radius: 0.5rem;
-  margin-right: 0.5rem;
+  /* negative margin to compensate height of 1.5rem */
+  margin: -0.3rem 0.5rem -0.3rem 0;
 }
 
 .NavigationItem a:active,
