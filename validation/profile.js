@@ -39,7 +39,7 @@ const validateProfileInput = data => {
   }
 
   // Check if required form fields are not empty
-  const requiredProps = ["handle", "status", "skills"];
+  const requiredProps = ["handle", "status"];
   utils.validateRequiredProps(requiredProps, data, errors);
 
   // Validate urls
