@@ -7,6 +7,7 @@ import classes from "./CreateProfileForm.css";
 import * as actionCreators from "../../store/actions";
 import TextInput from "../UI/TextInput/TextInput";
 import TextAreaInput from "../UI/TextAreaInput/TextAreaInput";
+import SelectInput from "../UI/SelectInput/SelectInput";
 import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
 import { makeId } from "../../shared/utils";
@@ -22,12 +23,33 @@ class CreateProfileForm extends Component {
           name: "handle",
           inputType: "text",
           labelText: "Profile handle",
-          icon: null,
-          info: "A unique handle for your profile URL, which cannot be changed later",
+          icon: "fas fa-user-circle",
+          info: "A unique handle for your profile URL",
           error: "",
           disabled: false,
           isRequired: true,
           value: ""
+        },
+        professionalStatus: {
+          id: `professionalStatus_${makeId()}`,
+          name: "professionalStatus",
+          inputType: "select",
+          info: "",
+          error: "",
+          disabled: false,
+          isRequired: true,
+          value: "",
+          defaultOption: { label: "*Select your professional status", value: "default" },
+          options: [
+            { label: "Project manager", value: "projectManager" },
+            { label: "Senior developer", value: "seniorDev" },
+            { label: "Developer", value: "dev" },
+            { label: "Junior developer", value: "juniorDev" },
+            { label: "Teacher", value: "teacher" },
+            { label: "Student", value: "student" },
+            { label: "Intern", value: "intern" },
+            { label: "Other", value: "other" }
+          ]
         },
         company: {
           id: `company_${makeId()}`,
@@ -71,7 +93,7 @@ class CreateProfileForm extends Component {
           inputType: "text",
           labelText: "Skills",
           icon: null,
-          info: "",
+          info: "Please use comma separated values",
           error: "",
           disabled: false,
           isRequired: false,
@@ -82,7 +104,7 @@ class CreateProfileForm extends Component {
           name: "githubUsername",
           inputType: "text",
           labelText: "Github username",
-          icon: null,
+          icon: "fab fa-github",
           info: "",
           error: "",
           disabled: false,
@@ -93,8 +115,9 @@ class CreateProfileForm extends Component {
           id: `bio_${makeId()}`,
           name: "bio",
           labelText: "Bio",
+          inputType: "textArea",
           info: "",
-          icon: "fab fa-youtube",
+          icon: "",
           error: "",
           disabled: false,
           isRequired: false,
@@ -164,6 +187,7 @@ class CreateProfileForm extends Component {
       formId: `createProfileForm_${makeId()}`,
       displayRequiredInfo: false
     };
+    this.state.form.professionalStatus.value = this.state.form.professionalStatus.defaultOption.value;
     this.state.displayRequiredInfo = this.checkForRequired();
   }
 
@@ -233,23 +257,7 @@ class CreateProfileForm extends Component {
           className={classes.CreateProfileForm}
         >
           {formElements.map(element => {
-            if (element.name !== "bio") {
-              return (<TextInput
-                key={element.id}
-                id={element.id}
-                name={element.name}
-                ref={element.name === "handle" ? this.inputRef : null}
-                inputType={element.inputType}
-                labelText={element.labelText}
-                icon={element.icon}
-                info={element.info}
-                error={element.error}
-                value={element.value}
-                disabled={element.disabled}
-                isRequired={element.isRequired}
-                handleChange={this.handleChange}
-              />);
-            } else {
+            if (element.inputType === "textArea") {
               return (
                 <TextAreaInput
                   key={element.id}
@@ -265,6 +273,40 @@ class CreateProfileForm extends Component {
                   handleChange={this.handleChange}
                 />
               );
+            } else if (element.inputType === "select") {
+              return (
+                <SelectInput
+                  key={element.id}
+                  id={element.id}
+                  name={element.name}
+                  labelText={element.labelText}
+                  icon={element.icon}
+                  info={element.info}
+                  error={element.error}
+                  value={element.value}
+                  disabled={element.disabled}
+                  isRequired={element.isRequired}
+                  handleChange={this.handleChange}
+                  defaultOption={element.defaultOption}
+                  options={element.options}
+                />
+              );
+            } else {
+              return (<TextInput
+                key={element.id}
+                id={element.id}
+                name={element.name}
+                ref={element.name === "handle" ? this.inputRef : null}
+                inputType={element.inputType}
+                labelText={element.labelText}
+                icon={element.icon}
+                info={element.info}
+                error={element.error}
+                value={element.value}
+                disabled={element.disabled}
+                isRequired={element.isRequired}
+                handleChange={this.handleChange}
+              />);
             }
           })}
           {requiredInfoTip}

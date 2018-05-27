@@ -106,7 +106,7 @@ class SignupForm extends Component {
   };
 
   handleChange = (value, name) => {
-    // update form with value received from TextInput
+    // update form with value received from SelectInput
     // eslint-disable-next-line
     const updatedForm = { ...this.state.form };
     updatedForm[name] = {

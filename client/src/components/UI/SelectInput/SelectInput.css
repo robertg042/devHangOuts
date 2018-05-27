@@ -1,0 +1,60 @@
+.SelectInput {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem 0;
+  font-size: 1.5rem;
+}
+
+.Element {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.3rem;
+  font-size: 1rem;
+  line-height: 1rem;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid black;
+}
+
+.Invalid {
+  color: var(--error-color);
+}
+
+.ErrorFeedback {
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  color: var(--error-color);
+  font-size: 0.85rem;
+  padding: 0.3rem 0.5rem 0.1rem 0.5rem;
+  text-align: left;
+}
+
+.InfoTip {
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  color: var(--muted-color);
+  font-size: 0.85rem;
+  padding: 0.2rem 0.5rem;
+  text-align: left;
+}
+
+.displayNone {
+  display: none;
+}
+
+.Element:disabled {
+  background: #eeeeee;
+  color: var(--muted-color);
+  cursor: not-allowed;
+}
+
+.Element:focus {
+  border-color: var(--highlight-color);
+}
+
