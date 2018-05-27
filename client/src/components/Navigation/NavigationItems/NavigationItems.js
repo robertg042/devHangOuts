@@ -20,9 +20,14 @@ class NavigationItems extends Component {
     );
     if (isAuthenticated) {
       links = (
-        <NavigationItem exact linkUrl={"/logout"}>
-          <img src={user.avatar} alt="User's avatar. Part of logout link."/>Log out
-        </NavigationItem>
+        <Fragment>
+          <NavigationItem exact linkUrl={"/dashboard"}>
+            Dashboard
+          </NavigationItem>
+          <NavigationItem exact linkUrl={"/logout"}>
+            <img src={user.avatar} alt="User's avatar. Part of logout link."/>Log out
+          </NavigationItem>
+        </Fragment>
       );
     }
 
