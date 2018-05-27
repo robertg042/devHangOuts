@@ -177,7 +177,7 @@ router.post(
               if (profile) {
                 return res
                   .status(400)
-                  .json({ error: msg.fieldAlreadyExists("handle") });
+                  .json({ handle: msg.fieldAlreadyExists("handle") });
               } else {
                 new Profile(fields)
                   .save()
