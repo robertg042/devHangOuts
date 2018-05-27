@@ -64,3 +64,32 @@ export const updateErrors = (nextProps, prevState) => {
     form: updatedForm
   });
 };
+
+export const updateValues = (nextProps, prevState) => {
+  const updatedForm = { ...prevState.form };
+  const { profile } = nextProps;
+  for (const key in prevState.form) {
+    if (prevState.form.hasOwnProperty(key)) {
+      if (profile.hasOwnProperty(key)) {
+        let value = !isEmpty(profile[key]) ? profile[key] : "";
+        if (key === "skills") {
+          value = profile[key].join(",");
+        }
+        updatedForm[key] = {
+          ...prevState.form[key],
+          value: value
+        };
+      } else {
+        updatedForm[key] = {
+          ...prevState.form[key],
+          value: ""
+        };
+      }
+    }
+  }
+
+  return ({
+    ...prevState,
+    form: updatedForm
+  });
+};

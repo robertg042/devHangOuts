@@ -4,6 +4,19 @@ import PropTypes from "prop-types";
 import classes from "./TextInput.css";
 
 class TextInput extends Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.value !== prevState.value) {
+      let labelClasses = [classes.Label, classes.LabelLow];
+      if (nextProps.value !== "") {
+        labelClasses = [classes.Label, classes.LabelHigh];
+      }
+
+      return { ...prevState, value: nextProps.value, labelClasses: labelClasses };
+    }
+
+    return null;
+  }
+
   constructor(props) {
     super(props);
     this.state = {

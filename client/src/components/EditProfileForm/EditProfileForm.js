@@ -3,22 +3,27 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import classes from "./CreateProfileForm.css";
+import classes from "./EditProfileForm.css";
 import * as actionCreators from "../../store/actions";
 import TextInput from "../UI/TextInput/TextInput";
 import TextAreaInput from "../UI/TextAreaInput/TextAreaInput";
 import SelectInput from "../UI/SelectInput/SelectInput";
 import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
-import { makeId, updateErrors, isEmpty } from "../../shared/utils";
+import { makeId, updateErrors, updateValues, isEmpty } from "../../shared/utils";
 
-class CreateProfileForm extends Component {
+// TODO: merge this component with CreateProfileForm
+class EditProfileForm extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
+    let state = { ...prevState };
+    if (nextProps.profile) {
+      state = updateValues(nextProps, state);
+    }
     if (nextProps.serverSideErrors) {
-      return updateErrors(nextProps, prevState);
+      state = updateErrors(nextProps, state);
     }
 
-    return null;
+    return state;
   }
 
   constructor(props) {
@@ -208,7 +213,7 @@ class CreateProfileForm extends Component {
 
   componentDidUpdate() {
     const { profile } = this.props;
-    if (profile && Object.keys(profile).length === 0) {
+    if (profile && Object.keys(profile).length !== 0) {
       this.inputRef.current.focus();
     }
   }
@@ -271,16 +276,16 @@ class CreateProfileForm extends Component {
     const { profile } = this.props;
     let formContents = <Spinner/>;
     if (profile) {
-      if (Object.keys(profile).length !== 0) {
-        this.props.history.replace("/edit-profile");
+      if (Object.keys(profile).length === 0) {
+        this.props.history.replace("/create-profile");
       } else {
         formContents = (
-          <div className={classes.CreateProfileFormWrapper}>
-            <div className={classes.Title}>Create profile</div>
+          <div className={classes.EditProfileFormWrapper}>
+            <div className={classes.Title}>Edit profile</div>
             <form
               id={this.state.formId}
               onSubmit={() => this.handleSubmit()}
-              className={classes.CreateProfileForm}
+              className={classes.EditProfileForm}
             >
               {formElements.map(element => {
                 if (element.inputType === "textArea") {
@@ -343,7 +348,7 @@ class CreateProfileForm extends Component {
               type={"submit"}
               colorType={"primary"}
             >
-              Create profile
+              Edit profile
             </Button>}
           </div>
         );
@@ -354,7 +359,7 @@ class CreateProfileForm extends Component {
   }
 }
 
-CreateProfileForm.propTypes = {
+EditProfileForm.propTypes = {
   serverSideErrors: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
@@ -377,4 +382,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateProfileForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditProfileForm));

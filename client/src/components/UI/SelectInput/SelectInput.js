@@ -4,6 +4,14 @@ import PropTypes from "prop-types";
 import classes from "./SelectInput.css";
 
 class SelectInput extends Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.value !== prevState.value) {
+      return { ...prevState, value: nextProps.value };
+    }
+
+    return null;
+  }
+
   state = {
     id: this.props.id,
     value: this.props.defaultOption.value

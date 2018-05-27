@@ -12,6 +12,7 @@ export const setProfileLoading = isLoading => {
 };
 
 export const deleteAccount = history => dispatch => {
+  // TODO: create modal
   // eslint-disable-next-line
   if (window.confirm("You are about to DELETE your account. This cannot be undone! Are you sure?")) {
     dispatch(setProfileLoading(true));
