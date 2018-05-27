@@ -2,12 +2,30 @@ import axios from "axios";
 
 import * as actionsTypes from "./actionTypes";
 import { getServerSideErrors } from "./serverSideErrorActions";
+import { logoutUser } from "./authActions";
 
 export const setProfileLoading = isLoading => {
   return {
     type: actionsTypes.PROFILE_LOADING,
     isLoading: isLoading
   };
+};
+
+export const deleteAccount = history => dispatch => {
+  // eslint-disable-next-line
+  if (window.confirm("You are about to DELETE your account. This cannot be undone! Are you sure?")) {
+    dispatch(setProfileLoading(true));
+    axios.delete("/api/profile")
+      .then(() => {
+        dispatch(setProfileLoading(false));
+        dispatch(logoutUser());
+        history.push("/redirect", { message: "Your account was successfully deleted", to: "home page", url: "/" });
+      })
+      .catch(error => {
+        dispatch(getServerSideErrors(error.response.data));
+        dispatch(setProfileLoading(false));
+      });
+  }
 };
 
 export const createProfile = (profileData, history) => dispatch => {

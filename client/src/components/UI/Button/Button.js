@@ -17,6 +17,9 @@ class Button extends Component {
       case "highlight":
         buttonClasses.push(classes.Highlight);
         break;
+      case "danger":
+        buttonClasses.push(classes.Danger);
+        break;
       default:
         buttonClasses.push(classes.Primary);
     }

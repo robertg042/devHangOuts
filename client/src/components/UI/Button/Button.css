@@ -85,6 +85,31 @@ button.Highlight:not(:disabled):active:hover {
   box-shadow: inset 0 2px 2px 2px black;
 }
 
+button.Danger {
+  color: var(--highlight-color);
+  font-weight: bold;
+  background-color: var(--error-color);
+  border: none;
+  box-shadow: 0 2px 2px 2px black;
+  transition: all 0.3s ease-out;
+}
+
+button.Danger:not(:disabled):active {
+  box-shadow: inset 0 2px 2px 2px black;
+}
+
+button.Danger:not(:disabled):hover {
+  color: var(--error-color);
+  background-color: var(--highlight-color);
+  box-shadow: 0 2px 2px 2px black;
+}
+
+button.Danger:not(:disabled):active:hover {
+  color: var(--error-color);
+  background-color: var(--highlight-color);
+  box-shadow: inset 0 2px 2px 2px black;
+}
+
 button.Button:not(:disabled) {
   animation: enable 0.3s linear;
 }

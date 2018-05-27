@@ -328,7 +328,7 @@ class CreateProfileForm extends Component {
           form={this.state.formId}
           handleClick={this.handleSubmit}
           type={"submit"}
-          colorType={"secondary"}
+          colorType={"primary"}
         >
           Create profile
         </Button>}
