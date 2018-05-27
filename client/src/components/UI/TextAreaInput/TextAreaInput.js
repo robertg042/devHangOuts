@@ -54,14 +54,15 @@ class TextAreaInput extends Component {
 
   autoGrow = element => {
     element.style.height = "5px";
-    element.style.height = `${element.scrollHeight}px`;
+    // 0.2rem bottom-padding
+    element.style.height = `calc(${element.scrollHeight}px + 0.2rem)`;
   };
 
   render() {
-    const { labelText } = this.props;
-    let requiredLabelText = labelText;
-    if (this.props.isRequired) {
-      requiredLabelText = `*${labelText}`;
+    const { labelText, isRequired, icon } = this.props;
+    let changedLabelText = labelText;
+    if (isRequired) {
+      changedLabelText = `*${changedLabelText}`;
     }
 
     const elementClasses = [classes.Element];
@@ -91,7 +92,8 @@ class TextAreaInput extends Component {
             className={this.state.labelClasses.join(" ")}
             htmlFor={this.state.id}
           >
-            {requiredLabelText}
+            {icon ? <i className={icon}/> : null}
+            {changedLabelText}
           </label>
         </div>
         {this.props.error && (
@@ -113,6 +115,7 @@ TextAreaInput.propTypes = {
   isRequired: PropTypes.bool,
   disabled: PropTypes.bool,
   handleChange: PropTypes.func,
+  icon: PropTypes.string,
   value: PropTypes.string.isRequired
 };
 
@@ -122,7 +125,8 @@ TextAreaInput.defaultProps = {
   error: "",
   isRequired: false,
   disabled: false,
-  handleChange: null
+  handleChange: null,
+  icon: ""
 };
 
 export default TextAreaInput;

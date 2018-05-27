@@ -35,7 +35,7 @@ i {
   display: block;
   width: 100%;
   box-sizing: border-box;
-  padding: 1.3rem 0.5rem 0.3rem 0.5rem;
+  padding: 1.3rem 0.5rem 0.2rem 0.5rem;
   outline: 0;
   border: 1px none var(--highlight-color);
   border-bottom-style: solid;

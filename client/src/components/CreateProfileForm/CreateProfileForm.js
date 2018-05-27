@@ -94,6 +94,7 @@ class CreateProfileForm extends Component {
           name: "bio",
           labelText: "Bio",
           info: "",
+          icon: "fab fa-youtube",
           error: "",
           disabled: false,
           isRequired: false,
@@ -255,6 +256,7 @@ class CreateProfileForm extends Component {
                   id={element.id}
                   name={element.name}
                   labelText={element.labelText}
+                  icon={element.icon}
                   info={element.info}
                   error={element.error}
                   value={element.value}
