@@ -10,9 +10,17 @@ import TextAreaInput from "../UI/TextAreaInput/TextAreaInput";
 import SelectInput from "../UI/SelectInput/SelectInput";
 import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
-import { makeId } from "../../shared/utils";
+import { makeId, updateErrors, isEmpty } from "../../shared/utils";
 
 class CreateProfileForm extends Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.serverSideErrors) {
+      return updateErrors(nextProps, prevState);
+    }
+
+    return null;
+  }
+
   constructor(props) {
     super(props);
     this.checkForRequired = this.checkForRequired.bind(this);
@@ -30,16 +38,16 @@ class CreateProfileForm extends Component {
           isRequired: true,
           value: ""
         },
-        professionalStatus: {
-          id: `professionalStatus_${makeId()}`,
-          name: "professionalStatus",
+        status: {
+          id: `status_${makeId()}`,
+          name: "status",
           inputType: "select",
           info: "",
           error: "",
           disabled: false,
           isRequired: true,
           value: "",
-          defaultOption: { label: "*Select your professional status", value: "default" },
+          defaultOption: { label: "*Select your professional status", value: "" },
           options: [
             { label: "Project manager", value: "projectManager" },
             { label: "Senior developer", value: "seniorDev" },
@@ -187,11 +195,14 @@ class CreateProfileForm extends Component {
       formId: `createProfileForm_${makeId()}`,
       displayRequiredInfo: false
     };
-    this.state.form.professionalStatus.value = this.state.form.professionalStatus.defaultOption.value;
+    this.state.form.status.value = this.state.form.status.defaultOption.value;
     this.state.displayRequiredInfo = this.checkForRequired();
   }
 
   componentDidMount() {
+    if (!isEmpty(this.props.profile)) {
+      this.props.history.replace("/dashboard");
+    }
     this.inputRef.current.focus();
   }
 
@@ -226,13 +237,15 @@ class CreateProfileForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    const profileData = {};
+    const { form } = this.state;
+    const formKeys = Object.keys(form);
 
-    // const userData = {
-    //   email: this.state.form.email.value,
-    //   password: this.state.form.password.value
-    // };
-    //
-    // this.props.loginUser(userData);
+    formKeys.forEach(key => {
+      profileData[key] = form[key].value;
+    });
+
+    this.props.createProfile(profileData, this.props.history);
   };
 
   render() {
@@ -327,19 +340,23 @@ class CreateProfileForm extends Component {
 CreateProfileForm.propTypes = {
   serverSideErrors: PropTypes.object.isRequired,
   clearErrors: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired
+  createProfile: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
   return {
     serverSideErrors: state.serverErrors.errors,
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    profile: state.profile.profile
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    clearErrors: () => dispatch(actionCreators.clearServerSideErrors())
+    clearErrors: () => dispatch(actionCreators.clearServerSideErrors()),
+    createProfile: (profileData, history) => dispatch(actionCreators.createProfile(profileData, history))
   };
 };
 

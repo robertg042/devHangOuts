@@ -21,7 +21,11 @@
 }
 
 .Invalid {
+  background: linear-gradient(105deg, white, rgba(0,0,0,0) 30%),
+  linear-gradient(-105deg, white, rgba(0,0,0,0) 30%),
+  linear-gradient(to top, rgba(255,0,0,0.6), white 20%);
   color: var(--error-color);
+  text-align: left;
 }
 
 .ErrorFeedback {

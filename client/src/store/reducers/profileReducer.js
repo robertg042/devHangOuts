@@ -11,14 +11,13 @@ const reducer = (state = initialState, action) => {
     case actionTypes.PROFILE_LOADING: {
       return {
         ...state,
-        loading: true
+        loading: action.isLoading
       };
     }
     case actionTypes.GET_PROFILE: {
       return {
         ...state,
-        profile: action.payload,
-        loading: false
+        profile: action.payload
       };
     }
     case actionTypes.CLEAR_CURRENT_PROFILE: {
