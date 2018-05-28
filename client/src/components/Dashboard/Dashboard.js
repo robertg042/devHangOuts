@@ -8,7 +8,7 @@ import * as actionCreators from "../../store/actions/index";
 import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
 import DashboardActions from "./DashboardActions/DashboardActions";
-import ExperienceTable from "./ExperienceTable/ExperienceTable";
+import Table from "./Table/Table";
 import { isEmpty } from "../../shared/utils";
 
 class dashboard extends Component {
@@ -28,11 +28,17 @@ class dashboard extends Component {
     this.props.deleteExperience(id);
   };
 
+  handleDeleteEducation = id => {
+    this.props.deleteEducation(id);
+  };
+
   render() {
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
 
     let content = null;
+    const experienceHeaders = ["Company", "Title", "Years"];
+    const educationHeaders = ["School", "Degree", "Field of study", "Years"];
 
     if (profile === null || loading) {
       content = <Spinner/>;
@@ -42,8 +48,16 @@ class dashboard extends Component {
         content = (<div>
           <p>Hi, <Link to={`/profile/${profile.handle}`}>{user.name}</Link> <i className={"fas fa-heart"}/></p>
           <DashboardActions/>
-          {!isEmpty(profile.experience) ? <ExperienceTable handleDeleteExperience={this.handleDeleteExperience}
-            experience={profile.experience}/> : null}
+          {!isEmpty(profile.experience) ? <Table
+            title={"Experience"}
+            headers={experienceHeaders}
+            rows={profile.experience}
+            handleDeleteItem={this.handleDeleteExperience}/> : null}
+          {!isEmpty(profile.education) ? <Table
+            title={"Education"}
+            headers={educationHeaders}
+            rows={profile.education}
+            handleDeleteItem={this.handleDeleteEducation}/> : null}
           <div style={{ marginTop: "5rem" }}>
             <Button type={"button"} colorType={"danger"} handleClick={this.handleDeleteAccount}>
               <i className={"fas fa-exclamation-triangle"}/>
@@ -78,7 +92,9 @@ dashboard.propTypes = {
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
-  deleteAccount: PropTypes.func.isRequired
+  deleteAccount: PropTypes.func.isRequired,
+  deleteExperience: PropTypes.func.isRequired,
+  deleteEducation: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -92,7 +108,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getCurrentProfile: () => dispatch(actionCreators.getCurrentProfile()),
     deleteAccount: history => dispatch(actionCreators.deleteAccount(history)),
-    deleteExperience: id => dispatch(actionCreators.deleteExperience(id))
+    deleteExperience: id => dispatch(actionCreators.deleteExperience(id)),
+    deleteEducation: id => dispatch(actionCreators.deleteEducation(id))
   };
 };
 

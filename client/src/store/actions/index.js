@@ -11,6 +11,7 @@ export {
   createProfile,
   addExperience,
   addEducation,
-  deleteAccount,
-  deleteExperience
+  deleteExperience,
+  deleteEducation,
+  deleteAccount
 } from "./profileActions";

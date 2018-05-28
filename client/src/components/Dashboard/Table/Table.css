@@ -1,9 +1,9 @@
-.ExperienceTableWrapper {
+.TableWrapper {
   font-size: 1rem;
   line-height: 1rem;
 }
 
-.ExperienceTableWrapper button {
+.TableWrapper button {
   transform: translateY(-0.1rem);
 }
 
@@ -13,7 +13,7 @@ table {
 }
 
 th {
-  padding-bottom: 0.5rem;
+  padding: 0.5rem;
 }
 
 td {
@@ -42,6 +42,6 @@ table tr th:last-child {
   border-right: 0;
 }
 
-.ExperienceTableWrapper i {
+.TableWrapper i {
   margin-right: 0;
 }
