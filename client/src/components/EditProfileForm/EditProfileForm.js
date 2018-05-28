@@ -59,14 +59,14 @@ class EditProfileForm extends Component {
           value: "",
           defaultOption: { label: "*Select your professional status", value: "" },
           options: [
-            { label: "Project manager", value: "projectManager" },
-            { label: "Senior developer", value: "seniorDev" },
-            { label: "Developer", value: "dev" },
-            { label: "Junior developer", value: "juniorDev" },
-            { label: "Teacher", value: "teacher" },
-            { label: "Student", value: "student" },
-            { label: "Intern", value: "intern" },
-            { label: "Other", value: "other" }
+            { label: "Project manager", value: "Project manager" },
+            { label: "Senior developer", value: "Senior developer" },
+            { label: "Developer", value: "Developer" },
+            { label: "Junior developer", value: "Junior developer" },
+            { label: "Teacher", value: "Teacher" },
+            { label: "Student", value: "Student" },
+            { label: "Intern", value: "Intern" },
+            { label: "Other", value: "Other" }
           ]
         },
         company: {
@@ -258,6 +258,8 @@ class EditProfileForm extends Component {
     formKeys.forEach(key => {
       profileData[key] = form[key].value;
     });
+
+    console.log(JSON.stringify(profileData, null, 4));
 
     this.props.createProfile(profileData, this.props.history);
   };
