@@ -11,7 +11,7 @@ const validateExperienceInput = data => {
   const maxLocationLength = 60;
 
   // If empty make sure values are strings
-  const allProps = ["title", "company", "from", "location"];
+  const allProps = ["title", "company", "from", "to", "location", "description"];
   utils.assureEmptyStringIfEmpty(allProps, data);
 
   // Check if required form fields are not empty
