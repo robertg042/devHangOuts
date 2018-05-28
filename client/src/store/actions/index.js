@@ -4,4 +4,4 @@ export { registerUser, loginUser, logoutUser, setAuthLoading } from "./authActio
 
 export { getServerSideErrors, clearServerSideErrors } from "./serverSideErrorActions";
 
-export { setProfileLoading, getCurrentProfile, clearCurrentProfile, createProfile, deleteAccount } from "./profileActions";
+export { setProfileLoading, getCurrentProfile, clearCurrentProfile, createProfile, addExperience, deleteAccount } from "./profileActions";

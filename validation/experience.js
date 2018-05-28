@@ -18,6 +18,11 @@ const validateExperienceInput = data => {
   const requiredProps = ["title", "company", "from"];
   utils.validateRequiredProps(requiredProps, data, errors);
 
+  // Either "to" date or current field is required
+  if (Validator.isEmpty(data.to) && !data.current) {
+    errors.to = "Field is required if it's not a current job";
+  }
+
   if (
     !Validator.isEmpty(data.location) &&
     !Validator.isLength(data.location, {

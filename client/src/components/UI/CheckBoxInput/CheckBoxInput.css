@@ -1,0 +1,57 @@
+.CheckBoxInput {
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+}
+
+i {
+  margin-right: 0.3rem;
+}
+
+.Label {
+  line-height: 1rem;
+  font-size: 1rem;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+  color: black;
+  cursor: default;
+}
+
+.Element {
+  margin: 0 0.5rem
+}
+
+.Invalid ~ label {
+  color: var(--error-color);
+}
+
+.ErrorFeedback {
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  color: var(--error-color);
+  font-size: 0.85rem;
+  padding: 0.3rem 0.5rem 0.1rem 0.5rem;
+  text-align: left;
+}
+
+.InfoTip {
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  color: var(--muted-color);
+  font-size: 0.85rem;
+  padding: 0.2rem 0.5rem;
+  text-align: left;
+}
+
+.Element:disabled ~ label {
+  color: var(--muted-color)
+}
+
+.Element:focus ~ label {
+  color: var(--highlight-color)
+}

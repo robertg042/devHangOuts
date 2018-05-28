@@ -1,4 +1,4 @@
-.EditProfileFormWrapper {
+.AddExperienceFormWrapper {
   color: black;
   background-color: white;
   width: 100%;
@@ -10,7 +10,7 @@
   font-size: 2rem;
 }
 
-.EditProfileForm {
+.AddExperienceForm {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -42,25 +42,25 @@
 }
 
 @media (min-width: 400px) {
-  .EditProfileFormWrapper {
+  .AddExperienceFormWrapper {
     width: 85%;
   }
 }
 
 @media (min-width: 31.25rem) {
-  .EditProfileFormWrapper {
+  .AddExperienceFormWrapper {
     align-items: center;
   }
 }
 
 @media (min-width: 768px) {
-  .EditProfileFormWrapper {
+  .AddExperienceFormWrapper {
     width: 70%;
   }
 }
 
 @media (min-width: 2100px) {
-  .EditProfileFormWrapper {
+  .AddExperienceFormWrapper {
     width: 50%;
   }
 }

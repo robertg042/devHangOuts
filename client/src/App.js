@@ -12,6 +12,7 @@ import Logout from "./components/Logout/Logout";
 import Dashboard from "./components/Dashboard/Dashboard";
 import CreateProfileForm from "./components/CreateProfileForm/CreateProfileForm";
 import EditProfileForm from "./components/EditProfileForm/EditProfileForm";
+import AddExperienceForm from "./components/AddExperienceForm/AddExperienceForm";
 import ProfilesList from "./components/ProfilesList/ProfilesList";
 import RedirectComponent from "./components/RedirectComponent/RedirectComponent";
 import store from "./store/store";
@@ -55,6 +56,7 @@ class App extends Component {
           <Route exact path={"/dashboard"} component={Dashboard}/>
           <Route exact path={"/create-profile"} component={CreateProfileForm}/>
           <Route exact path={"/edit-profile"} component={EditProfileForm}/>
+          <Route exact path={"/add-experience"} component={AddExperienceForm}/>
           <Route exact path={"/logout"} component={Logout}/>
           <Route exact path={"/redirect"} component={RedirectComponent}/>
           <Redirect exact from={"/login"} to={"/dashboard"}/>
