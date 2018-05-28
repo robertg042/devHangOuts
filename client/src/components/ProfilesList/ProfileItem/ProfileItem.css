@@ -1,0 +1,50 @@
+.ProfileItem {
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1rem;
+  margin: 1rem;
+  border: 1px solid black;
+  background-color: var(--light-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: grid;
+  grid: "avatar name skills"
+        "avatar status skills"
+        "avatar location skills"
+        "avatar link skills"
+        / 3rem auto 3rem;
+}
+
+.ProfileItem img {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.Avatar {
+  grid-area: avatar;
+}
+
+.Name {
+  grid-area: name;
+
+}
+
+.Status {
+  grid-area: status;
+
+}
+
+.Location {
+  grid-area: location;
+
+}
+
+.LinkToHandle {
+  grid-area: link;
+
+}
+
+.Skills {
+  grid-area: skills;
+
+}

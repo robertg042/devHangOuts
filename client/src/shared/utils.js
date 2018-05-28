@@ -93,3 +93,30 @@ export const updateValues = (nextProps, prevState) => {
     form: updatedForm
   });
 };
+
+export const capitalizeFirstLetter = str => `${str.charAt(0).toUpperCase() + str.slice(1)}`;
+
+export const dynamicSort = property => {
+  /* eslint-disable */
+  // Usage:
+  // const People = [
+  //   {Name: "Name", Surname: "Surname"},
+  //   {Name:"AAA", Surname:"ZZZ"},
+  //   {Name: "Name", Surname: "AAA"}
+  // ];
+  // People.sort(dynamicSort("Name"));
+  // People.sort(dynamicSort("Surname"));
+  // People.sort(dynamicSort("-Surname"))
+  let sortOrder = 1;
+  if (property[0] === "-") {
+    sortOrder = -1;
+    property = property.substr(1);
+  }
+
+  return function (a, b) {
+    let result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+
+    return result * sortOrder;
+  };
+  /* eslint-enable */
+};

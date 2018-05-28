@@ -117,9 +117,9 @@ class EditProfileForm extends Component {
           isRequired: false,
           value: ""
         },
-        githubUsername: {
-          id: `githubUsername_${makeId()}`,
-          name: "githubUsername",
+        githubusername: {
+          id: `githubusername_${makeId()}`,
+          name: "githubusername",
           inputType: "text",
           labelText: "Github username",
           icon: "fab fa-github",
@@ -165,9 +165,9 @@ class EditProfileForm extends Component {
           isRequired: false,
           value: ""
         },
-        linkedIn: {
-          id: `linkedIn_${makeId()}`,
-          name: "linkedIn",
+        linkedin: {
+          id: `linkedin_${makeId()}`,
+          name: "linkedin",
           inputType: "text",
           labelText: "LinkedIn profile URL",
           icon: "fab fa-linkedin",

@@ -20,6 +20,8 @@ import store from "./store/store";
 import { setAuthToken } from "./shared/utils";
 import { setAuthenticatedUser, logoutUser } from "./store/actions/authActions";
 
+// FIXME: bug: user logged in with an not-existent account (deleted through database) with not expired token should be logged out
+
 class App extends Component {
   componentDidMount() {
     if (localStorage.jwtToken) {

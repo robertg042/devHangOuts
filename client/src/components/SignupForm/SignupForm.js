@@ -12,11 +12,16 @@ import { makeId, updateErrors } from "../../shared/utils";
 
 class SignupForm extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
+    let state = { ...prevState };
+    if (!prevState.initiallyFocused && prevState.focusedRef && prevState.focusedRef.current) {
+      prevState.focusedRef.current.focus();
+      state = { ...prevState, initiallyFocused: true };
+    }
     if (nextProps.serverSideErrors) {
-      return updateErrors(nextProps, prevState);
+      state = updateErrors(nextProps, state);
     }
 
-    return null;
+    return state;
   }
 
   constructor(props) {
@@ -70,7 +75,11 @@ class SignupForm extends Component {
         }
       },
       formId: `signupForm_${makeId()}`,
-      displayRequiredInfo: false
+      displayRequiredInfo: false,
+      focusedRef: null,
+      /* eslint-disable react/no-unused-state */
+      initiallyFocused: false
+      /* eslint-enable */
     };
     this.state.displayRequiredInfo = this.checkForRequired();
     this.state.form.name.value = this.props.nameValue;
@@ -81,10 +90,7 @@ class SignupForm extends Component {
     this.state.form.email.error = this.props.serverSideErrors.email;
     this.state.form.password.error = this.props.serverSideErrors.password;
     this.state.form.password2.error = this.props.serverSideErrors.password2;
-  }
-
-  componentDidMount() {
-    this.inputRef.current.focus();
+    this.state.focusedRef = React.createRef();
   }
 
   componentWillUnmount() {
@@ -92,8 +98,6 @@ class SignupForm extends Component {
       this.props.clearErrors();
     }
   }
-
-  inputRef = React.createRef();
 
   checkForRequired = () => {
     const atLeastOneRequired = Object.keys(this.state.form)
@@ -177,7 +181,7 @@ class SignupForm extends Component {
               key={element.id}
               id={element.id}
               name={element.name}
-              ref={element.name === "name" ? this.inputRef : null}
+              ref={element.name === "name" ? this.state.focusedRef : null}
               inputType={element.inputType}
               labelText={element.labelText}
               info={element.info}

@@ -14,11 +14,16 @@ import { makeId, updateErrors, isEmpty } from "../../shared/utils";
 
 class CreateProfileForm extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
+    let state = { ...prevState };
+    if (!prevState.initiallyFocused && prevState.focusedRef && prevState.focusedRef.current) {
+      prevState.focusedRef.current.focus();
+      state = { ...prevState, initiallyFocused: true };
+    }
     if (nextProps.serverSideErrors) {
-      return updateErrors(nextProps, prevState);
+      state = updateErrors(nextProps, state);
     }
 
-    return null;
+    return state;
   }
 
   constructor(props) {
@@ -107,9 +112,9 @@ class CreateProfileForm extends Component {
           isRequired: false,
           value: ""
         },
-        githubUsername: {
-          id: `githubUsername_${makeId()}`,
-          name: "githubUsername",
+        githubusername: {
+          id: `githubusername_${makeId()}`,
+          name: "githubusername",
           inputType: "text",
           labelText: "Github username",
           icon: "fab fa-github",
@@ -155,9 +160,9 @@ class CreateProfileForm extends Component {
           isRequired: false,
           value: ""
         },
-        linkedIn: {
-          id: `linkedIn_${makeId()}`,
-          name: "linkedIn",
+        linkedin: {
+          id: `linkedin_${makeId()}`,
+          name: "linkedin",
           inputType: "text",
           labelText: "LinkedIn profile URL",
           icon: "fab fa-linkedin",
@@ -193,10 +198,15 @@ class CreateProfileForm extends Component {
         }
       },
       formId: `createProfileForm_${makeId()}`,
-      displayRequiredInfo: false
+      displayRequiredInfo: false,
+      focusedRef: null,
+      /* eslint-disable react/no-unused-state */
+      initiallyFocused: false
+      /* eslint-enable */
     };
     this.state.form.status.value = this.state.form.status.defaultOption.value;
     this.state.displayRequiredInfo = this.checkForRequired();
+    this.state.focusedRef = React.createRef();
   }
 
   componentDidMount() {
@@ -206,20 +216,11 @@ class CreateProfileForm extends Component {
     }
   }
 
-  componentDidUpdate() {
-    const { profile } = this.props;
-    if (profile && Object.keys(profile).length === 0) {
-      this.inputRef.current.focus();
-    }
-  }
-
   componentWillUnmount() {
     if (this.props.serverSideErrors) {
       this.props.clearErrors();
     }
   }
-
-  inputRef = React.createRef();
 
   checkForRequired = () => {
     const atLeastOneRequired = Object.keys(this.state.form)
@@ -322,7 +323,7 @@ class CreateProfileForm extends Component {
                     key={element.id}
                     id={element.id}
                     name={element.name}
-                    ref={element.name === "handle" ? this.inputRef : null}
+                    ref={element.name === "handle" ? this.state.focusedRef : null}
                     inputType={element.inputType}
                     labelText={element.labelText}
                     icon={element.icon}

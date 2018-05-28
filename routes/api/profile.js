@@ -123,7 +123,12 @@ router.post(
       "location",
       "bio",
       "status",
-      "githubusername"
+      "githubusername",
+      "twitter",
+      "facebook",
+      "linkedin",
+      "youtube",
+      "instagram"
     ];
 
     fields.user = req.user.id;
@@ -137,21 +142,6 @@ router.post(
     if (req.body.skills) {
       fields.skills = req.body.skills.split(",").map(skill => skill.trim());
     }
-
-    fields.social = {};
-    const socialPropsArray = [
-      "youtube",
-      "twitter",
-      "facebook",
-      "linkedin",
-      "instagram"
-    ];
-
-    socialPropsArray.forEach(prop => {
-      if (req.body[prop]) {
-        fields.social[prop] = req.body[prop];
-      }
-    });
 
     Profile.findOne({ user: req.user.id })
       .then(profile => {

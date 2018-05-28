@@ -9,7 +9,7 @@ import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
 import DashboardActions from "./DashboardActions/DashboardActions";
 import Table from "./Table/Table";
-import { isEmpty } from "../../shared/utils";
+import { isEmpty, dynamicSort } from "../../shared/utils";
 
 class dashboard extends Component {
   componentDidMount() {
@@ -45,13 +45,13 @@ class dashboard extends Component {
     } else {
       if (Object.keys(profile).length > 0) {
         // profile exists
-        content = (<div>
-          <p>Hi, <Link to={`/profile/${profile.handle}`}>{user.name}</Link> <i className={"fas fa-heart"}/></p>
+        content = (<div className={classes.ProfileExists}>
+          <div className={classes.Title}>Hi, <Link to={`/profile/${profile.handle}`}>{user.name}</Link> <i className={"fas fa-heart"}/></div>
           <DashboardActions/>
           {!isEmpty(profile.experience) ? <Table
             title={"Experience"}
             headers={experienceHeaders}
-            rows={profile.experience}
+            rows={profile.experience.sort(dynamicSort("-from"))}
             handleDeleteItem={this.handleDeleteExperience}/> : null}
           {!isEmpty(profile.education) ? <Table
             title={"Education"}
@@ -69,7 +69,7 @@ class dashboard extends Component {
         // there's no profile for logged in user
         content = (
           <div>
-            <p>Hi, {user.name} <i className={"fas fa-heart"}/></p>
+            <div className={classes.Title}>Hi, {user.name} <i className={"fas fa-heart"}/></div>
             <p>You have no profile yet.</p>
             <p><i className={"fas fa-fire"}/> Please, create one <i className={"fas fa-fire"}/></p>
             <Button colorType={"secondary"} handleClick={this.handleClick}>Create profile</Button>

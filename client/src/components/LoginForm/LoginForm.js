@@ -13,43 +13,52 @@ import { makeId, updateErrors } from "../../shared/utils";
 
 class LoginForm extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.isAuthenticated) {
-      nextProps.history.push("/dashboard");
+    let state = { ...prevState };
+    if (!prevState.initiallyFocused && prevState.focusedRef && prevState.focusedRef.current) {
+      prevState.focusedRef.current.focus();
+      state = { ...prevState, initiallyFocused: true };
     }
+    // if (nextProps.isAuthenticated) {
+    //   nextProps.history.push("/dashboard");
+    // }
 
     if (nextProps.serverSideErrors) {
-      return updateErrors(nextProps, prevState);
+      state = updateErrors(nextProps, state);
     }
 
-    return null;
+    return state;
   }
 
-  state = {
-    form: {
-      email: {
-        id: `name_${makeId()}`,
-        name: "email",
-        inputType: "email",
-        labelText: "Email address",
-        info: "",
-        error: "",
-        value: ""
+  constructor(props) {
+    super(props);
+    this.state = {
+      form: {
+        email: {
+          id: `name_${makeId()}`,
+          name: "email",
+          inputType: "email",
+          labelText: "Email address",
+          info: "",
+          error: "",
+          value: ""
+        },
+        password: {
+          id: `password_${makeId()}`,
+          name: "password",
+          inputType: "password",
+          labelText: "Password",
+          info: "",
+          error: "",
+          value: ""
+        }
       },
-      password: {
-        id: `password_${makeId()}`,
-        name: "password",
-        inputType: "password",
-        labelText: "Password",
-        info: "",
-        error: "",
-        value: ""
-      }
-    },
-    formId: `loginForm_${makeId()}`
-  };
-
-  componentDidMount() {
-    this.inputRef.current.focus();
+      formId: `loginForm_${makeId()}`,
+      focusedRef: null,
+      /* eslint-disable react/no-unused-state */
+      initiallyFocused: false
+      /* eslint-enable */
+    };
+    this.state.focusedRef = React.createRef();
   }
 
   componentWillUnmount() {
@@ -57,8 +66,6 @@ class LoginForm extends Component {
       this.props.clearErrors();
     }
   }
-
-  inputRef = React.createRef();
 
   handleChange = (value, name) => {
     // eslint-disable-next-line
@@ -103,7 +110,7 @@ class LoginForm extends Component {
               key={element.id}
               id={element.id}
               name={element.name}
-              ref={element.name === "email" ? this.inputRef : null}
+              ref={element.name === "email" ? this.state.focusedRef : null}
               inputType={element.inputType}
               labelText={element.labelText}
               info={element.info}

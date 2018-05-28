@@ -187,7 +187,6 @@ class AddExperienceForm extends Component {
     const experienceData = {};
     const { form } = this.state;
     const formKeys = Object.keys(form);
-    debugger;
 
     formKeys.forEach(key => {
       experienceData[key] = form[key].value;

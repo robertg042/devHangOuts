@@ -2,6 +2,7 @@
   color: black;
   background-color: white;
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -17,14 +18,23 @@
   margin: 0 auto;
   padding-bottom: 1.5rem;
   font-size: 2rem;
+  overflow: auto;
 }
 
-.Dashboard button {
+.ProfileExists button {
   font-size: 0.8rem;
   line-height: 0.8rem;
   border-radius: 0.3rem;
   box-shadow: 0 1px 1px 1px black;
   padding: 0.25rem 0.5rem;
+}
+
+.Title {
+  width: 100%;
+  text-align: center;
+  font-size: 3rem;
+  line-height: 3rem;
+  padding-bottom: 2rem;
 }
 
 @media (min-width: 400px) {
