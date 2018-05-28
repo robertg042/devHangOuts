@@ -140,7 +140,10 @@ router.post(
     });
 
     if (req.body.skills) {
-      fields.skills = req.body.skills.split(",").map(skill => skill.trim());
+      fields.skills = req.body.skills
+        .split(",")
+        .map(skill => skill.trim())
+        .filter((value, index, array) => array.indexOf(value) === index);
     }
 
     Profile.findOne({ user: req.user.id })
