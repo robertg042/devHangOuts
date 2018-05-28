@@ -76,8 +76,20 @@ export const addEducation = (educationData, history) => dispatch => {
     });
 };
 
+export const deleteExperience = id => dispatch => {
+  dispatch(setProfileLoading(true));
+  axios.delete(`/api/profile/experience/${id}`)
+    .then(() => {
+      dispatch(setProfileLoading(false));
+      dispatch(getCurrentProfile());
+    })
+    .catch(error => {
+      dispatch(getServerSideErrors(error.response.data));
+      dispatch(setProfileLoading(false));
+    });
+};
+
 export const deleteAccount = history => dispatch => {
-  // TODO: create modal
   // eslint-disable-next-line
   if (window.confirm("You are about to DELETE your account. This cannot be undone! Are you sure?")) {
     dispatch(setProfileLoading(true));

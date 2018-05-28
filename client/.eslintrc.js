@@ -128,7 +128,7 @@ module.exports = {
     "no-nested-ternary": 1, // disallow nested ternary expressions (off by default)
     "no-new-object": 1, // disallow use of the Object constructor
     "no-trailing-spaces": 1, // disallow trailing whitespace at the end of lines
-    "no-underscore-dangle": 1, // disallow dangling underscores in identifiers
+    "no-underscore-dangle": 0, // disallow dangling underscores in identifiers
     "no-unneeded-ternary": 1, // disallow ternary operators when simpler alternatives exist
     "no-whitespace-before-property": 1, // disallow whitespace before properties
     "nonblock-statement-body-position": 1, // enforce the location of single-line statements

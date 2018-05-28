@@ -19,6 +19,14 @@
   font-size: 2rem;
 }
 
+.Dashboard button {
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+  border-radius: 0.3rem;
+  box-shadow: 0 1px 1px 1px black;
+  padding: 0.25rem 0.5rem;
+}
+
 @media (min-width: 400px) {
   .DashboardWrapper {
     width: 85%;

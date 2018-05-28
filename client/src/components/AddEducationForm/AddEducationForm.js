@@ -191,6 +191,8 @@ class AddEducationForm extends Component {
     formKeys.forEach(key => {
       educationData[key] = form[key].value;
     });
+    // Make sure boolean is send, not ""
+    educationData.current = !isEmpty(educationData.current);
 
     this.props.addEducation(educationData, this.props.history);
   };

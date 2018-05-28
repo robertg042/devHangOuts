@@ -8,6 +8,8 @@ import * as actionCreators from "../../store/actions/index";
 import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
 import DashboardActions from "./DashboardActions/DashboardActions";
+import ExperienceTable from "./ExperienceTable/ExperienceTable";
+import { isEmpty } from "../../shared/utils";
 
 class dashboard extends Component {
   componentDidMount() {
@@ -19,8 +21,11 @@ class dashboard extends Component {
   };
 
   handleDeleteAccount = () => {
-    console.log("hello");
     this.props.deleteAccount(this.props.history);
+  };
+
+  handleDeleteExperience = id => {
+    this.props.deleteExperience(id);
   };
 
   render() {
@@ -36,7 +41,15 @@ class dashboard extends Component {
         // profile exists
         content = (<div>
           <p>Hi, <Link to={`/profile/${profile.handle}`}>{user.name}</Link> <i className={"fas fa-heart"}/></p>
-          <DashboardActions handleDeleteAccount={this.handleDeleteAccount}/>
+          <DashboardActions/>
+          {!isEmpty(profile.experience) ? <ExperienceTable handleDeleteExperience={this.handleDeleteExperience}
+            experience={profile.experience}/> : null}
+          <div style={{ marginTop: "5rem" }}>
+            <Button type={"button"} colorType={"danger"} handleClick={this.handleDeleteAccount}>
+              <i className={"fas fa-exclamation-triangle"}/>
+              Delete Account
+            </Button>
+          </div>
         </div>);
       } else {
         // there's no profile for logged in user
@@ -78,7 +91,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getCurrentProfile: () => dispatch(actionCreators.getCurrentProfile()),
-    deleteAccount: history => dispatch(actionCreators.deleteAccount(history))
+    deleteAccount: history => dispatch(actionCreators.deleteAccount(history)),
+    deleteExperience: id => dispatch(actionCreators.deleteExperience(id))
   };
 };
 
