@@ -1,3 +1,4 @@
+const Validator = require("validator");
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
@@ -139,11 +140,13 @@ router.post(
       }
     });
 
-    if (req.body.skills) {
+    if (!Validator.isEmpty(req.body.skills)) {
       fields.skills = req.body.skills
         .split(",")
         .map(skill => skill.trim())
         .filter((value, index, array) => array.indexOf(value) === index);
+    } else {
+      fields.skills = [];
     }
 
     Profile.findOne({ user: req.user.id })
