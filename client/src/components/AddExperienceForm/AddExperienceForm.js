@@ -124,7 +124,7 @@ class AddExperienceForm extends Component {
           value: ""
         }
       },
-      formId: `createProfileForm_${makeId()}`,
+      formId: `addExperienceForm_${makeId()}`,
       displayRequiredInfo: false,
       focusedRef: null,
       /* eslint-disable react/no-unused-state */

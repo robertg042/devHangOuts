@@ -63,6 +63,19 @@ export const addExperience = (experienceData, history) => dispatch => {
     });
 };
 
+export const addEducation = (educationData, history) => dispatch => {
+  dispatch(setProfileLoading(true));
+  axios.post("/api/profile/education", educationData)
+    .then(() => {
+      dispatch(setProfileLoading(false));
+      history.push("/dashboard");
+    })
+    .catch(error => {
+      dispatch(getServerSideErrors(error.response.data));
+      dispatch(setProfileLoading(false));
+    });
+};
+
 export const deleteAccount = history => dispatch => {
   // TODO: create modal
   // eslint-disable-next-line

@@ -3,17 +3,17 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import classes from "./EditProfileForm.css";
+import classes from "./AddEducationForm.css";
 import * as actionCreators from "../../store/actions";
 import TextInput from "../UI/TextInput/TextInput";
 import TextAreaInput from "../UI/TextAreaInput/TextAreaInput";
-import SelectInput from "../UI/SelectInput/SelectInput";
+import DateInput from "../UI/DateInput/DateInput";
+import CheckBoxInput from "../UI/CheckBoxInput/CheckBoxInput";
 import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
 import { makeId, updateErrors, updateValues, isEmpty } from "../../shared/utils";
 
-// TODO: merge this component with CreateProfileForm
-class EditProfileForm extends Component {
+class AddEducationForm extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     let state = { ...prevState };
     if (!prevState.initiallyFocused && prevState.focusedRef && prevState.focusedRef.current) {
@@ -36,103 +36,85 @@ class EditProfileForm extends Component {
     this.checkForRequired = this.checkForRequired.bind(this);
     this.state = {
       form: {
-        handle: {
-          id: `handle_${makeId()}`,
-          name: "handle",
+        school: {
+          id: `school_${makeId()}`,
+          name: "school",
           inputType: "text",
-          labelText: "Profile handle",
-          icon: "fas fa-user-circle",
-          info: "A unique handle for your profile URL",
-          error: "",
-          disabled: false,
-          isRequired: true,
-          value: ""
-        },
-        status: {
-          id: `status_${makeId()}`,
-          name: "status",
-          inputType: "select",
+          labelText: "School",
+          icon: null,
           info: "",
           error: "",
           disabled: false,
-          isRequired: true,
+          isRequired: false,
+          value: ""
+        },
+        degree: {
+          id: `degree_${makeId()}`,
+          name: "degree",
+          inputType: "text",
+          labelText: "Degree",
+          icon: "",
+          info: "",
+          error: "",
+          disabled: false,
+          isRequired: false,
+          value: ""
+        },
+        fieldofstudy: {
+          id: `fieldofstudy_${makeId()}`,
+          name: "fieldofstudy",
+          inputType: "text",
+          labelText: "Field of study",
+          icon: null,
+          info: "",
+          error: "",
+          disabled: false,
+          isRequired: false,
+          value: ""
+        },
+        from: {
+          id: `from_${makeId()}`,
+          name: "from",
+          inputType: "date",
+          labelText: "From",
+          icon: null,
+          info: "",
+          error: "",
+          disabled: false,
+          isRequired: false,
           value: "",
-          defaultOption: { label: "*Select your professional status", value: "" },
-          options: [
-            { label: "Project manager", value: "projectManager" },
-            { label: "Senior developer", value: "seniorDev" },
-            { label: "Developer", value: "dev" },
-            { label: "Junior developer", value: "juniorDev" },
-            { label: "Teacher", value: "teacher" },
-            { label: "Student", value: "student" },
-            { label: "Intern", value: "intern" },
-            { label: "Other", value: "other" }
-          ]
+          max: ""
         },
-        company: {
-          id: `company_${makeId()}`,
-          name: "company",
-          inputType: "text",
-          labelText: "Company",
+        to: {
+          id: `to_${makeId()}`,
+          name: "to",
+          inputType: "date",
+          labelText: "To",
           icon: null,
           info: "",
           error: "",
           disabled: false,
           isRequired: false,
-          value: ""
+          value: "",
+          max: "",
+          previousValue: ""
         },
-        website: {
-          id: `website_${makeId()}`,
-          name: "website",
-          inputType: "text",
-          labelText: "Website",
-          icon: null,
+        current: {
+          id: `current_${makeId()}`,
+          name: "current",
+          labelText: "Current",
+          inputType: "checkbox",
           info: "",
+          icon: "",
           error: "",
           disabled: false,
           isRequired: false,
-          value: ""
+          value: false
         },
-        location: {
-          id: `location_${makeId()}`,
-          name: "location",
-          inputType: "text",
-          labelText: "Location",
-          icon: null,
-          info: "",
-          error: "",
-          disabled: false,
-          isRequired: false,
-          value: ""
-        },
-        skills: {
-          id: `skills_${makeId()}`,
-          name: "skills",
-          inputType: "text",
-          labelText: "Skills",
-          icon: null,
-          info: "Please use comma separated values",
-          error: "",
-          disabled: false,
-          isRequired: false,
-          value: ""
-        },
-        githubUsername: {
-          id: `githubUsername_${makeId()}`,
-          name: "githubUsername",
-          inputType: "text",
-          labelText: "Github username",
-          icon: "fab fa-github",
-          info: "",
-          error: "",
-          disabled: false,
-          isRequired: false,
-          value: ""
-        },
-        bio: {
-          id: `bio_${makeId()}`,
-          name: "bio",
-          labelText: "Bio",
+        description: {
+          id: `description_${makeId()}`,
+          name: "description",
+          labelText: "Description",
           inputType: "textArea",
           info: "",
           icon: "",
@@ -140,69 +122,9 @@ class EditProfileForm extends Component {
           disabled: false,
           isRequired: false,
           value: ""
-        },
-        twitter: {
-          id: `twitter_${makeId()}`,
-          name: "twitter",
-          inputType: "text",
-          labelText: "Twitter profile URL",
-          icon: "fab fa-twitter",
-          info: "",
-          error: "",
-          disabled: false,
-          isRequired: false,
-          value: ""
-        },
-        facebook: {
-          id: `facebook_${makeId()}`,
-          name: "facebook",
-          inputType: "text",
-          labelText: "Facebook profile URL",
-          icon: "fab fa-facebook",
-          info: "",
-          error: "",
-          disabled: false,
-          isRequired: false,
-          value: ""
-        },
-        linkedIn: {
-          id: `linkedIn_${makeId()}`,
-          name: "linkedIn",
-          inputType: "text",
-          labelText: "LinkedIn profile URL",
-          icon: "fab fa-linkedin",
-          info: "",
-          error: "",
-          disabled: false,
-          isRequired: false,
-          value: ""
-        },
-        youtube: {
-          id: `youtube_${makeId()}`,
-          name: "youtube",
-          inputType: "text",
-          labelText: "Youtube profile URL",
-          icon: "fab fa-youtube",
-          info: "",
-          error: "",
-          disabled: false,
-          isRequired: false,
-          value: ""
-        },
-        instagram: {
-          id: `instagram_${makeId()}`,
-          name: "instagram",
-          inputType: "text",
-          labelText: "Instagram profile URL",
-          icon: "fab fa-instagram",
-          info: "",
-          error: "",
-          disabled: false,
-          isRequired: false,
-          value: ""
         }
       },
-      formId: `editProfileForm_${makeId()}`,
+      formId: `addEducationForm_${makeId()}`,
       displayRequiredInfo: false,
       focusedRef: null,
       /* eslint-disable react/no-unused-state */
@@ -210,8 +132,10 @@ class EditProfileForm extends Component {
       initiallyFilled: false
       /* eslint-enable */
     };
-    this.state.form.status.value = this.state.form.status.defaultOption.value;
     this.state.displayRequiredInfo = this.checkForRequired();
+    const today = this.setInputMaxDateToToday();
+    this.state.form.from.max = today;
+    this.state.form.to.max = today;
     this.state.focusedRef = React.createRef();
   }
 
@@ -246,24 +170,48 @@ class EditProfileForm extends Component {
     };
     updatedElement.value = value;
     updatedForm[name] = updatedElement;
+    if (name === "current") {
+      const toElement = {
+        ...updatedForm.to
+      };
+      // swap values
+      [toElement.value, toElement.previousValue] = [toElement.previousValue, toElement.value];
+      toElement.disabled = value;
+      updatedForm.to = toElement;
+    }
     this.setState({ form: updatedForm });
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    const profileData = {};
+    const educationData = {};
     const { form } = this.state;
     const formKeys = Object.keys(form);
 
     formKeys.forEach(key => {
-      profileData[key] = form[key].value;
+      educationData[key] = form[key].value;
     });
 
-    this.props.createProfile(profileData, this.props.history);
+    this.props.addEducation(educationData, this.props.history);
   };
 
   go = path => {
     this.props.history.push(path);
+  };
+
+  setInputMaxDateToToday = () => {
+    const today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1;
+    const yyyy = today.getFullYear();
+    if (dd < 10) {
+      dd = `0${dd}`;
+    }
+    if (mm < 10) {
+      mm = `0${mm}`;
+    }
+
+    return `${yyyy}-${mm}-${dd}`;
   };
 
   render() {
@@ -286,18 +234,18 @@ class EditProfileForm extends Component {
         this.props.history.replace("/create-profile");
       } else {
         formContents = (
-          <div className={classes.EditProfileFormWrapper}>
+          <div className={classes.AddEducationFormWrapper}>
             <div className={classes.AlignStart}>
               <Button type={"button"} colorType={"secondary"} handleClick={this.go.bind(this, "/dashboard")}>
                 <i className={"fas fa-angle-left"}/>
                 Go back
               </Button>
             </div>
-            <div className={classes.Title}>Edit profile</div>
+            <div className={classes.Title}>Add education</div>
             <form
               id={this.state.formId}
               onSubmit={() => this.handleSubmit()}
-              className={classes.EditProfileForm}
+              className={classes.AddEducationForm}
             >
               {formElements.map(element => {
                 if (element.inputType === "textArea") {
@@ -316,9 +264,9 @@ class EditProfileForm extends Component {
                       handleChange={this.handleChange}
                     />
                   );
-                } else if (element.inputType === "select") {
+                } else if (element.inputType === "date") {
                   return (
-                    <SelectInput
+                    <DateInput
                       key={element.id}
                       id={element.id}
                       name={element.name}
@@ -330,8 +278,23 @@ class EditProfileForm extends Component {
                       disabled={element.disabled}
                       isRequired={element.isRequired}
                       handleChange={this.handleChange}
-                      defaultOption={element.defaultOption}
-                      options={element.options}
+                      max={element.max}
+                    />
+                  );
+                } else if (element.inputType === "checkbox") {
+                  return (
+                    <CheckBoxInput
+                      key={element.id}
+                      id={element.id}
+                      name={element.name}
+                      labelText={element.labelText}
+                      icon={element.icon}
+                      info={element.info}
+                      error={element.error}
+                      value={element.value}
+                      disabled={element.disabled}
+                      isRequired={element.isRequired}
+                      handleChange={this.handleChange}
                     />
                   );
                 } else {
@@ -339,7 +302,7 @@ class EditProfileForm extends Component {
                     key={element.id}
                     id={element.id}
                     name={element.name}
-                    ref={element.name === "handle" ? this.state.focusedRef : null}
+                    ref={element.name === "school" ? this.state.focusedRef : null}
                     inputType={element.inputType}
                     labelText={element.labelText}
                     icon={element.icon}
@@ -360,7 +323,7 @@ class EditProfileForm extends Component {
               type={"submit"}
               colorType={"primary"}
             >
-              Edit profile
+              Add education
             </Button>}
           </div>
         );
@@ -371,11 +334,11 @@ class EditProfileForm extends Component {
   }
 }
 
-EditProfileForm.propTypes = {
+AddEducationForm.propTypes = {
   serverSideErrors: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
-  createProfile: PropTypes.func.isRequired
+  addEducation: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -390,8 +353,8 @@ const mapDispatchToProps = dispatch => {
   return {
     getCurrentProfile: () => dispatch(actionCreators.getCurrentProfile()),
     clearErrors: () => dispatch(actionCreators.clearServerSideErrors()),
-    createProfile: (profileData, history) => dispatch(actionCreators.createProfile(profileData, history))
+    addEducation: (profileData, history) => dispatch(actionCreators.addEducation(profileData, history))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps, null, { pure: false })(withRouter(EditProfileForm));
+export default connect(mapStateToProps, mapDispatchToProps, null, { pure: false })(withRouter(AddEducationForm));
