@@ -98,6 +98,39 @@ router.get("/user/:user_id", (req, res) => {
     });
 });
 
+// @route GET api/profile/github/:githubusername?per_page&sort
+// @desc Get github repos for given github username
+// @access Public
+router.get("/github/:githubusername", (req, res) => {
+  const username = req.params.githubusername;
+  const clientId = KEYS.GITHUB_ID;
+  const clientSecret = KEYS.GITHUB_SECRET;
+  const { per_page, sort } = req.query;
+  const address = `https://api.github.com/users/${username}/repos?per_page=${per_page}&sort=${sort}&client_id=${clientId}&client_secret=${clientSecret}`;
+  request({
+    uri: address,
+    method: "GET",
+    followRedirect: true,
+    maxRedirects: 10,
+    headers: {
+      "User-Agent": "robertg042"
+    }
+  }, (error, response, body) => {
+    if (error) {
+      console.log(error);
+
+      return res.status(500).json({ error: "Error while getting github repos" });
+    }
+    if (response.statusCode === 200) {
+      return res.json(body);
+    }
+
+    console.log(error);
+
+    return res.status(500).json({ error: "Unexpected error" });
+  });
+});
+
 // @route POST api/profile
 // @desc Create or update profile
 // @access Private
