@@ -139,11 +139,12 @@ router.post(
       .then(profile => {
         if (profile) {
           // Update
+          const prevHandle = profile.handle;
 
           // Check handle
           Profile.findOne({ handle: fields.handle })
             .then(profile => {
-              if (profile) {
+              if (profile && profile.handle !== prevHandle) {
                 return res
                   .status(400)
                   .json({ handle: msg.fieldAlreadyExists("handle") });
