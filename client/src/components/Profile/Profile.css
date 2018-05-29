@@ -7,16 +7,17 @@
   flex-direction: column;
   margin: 0 auto;
   padding: 2rem;
+  overflow: auto;
 }
 
 .Profile {
   width: 100%;
   margin: 1rem auto;
-  /*overflow: auto;*/
   display: grid;
   grid: "header header"
   "about about"
-  "exp edu"
+  "exp exp"
+  "edu edu"
   "github github"
         / 1fr 1fr;
   grid-gap: 1rem;
@@ -66,6 +67,16 @@
 @media (min-width: 768px) {
   .ProfileWrapper {
     width: 70%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Profile {
+    grid: "header header"
+    "about about"
+    "exp edu"
+    "github github"
+        / 1fr 1fr;
   }
 }
 
