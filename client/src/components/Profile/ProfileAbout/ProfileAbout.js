@@ -10,12 +10,12 @@ class ProfileAbout extends Component {
     const { user, bio, skills } = profile;
 
     // eslint-disable-next-line
-    const firstName = user.name.trim().split(" ")[0];
+    const firstName = capitalizeFirstLetter(user.name.trim().split(" ")[0]);
 
     let skillBox = null;
     if (!isEmpty(skills)) {
       const skillList = skills.map(skill => (
-        <div key={skill} className={classes.SkillItem}>
+        <div key={skill}>
           <i style={{ color: "var(--highlight-color)" }} className={"fas fa-check"}/>{skill}
         </div>
       ));
@@ -26,9 +26,9 @@ class ProfileAbout extends Component {
       <Fragment>
         <div className={classes.Bio}>
           <div className={classes.Header}>
-            {capitalizeFirstLetter(firstName)}&apos;s bio
+            {firstName}&apos;s bio
           </div>
-          {!isEmpty(bio) ? <div className={classes.Body}>{bio}</div> : <div className={classes.Body}>{firstName} has no bio</div>}
+          {!isEmpty(bio) ? <div className={classes.BioBody}>{bio}</div> : <div className={classes.Body}>{firstName} has no bio</div>}
         </div>
         <div className={classes.Skills}>
           <div className={classes.Header}>

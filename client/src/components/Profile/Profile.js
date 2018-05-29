@@ -10,20 +10,29 @@ import ProfileGithub from "./ProfileGithub/ProfileGithub";
 import ProfileHeader from "./ProfileHeader/ProfileHeader";
 import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
+import { dynamicSort } from "../../shared/utils";
 
 class Profile extends Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!prevState.showBackButton && nextProps.history.action === "PUSH") {
+      return { ...prevState, showBackButton: true };
+    }
+
+    return null;
+  }
+
+  state = {
+    showBackButton: false
+  };
+
   componentDidMount() {
     if (this.props.match.params.handle) {
       this.props.getProfileByHandle(this.props.match.params.handle);
     }
   }
 
-  go = path => {
-    this.props.history.push(path);
-  };
-
   render() {
-    const { profile, loading } = this.props;
+    const { profile, loading, history } = this.props;
 
     let profileContents;
 
@@ -32,12 +41,12 @@ class Profile extends Component {
     } else {
       profileContents = (
         <div className={classes.ProfileWrapper}>
-          <div className={classes.AlignStart}>
-            <Button type={"button"} colorType={"secondary"} handleClick={this.go.bind(this, "/dashboard")}>
+          {this.state.showBackButton ? <div className={classes.AlignStart}>
+            <Button type={"button"} colorType={"secondary"} handleClick={history.goBack}>
               <i className={"fas fa-angle-left"}/>
               Go back
             </Button>
-          </div>
+          </div> : null}
           <div className={classes.Profile}>
             <div className={classes.Header}>
               <ProfileHeader profile={profile}/>
@@ -46,10 +55,10 @@ class Profile extends Component {
               <ProfileAbout profile={profile}/>
             </div>
             <div className={classes.Experience}>
-              {profile.experience ? <ProfileCreds experience={profile.experience}/> : null}
+              {profile.experience ? <ProfileCreds experience={profile.experience.sort(dynamicSort("-from"))}/> : null}
             </div>
             <div className={classes.Education}>
-              {profile.education ? <ProfileCreds education={profile.education}/> : null}
+              {profile.education ? <ProfileCreds education={profile.education.sort(dynamicSort("-from"))}/> : null}
             </div>
             <div className={classes.Github}>
               <ProfileGithub profile={profile}/>
@@ -63,15 +72,11 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
-  // serverSideErrors: PropTypes.object.isRequired,
   getProfileByHandle: PropTypes.func.isRequired
-  // clearErrors: PropTypes.func.isRequired,
-  // createProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    // serverSideErrors: state.serverErrors.errors,
     loading: state.profile.loading,
     profile: state.profile.profile
   };
@@ -79,10 +84,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // getCurrentProfile: () => dispatch(actionCreators.getCurrentProfile()),
     getProfileByHandle: handle => dispatch(actionCreators.getProfileByHandle(handle))
-    // clearErrors: () => dispatch(actionCreators.clearServerSideErrors()),
-    // createProfile: (profileData, history) => dispatch(actionCreators.createProfile(profileData, history))
   };
 };
 

@@ -240,7 +240,7 @@ class AddExperienceForm extends Component {
             <div className={classes.AlignStart}>
               <Button type={"button"} colorType={"secondary"} handleClick={this.go.bind(this, "/dashboard")}>
                 <i className={"fas fa-angle-left"}/>
-                Go back
+                Go to dashboard
               </Button>
             </div>
             <div className={classes.Title}>Add experience</div>

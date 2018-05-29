@@ -2,13 +2,13 @@
   width: 100%;
   font-size: 1rem;
   line-height: 1rem;
-  color: black;
+  color: var(--dark-color);
 }
 .Bio {
   text-align: center;
   border-radius: 0.3rem 0.3rem 0 0;
   padding: 1rem;
-  border: 1px solid black;
+  border: 1px solid var(--dark-color);
   background-color: var(--light-color);
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@
   text-align: center;
   border-radius: 0 0 0.3rem 0.3rem;
   padding: 1rem;
-  border: 1px solid black;
+  border: 1px solid var(--dark-color);
   border-top: none;
   background-color: var(--light-color);
   display: flex;
@@ -26,26 +26,30 @@
 }
 
 .Header {
-  font-size: 1.6rem;
-  line-height: 1.6rem;
-  padding-bottom: 1rem;
+  color: white;
+  background-color: var(--dark-color);
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+  margin-bottom: 1rem;
+  padding: 0.4rem 0;
+  box-shadow: 1px 1px 1px 1px black;
 }
-
 .Body {
   font-size: 1rem;
   line-height: 1rem;
   text-align: left;
 }
 
+.BioBody {
+  font-size: 1rem;
+  line-height: 1rem;
+  text-align: left;
+  padding: 0.3rem;
+  color: black;
+}
+
 .SkillBox {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-}
-
-.SkillItem {
-  background-color: white;
-  margin: 0.1rem;
-  padding: 0.3rem;
-  border-radius: 0.3rem;
 }
