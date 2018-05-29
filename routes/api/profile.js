@@ -11,13 +11,6 @@ const validateEducationInput = require("../../validation/education");
 const isEmpty = require("../../shared/isEmpty");
 const msg = require("../../shared/messages");
 
-// @route GET api/profile/test
-// @desc test route for profile
-// @access Public
-router.get("/test", (req, res) => {
-  res.json("Hello world");
-});
-
 // @route GET api/profile
 // @desc Get current user profile
 // @access Private

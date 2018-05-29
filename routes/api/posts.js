@@ -7,13 +7,6 @@ const validatePostInput = require("../../validation/post");
 const isEmpty = require("../../shared/isEmpty");
 const msg = require("../../shared/messages");
 
-// @route GET api/posts/test
-// @desc test route for posts
-// @access Public
-router.get("/test", (req, res) => {
-  res.json("Hello world");
-});
-
 // @route GET api/posts
 // @desc Get all posts
 // @access Public

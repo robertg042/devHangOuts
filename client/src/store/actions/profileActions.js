@@ -11,6 +11,13 @@ export const setProfileLoading = isLoading => {
   };
 };
 
+export const setProfileFoundState = profileFoundState => {
+  return {
+    type: actionsTypes.PROFILE_FOUND,
+    profileFoundState: profileFoundState
+  };
+};
+
 export const createProfile = (profileData, history) => dispatch => {
   dispatch(setProfileLoading(true));
   axios.post("/api/profile", profileData)
@@ -33,6 +40,7 @@ export const getCurrentProfile = () => dispatch => {
         type: actionsTypes.GET_PROFILE,
         payload: res.data
       });
+      dispatch(setProfileFoundState(true));
       dispatch(setProfileLoading(false));
     })
     .catch(() => {
@@ -40,6 +48,7 @@ export const getCurrentProfile = () => dispatch => {
         type: actionsTypes.GET_PROFILE,
         payload: {}
       });
+      dispatch(setProfileFoundState(false));
       dispatch(setProfileLoading(false));
     });
 };
@@ -53,13 +62,11 @@ export const getProfileByHandle = handle => dispatch => {
         type: actionsTypes.GET_PROFILE,
         payload: res.data
       });
+      dispatch(setProfileFoundState(true));
       dispatch(setProfileLoading(false));
     })
     .catch(() => {
-      dispatch({
-        type: actionsTypes.GET_PROFILE,
-        payload: null
-      });
+      dispatch(setProfileFoundState(false));
       dispatch(setProfileLoading(false));
     });
 };

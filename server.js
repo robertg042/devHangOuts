@@ -13,7 +13,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const db = require("./config/keys").mongoURI;
+const db = require("./config/keys").MONGODB_URI;
 
 mongoose
   .connect(db)

@@ -3,7 +3,8 @@ import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   profile: null,
   profiles: null,
-  loading: null
+  loading: null,
+  profileFound: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,6 +13,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: action.isLoading
+      };
+    }
+    case actionTypes.PROFILE_FOUND: {
+      return {
+        ...state,
+        profileFound: action.profileFoundState
       };
     }
     case actionTypes.GET_PROFILE: {
@@ -29,7 +36,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.CLEAR_CURRENT_PROFILE: {
       return {
         ...state,
-        profile: null
+        profile: null,
+        profileFound: null
       };
     }
     default:

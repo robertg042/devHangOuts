@@ -10,7 +10,7 @@ import ProfileGithub from "./ProfileGithub/ProfileGithub";
 import ProfileHeader from "./ProfileHeader/ProfileHeader";
 import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
-import { dynamicSort } from "../../shared/utils";
+import { isEmpty, dynamicSort } from "../../shared/utils";
 
 class Profile extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -32,13 +32,14 @@ class Profile extends Component {
   }
 
   render() {
-    const { profile, loading, history } = this.props;
+    const { profile, loading, history, profileFound, setProfileFoundState } = this.props;
 
-    let profileContents;
-
-    if (profile === null || loading) {
-      profileContents = <Spinner/>;
-    } else {
+    let profileContents = <Spinner/>;
+    if (profileFound === false) {
+      setProfileFoundState(null);
+      history.push("/redirect", { message: "Profile not found", to: "/developers page", url: "/developers" });
+    }
+    if (profile && !loading) {
       profileContents = (
         <div className={classes.ProfileWrapper}>
           {this.state.showBackButton ? <div className={classes.AlignStart}>
@@ -60,9 +61,9 @@ class Profile extends Component {
             <div className={classes.Education}>
               {profile.education ? <ProfileCreds education={profile.education.sort(dynamicSort("-from"))}/> : null}
             </div>
-            <div className={classes.Github}>
-              <ProfileGithub profile={profile}/>
-            </div>
+            {!isEmpty(profile.githubusername) ? <div className={classes.Github}>
+              <ProfileGithub username={profile.githubusername}/>
+            </div> : null}
           </div>
         </div>);
     }
@@ -77,6 +78,7 @@ Profile.propTypes = {
 
 const mapStateToProps = state => {
   return {
+    profileFound: state.profile.profileFound,
     loading: state.profile.loading,
     profile: state.profile.profile
   };
@@ -84,7 +86,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProfileByHandle: handle => dispatch(actionCreators.getProfileByHandle(handle))
+    getProfileByHandle: handle => dispatch(actionCreators.getProfileByHandle(handle)),
+    setProfileFoundState: foundState => dispatch(actionCreators.setProfileFoundState(foundState))
   };
 };
 
