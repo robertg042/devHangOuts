@@ -43,6 +43,7 @@ const ERROR_INTERNAL_ERROR = "Internal error";
 
 // profile
 const ERROR_URL_INVALID = "This is not a valid URL";
+const ERROR_URL_NOT_HTTP = "URL has to start with all lowercase \"http://\" or \"https://\"";
 
 // posts
 const ERROR_USER_NOT_AUTHORIZED = "User not authorized";
@@ -59,6 +60,7 @@ module.exports = {
   ERROR_PASSWORD2_FIELD_NOT_MATCH,
   ERROR_INTERNAL_ERROR,
   ERROR_URL_INVALID,
+  ERROR_URL_NOT_HTTP,
   ERROR_USER_NOT_AUTHORIZED,
   ERROR_USER_ALREADY_LIKED_POST,
   ERROR_CANNOT_DISLIKE_POST

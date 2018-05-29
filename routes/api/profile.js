@@ -124,8 +124,6 @@ router.post(
       fields[key] = req.body[key];
     });
 
-    console.log(fields);
-
     if (!Validator.isEmpty(req.body.skills)) {
       fields.skills = req.body.skills
         .split(",")

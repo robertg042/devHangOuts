@@ -20,6 +20,7 @@ const validateProfileInput = data => {
     "facebook",
     "twitter",
     "linkedin",
+    "youtube",
     "instagram"
   ];
   utils.assureEmptyStringIfEmpty(allProps, data);
@@ -43,7 +44,7 @@ const validateProfileInput = data => {
   utils.validateRequiredProps(requiredProps, data, errors);
 
   // Validate urls
-  const urlProps = ["website", "facebook", "twitter", "linkedin", "instagram"];
+  const urlProps = ["website", "facebook", "twitter", "linkedin", "youtube", "instagram"];
   utils.validateUrlProps(urlProps, data, errors);
 
   return {
