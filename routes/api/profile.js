@@ -2,6 +2,7 @@ const Validator = require("validator");
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const request = require("request");
 
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
@@ -10,6 +11,7 @@ const validateExperienceInput = require("../../validation/experience");
 const validateEducationInput = require("../../validation/education");
 const isEmpty = require("../../shared/isEmpty");
 const msg = require("../../shared/messages");
+const KEYS = require("../../config/keys");
 
 // @route GET api/profile
 // @desc Get current user profile
@@ -59,7 +61,7 @@ router.get("/all", (req, res) => {
 // @route GET api/profile/:handle
 // @desc Get profile by handle
 // @access Public
-router.get("/:handle", (req, res) => {
+router.get("/handle/:handle", (req, res) => {
   Profile.findOne({ handle: req.params.handle })
     .populate("user", ["name", "avatar"])
     .then(profile => {
@@ -193,57 +195,6 @@ router.post(
 
         return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
-
-    // Profile.findOne({ user: req.user.id })
-    //   .then(profile => {
-    //     if (profile) {
-    //       // Update
-    //       Profile.findOneAndUpdate(
-    //         { user: req.user.id },
-    //         { $set: fields },
-    //         { new: true }
-    //       )
-    //         .then(profile => res.json(profile))
-    //         .catch(err => {
-    //           console.log(err);
-    //
-    //           return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
-    //         });
-    //     } else {
-    //       // Create
-    //
-    //       // Check handle
-    //       Profile.findOne({ handle: fields.handle })
-    //         .then(profile => {
-    //           if (profile) {
-    //             return res
-    //               .status(400)
-    //               .json({ handle: msg.fieldAlreadyExists("handle") });
-    //           } else {
-    //             new Profile(fields)
-    //               .save()
-    //               .then(profile => res.json(profile))
-    //               .catch(err => {
-    //                 console.log(err);
-    //
-    //                 return res
-    //                   .status(500)
-    //                   .json({ error: msg.ERROR_INTERNAL_ERROR });
-    //               });
-    //           }
-    //         })
-    //         .catch(err => {
-    //           console.log(err);
-    //
-    //           return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
-    //         });
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //
-    //     return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
-    //   });
   }
 );
 
