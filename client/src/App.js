@@ -15,6 +15,7 @@ import EditProfileForm from "./components/EditProfileForm/EditProfileForm";
 import AddExperienceForm from "./components/AddExperienceForm/AddExperienceForm";
 import AddEducationForm from "./components/AddEducationForm/AddEducationForm";
 import ProfilesList from "./components/ProfilesList/ProfilesList";
+import Profile from "./components/Profile/Profile";
 import RedirectComponent from "./components/RedirectComponent/RedirectComponent";
 import store from "./store/store";
 import { setAuthToken } from "./shared/utils";
@@ -44,6 +45,7 @@ class App extends Component {
     let routes = (
       <Switch>
         <Route exact path={"/developers"} component={ProfilesList}/>
+        <Route path={"/profile/:handle"} component={Profile}/>
         <Route exact path={"/redirect"} component={RedirectComponent}/>
         <Route exact path={"/login"} component={LoginForm}/>
         <Route exact path={"/signup"} component={SignupForm}/>
@@ -56,6 +58,7 @@ class App extends Component {
       routes = (
         <Switch>
           <Route exact path={"/developers"} component={ProfilesList}/>
+          <Route path={"/profile/:handle"} component={Profile}/>
           <Route exact path={"/dashboard"} component={Dashboard}/>
           <Route exact path={"/create-profile"} component={CreateProfileForm}/>
           <Route exact path={"/edit-profile"} component={EditProfileForm}/>

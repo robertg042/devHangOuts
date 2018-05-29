@@ -259,8 +259,6 @@ class EditProfileForm extends Component {
       profileData[key] = form[key].value;
     });
 
-    console.log(JSON.stringify(profileData, null, 4));
-
     this.props.createProfile(profileData, this.props.history);
   };
 

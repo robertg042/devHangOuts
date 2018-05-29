@@ -31,7 +31,7 @@ class ProfileItem extends Component {
 
     return (
       <div className={classes.ProfileItem}>
-        <div className={classes.Avatar}><img src={avatar} alt="User's avatar"/> </div>
+        <div className={classes.Avatar}><img src={avatar} alt="User's avatar"/></div>
         <div className={classes.Name}>{name}</div>
         <div className={classes.Status}>
           {capitalizeFirstLetter(status)} {!isEmpty(company) ? <span>at {company}</span> : null}

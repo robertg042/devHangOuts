@@ -7,6 +7,7 @@ export { getServerSideErrors, clearServerSideErrors } from "./serverSideErrorAct
 export {
   setProfileLoading,
   getCurrentProfile,
+  getProfileByHandle,
   clearCurrentProfile,
   createProfile,
   addExperience,

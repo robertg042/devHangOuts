@@ -44,6 +44,26 @@ export const getCurrentProfile = () => dispatch => {
     });
 };
 
+export const getProfileByHandle = handle => dispatch => {
+  dispatch(setProfileLoading(true));
+
+  axios.get(`/api/profile/${handle}`)
+    .then(res => {
+      dispatch({
+        type: actionsTypes.GET_PROFILE,
+        payload: res.data
+      });
+      dispatch(setProfileLoading(false));
+    })
+    .catch(() => {
+      dispatch({
+        type: actionsTypes.GET_PROFILE,
+        payload: null
+      });
+      dispatch(setProfileLoading(false));
+    });
+};
+
 export const clearCurrentProfile = () => {
   return {
     type: actionsTypes.CLEAR_CURRENT_PROFILE

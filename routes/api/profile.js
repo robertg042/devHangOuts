@@ -63,10 +63,10 @@ router.get("/all", (req, res) => {
     });
 });
 
-// @route GET api/profile/handle/:handle
+// @route GET api/profile/:handle
 // @desc Get profile by handle
 // @access Public
-router.get("/handle/:handle", (req, res) => {
+router.get("/:handle", (req, res) => {
   Profile.findOne({ handle: req.params.handle })
     .populate("user", ["name", "avatar"])
     .then(profile => {
@@ -117,28 +117,14 @@ router.post(
     }
 
     const fields = {};
-    const propsArray = [
-      "handle",
-      "company",
-      "website",
-      "location",
-      "bio",
-      "status",
-      "githubusername",
-      "twitter",
-      "facebook",
-      "linkedin",
-      "youtube",
-      "instagram"
-    ];
 
     fields.user = req.user.id;
 
-    propsArray.forEach(prop => {
-      if (req.body[prop]) {
-        fields[prop] = req.body[prop];
-      }
+    Object.keys(req.body).map(key => {
+      fields[key] = req.body[key];
     });
+
+    console.log(fields);
 
     if (!Validator.isEmpty(req.body.skills)) {
       fields.skills = req.body.skills

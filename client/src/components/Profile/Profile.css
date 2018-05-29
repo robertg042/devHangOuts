@@ -1,0 +1,76 @@
+.ProfileWrapper {
+  color: black;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.Profile {
+  width: 100%;
+  margin: 1rem auto;
+  /*overflow: auto;*/
+  display: grid;
+  grid: "header header"
+  "about about"
+  "exp edu"
+  "github github"
+        / 1fr 1fr;
+  grid-gap: 1rem;
+}
+
+.Profile img {
+  width: 9rem;
+  border-radius: 50%;
+}
+
+.Header {
+  grid-area: header;
+}
+
+.About {
+  grid-area: about;
+}
+
+.Experience {
+  grid-area: exp;
+}
+
+.Education {
+  grid-area: edu;
+}
+
+.Github {
+  grid-area: github;
+}
+
+.AlignStart {
+  align-self: flex-start;
+}
+
+@media (min-width: 400px) {
+  .ProfileWrapper {
+    width: 85%;
+  }
+}
+
+@media (min-width: 31.25rem) {
+  .ProfileWrapper {
+    align-items: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .ProfileWrapper {
+    width: 70%;
+  }
+}
+
+@media (min-width: 2100px) {
+  .ProfileWrapper {
+    width: 50%;
+  }
+}

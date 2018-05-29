@@ -1,0 +1,64 @@
+.ProfileHeader {
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1rem;
+  text-align: center;
+  border: 1px solid black;
+  background-color: var(--dark-color);
+  color: white;
+  border-radius: 0.3rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.ProfileHeader i {
+  padding: 0;
+  margin: 0;
+}
+
+.Avatar {
+  padding-bottom: 1rem;
+}
+
+.Name {
+  font-size: 2rem;
+  line-height: 2rem;
+  padding-bottom: 1rem;
+}
+
+.Status {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.Location {
+  font-size: 1rem;
+  line-height: 1rem;
+  padding-bottom: 1rem;
+}
+
+.SocialWrapper {
+  font-size: 2rem;
+  line-height: 2rem;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.SocialItem {
+  padding: 0.2rem 1rem;
+  color: inherit;
+  transition: all 0.3s;
+}
+
+.SocialItem:focus, .SocialItem:hover {
+  color: var(--highlight-color);
+  transform: scale(1.2);
+}
+
+.Smaller {
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+}
