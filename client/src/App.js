@@ -22,6 +22,7 @@ import { setAuthToken } from "./shared/utils";
 import { setAuthenticatedUser, logoutUser } from "./store/actions/authActions";
 
 // FIXME: bug: user logged in with an not-existent account (deleted through database) with not expired token should be logged out
+// FIXME: bug: during redirecting from logout when clicked on login link without waiting there is no autofocus on name field
 
 class App extends Component {
   componentDidMount() {

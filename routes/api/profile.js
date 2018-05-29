@@ -139,12 +139,28 @@ router.post(
       .then(profile => {
         if (profile) {
           // Update
-          Profile.findOneAndUpdate(
-            { user: req.user.id },
-            { $set: fields },
-            { new: true }
-          )
-            .then(profile => res.json(profile))
+
+          // Check handle
+          Profile.findOne({ handle: fields.handle })
+            .then(profile => {
+              if (profile) {
+                return res
+                  .status(400)
+                  .json({ handle: msg.fieldAlreadyExists("handle") });
+              } else {
+                Profile.findOneAndUpdate(
+                  { user: req.user.id },
+                  { $set: fields },
+                  { new: true }
+                )
+                  .then(profile => res.json(profile))
+                  .catch(err => {
+                    console.log(err);
+
+                    return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
+                  });
+              }
+            })
             .catch(err => {
               console.log(err);
 
@@ -185,6 +201,57 @@ router.post(
 
         return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
       });
+
+    // Profile.findOne({ user: req.user.id })
+    //   .then(profile => {
+    //     if (profile) {
+    //       // Update
+    //       Profile.findOneAndUpdate(
+    //         { user: req.user.id },
+    //         { $set: fields },
+    //         { new: true }
+    //       )
+    //         .then(profile => res.json(profile))
+    //         .catch(err => {
+    //           console.log(err);
+    //
+    //           return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
+    //         });
+    //     } else {
+    //       // Create
+    //
+    //       // Check handle
+    //       Profile.findOne({ handle: fields.handle })
+    //         .then(profile => {
+    //           if (profile) {
+    //             return res
+    //               .status(400)
+    //               .json({ handle: msg.fieldAlreadyExists("handle") });
+    //           } else {
+    //             new Profile(fields)
+    //               .save()
+    //               .then(profile => res.json(profile))
+    //               .catch(err => {
+    //                 console.log(err);
+    //
+    //                 return res
+    //                   .status(500)
+    //                   .json({ error: msg.ERROR_INTERNAL_ERROR });
+    //               });
+    //           }
+    //         })
+    //         .catch(err => {
+    //           console.log(err);
+    //
+    //           return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
+    //         });
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //
+    //     return res.status(500).json({ error: msg.ERROR_INTERNAL_ERROR });
+    //   });
   }
 );
 
