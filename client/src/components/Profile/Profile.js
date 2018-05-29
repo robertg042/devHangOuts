@@ -35,7 +35,7 @@ class Profile extends Component {
           <div className={classes.AlignStart}>
             <Button type={"button"} colorType={"secondary"} handleClick={this.go.bind(this, "/dashboard")}>
               <i className={"fas fa-angle-left"}/>
-            Go back
+              Go back
             </Button>
           </div>
           <div className={classes.Profile}>
@@ -46,10 +46,10 @@ class Profile extends Component {
               <ProfileAbout profile={profile}/>
             </div>
             <div className={classes.Experience}>
-              <ProfileCreds profile={profile}/>
+              {profile.experience ? <ProfileCreds experience={profile.experience}/> : null}
             </div>
             <div className={classes.Education}>
-              <ProfileCreds profile={profile}/>
+              {profile.education ? <ProfileCreds education={profile.education}/> : null}
             </div>
             <div className={classes.Github}>
               <ProfileGithub profile={profile}/>
