@@ -116,6 +116,7 @@ router.get("/github/:githubusername", (req, res) => {
       "User-Agent": "robertg042"
     }
   }, (error, response, body) => {
+    console.log(response);
     if (error) {
       console.log(error);
 

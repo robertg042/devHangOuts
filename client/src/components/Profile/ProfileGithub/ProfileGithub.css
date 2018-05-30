@@ -1,3 +1,89 @@
 .ProfileGithub {
+  padding: 1rem;
+  border: 1px solid var(--dark-color);
+  border-radius: 0.3rem;
+  background-color: var(--light-color);
+}
 
+.ProfileGithub i {
+  padding: 0;
+  margin: 0 0.3rem;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+}
+
+.Header {
+  color: white;
+  background-color: var(--dark-color);
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+  margin: auto;
+  padding: 0.4rem 0;
+  box-shadow: 1px 1px 1px 1px black;
+  text-align: center;
+  vertical-align: center;
+  position: relative;
+}
+
+.Header a {
+  display: inline;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+}
+
+.Header i {
+  transform: translateY(-0.1rem);
+}
+
+.Repo {
+  padding: 0.4rem;
+  margin: 0.5rem;
+  text-align: center;
+  border: 1px solid var(--dark-color);
+  border-radius: 0.3rem;
+  box-shadow: 0 0 1px 1px var(--highlight-color);
+  background-color: var(--lighter-color);
+  display: grid;
+  grid: "namelink badges"
+        / auto 8rem
+}
+
+.NameLink {
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  margin: 0.8rem 0.5rem;
+  text-align: center;
+  color: var(--dark-color);
+  text-decoration: none;
+  grid-area: namelink;
+}
+
+.Description {
+  display: none;
+  font-style: italic;
+  grid-area: description;
+}
+
+.Badges {
+  grid-area: badges;
+}
+
+.Badge {
+  padding: 0.3rem;
+  border: 1px solid var(--dark-color);
+  border-radius: 0.3rem;
+  background-color: var(--light-color);
+}
+
+@media (min-width: 900px) {
+  .Repo {
+    grid: "namelink badges"
+    "description badges"
+        / auto 8rem
+  }
+
+  .Description {
+    display: block;
+  }
 }

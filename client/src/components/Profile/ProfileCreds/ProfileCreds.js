@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Moment from "react-moment";
 
 import classes from "./ProfileCreds.css";
@@ -74,7 +74,7 @@ class ProfileCreds extends Component {
     return (
       <div className={classes.ProfileCreds}>
         <div className={classes.Header}>
-          {experience ? "Experience" : "Education"}
+          {experience ? <span><i className="fab fa-black-tie"/>Experience</span> : <span><i className="fas fa-graduation-cap"/>Education</span>}
         </div>
         {itemContents}
       </div>
