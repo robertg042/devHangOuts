@@ -37,7 +37,7 @@ class ProfileGithub extends Component {
       repoItems = repos.map(repo => (
         <div className={classes.Repo} key={repo.id}>
           <Link className={classes.NameLink} to={repo.html_url} target={"_blank"}>{repo.name}<i className="fas fa-external-link-alt"/></Link>
-          <div className={classes.Description}>{repo.description || "No description"}</div>
+          <div className={classes.Description}>{repo.description || "No description "}</div>
           <div className={classes.Badges}>
             <div className={classes.Badge}><i className={"fas fa-star"}/>Stars: {repo.stargazers_count}</div>
             <div className={classes.Badge}><i className={"fas fa-eye"}/>Watchers: {repo.watchers_count}</div>

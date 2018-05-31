@@ -123,7 +123,7 @@ class EditProfileForm extends Component {
           inputType: "text",
           labelText: "Github username",
           icon: "fab fa-github",
-          info: "",
+          info: "Fill to have your latest repositories displayed",
           error: "",
           disabled: false,
           isRequired: false,
@@ -287,7 +287,7 @@ class EditProfileForm extends Component {
       } else {
         formContents = (
           <div className={classes.EditProfileFormWrapper}>
-            <div className={classes.AlignStart}>
+            <div className={classes.BackButton}>
               <Button type={"button"} colorType={"secondary"} handleClick={this.go.bind(this, "/dashboard")}>
                 <i className={"fas fa-angle-left"}/>
                 Go to dashboard

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import Moment from "react-moment";
 
 import classes from "./ProfileCreds.css";

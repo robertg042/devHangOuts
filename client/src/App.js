@@ -23,7 +23,6 @@ import { setAuthenticatedUser, logoutUser } from "./store/actions/authActions";
 
 // FIXME: bug: user logged in with an not-existent account (deleted through database) with not expired token should be logged out
 // FIXME: bug: during redirecting from logout when clicked on login link without waiting there is no autofocus on name field
-// FIXME: consolidate overflowing to <main> element
 
 class App extends Component {
   componentDidMount() {
@@ -53,7 +52,7 @@ class App extends Component {
         <Route exact path={"/signup"} component={SignupForm}/>
         <Route exact path={"/"} component={Landing}/>
         <Route render={() => {
-          return <RedirectComponent message={"Not found."} to={"home page"} url={"/"} />;
+          return <RedirectComponent message={"Not found"} to={"home page"} url={"/"} />;
         }}/>
       </Switch>);
     if (this.props.isAuthenticated) {
@@ -72,7 +71,7 @@ class App extends Component {
           <Redirect exact from={"/signup"} to={"/developers"}/>
           <Redirect exact from={"/"} to={"/developers"}/>
           <Route render={() => {
-            return <RedirectComponent message={"Not found."} to={"home page"} url={"/"} />;
+            return <RedirectComponent message={"Not found"} to={"home page"} url={"/"} />;
           }}/>
         </Switch>);
     }

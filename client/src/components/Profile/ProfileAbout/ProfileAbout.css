@@ -4,25 +4,17 @@
   line-height: 1rem;
   color: var(--dark-color);
 }
-.Bio {
+.Bio, .Skills {
   text-align: center;
-  border-radius: 0.3rem 0.3rem 0 0;
   padding: 1rem;
-  border: 1px solid var(--dark-color);
   background-color: var(--light-color);
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid var(--dark-color);
 }
 
-.Skills {
-  text-align: center;
-  border-radius: 0 0 0.3rem 0.3rem;
-  padding: 1rem;
-  border: 1px solid var(--dark-color);
-  border-top: none;
-  background-color: var(--light-color);
-  display: flex;
-  flex-direction: column;
+.Bio {
+  border-top: 1px solid var(--dark-color);
 }
 
 .Header {
@@ -52,4 +44,20 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+
+
+@media (min-width: 31.25rem) {
+  .Bio, .Skills {
+    border: 1px solid var(--dark-color);
+  }
+
+  .Bio {
+    border-radius: 0.3rem 0.3rem 0 0;
+  }
+
+  .Skills {
+    border-top: none;
+    border-radius: 0 0 0.3rem 0.3rem;
+  }
 }

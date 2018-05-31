@@ -12,7 +12,7 @@ class Table extends Component {
       <th key={header}>{header}</th>
     ));
     let items = null;
-    if (title === "Experience") {
+    if (String(title) === "Experience") {
       items = rows.map(item => {
         return (
           <tr key={item._id}>
@@ -36,7 +36,7 @@ class Table extends Component {
           </tr>
         );
       });
-    } else if (title === "Education") {
+    } else if (String(title) === "Education") {
       items = rows.map(item => {
         return (
           <tr key={item._id}>
@@ -65,18 +65,20 @@ class Table extends Component {
 
     return (
       <div className={classes.TableWrapper}>
-        <h4>{title}</h4>
-        <table>
-          <thead>
-            <tr>
-              {headerList}
-              <th/>
-            </tr>
-          </thead>
-          <tbody>
-            {items}
-          </tbody>
-        </table>
+        <div className={classes.Header}>{title}</div>
+        <div style={{ overflow: "auto" }}>
+          <table>
+            <thead>
+              <tr>
+                {headerList}
+                <th/>
+              </tr>
+            </thead>
+            <tbody>
+              {items}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }

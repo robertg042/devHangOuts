@@ -20,9 +20,9 @@ class ProfilesList extends Component {
       profileItems = <Spinner/>;
     } else {
       if (profiles.length > 0) {
-        profileItems = profiles.map(profile => (
-          <ProfileItem key={profile._id} profile={profile}/>
-        ));
+        profileItems = profiles.map(profile => {
+          return <ProfileItem key={profile._id} profile={profile}/>;
+        });
       } else {
         profileItems = <h4>No profiles found</h4>;
       }
@@ -30,13 +30,11 @@ class ProfilesList extends Component {
 
     return (
       <div className={classes.ProfilesListWrapper}>
+        <div className={classes.Title}>Developer profiles</div>
+        <div className={classes.SubTitle}>
+          Browse through developer&apos;s profiles
+        </div>
         <div className={classes.ProfilesList}>
-          <div className={classes.Title}>Developer profiles</div>
-          <div className={classes.SubTitle}>
-            <p>
-              Browse through developer&apos;s profiles
-            </p>
-          </div>
           {profileItems}
         </div>
       </div>

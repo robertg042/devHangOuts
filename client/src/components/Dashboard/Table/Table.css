@@ -4,7 +4,15 @@
 }
 
 .TableWrapper button {
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.2rem;
   transform: translateY(-0.1rem);
+}
+
+.Header {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  padding: 1.5rem;
 }
 
 /* Table: set position and padding */

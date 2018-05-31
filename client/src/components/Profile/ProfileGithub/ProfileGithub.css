@@ -1,8 +1,15 @@
 .ProfileGithub {
   padding: 1rem;
-  border: 1px solid var(--dark-color);
-  border-radius: 0.3rem;
+  border-top: 1px solid var(--dark-color);
+  border-bottom: 1px solid var(--dark-color);
   background-color: var(--light-color);
+}
+
+@media (min-width: 31.25rem) {
+  .ProfileGithub {
+    border: 1px solid var(--dark-color);
+    border-radius: 0.3rem;
+  }
 }
 
 .ProfileGithub i {
@@ -17,7 +24,7 @@
   background-color: var(--dark-color);
   font-size: 1.3rem;
   line-height: 1.3rem;
-  margin: auto;
+  margin-bottom: 1rem;
   padding: 0.4rem 0;
   box-shadow: 1px 1px 1px 1px black;
   text-align: center;
@@ -37,7 +44,7 @@
 }
 
 .Repo {
-  padding: 0.4rem;
+  padding: 0 0 0 0.4rem;
   margin: 0.5rem;
   text-align: center;
   border: 1px solid var(--dark-color);
@@ -57,33 +64,51 @@
   color: var(--dark-color);
   text-decoration: none;
   grid-area: namelink;
+  align-self: center;
 }
 
 .Description {
   display: none;
+  text-align: left;
   font-style: italic;
   grid-area: description;
+  padding: 1rem;
 }
 
 .Badges {
   grid-area: badges;
+  border-radius: 0 0.3rem 0.3rem 0;
 }
 
 .Badge {
   padding: 0.3rem;
-  border: 1px solid var(--dark-color);
-  border-radius: 0.3rem;
+  border-bottom: 1px solid var(--dark-color);
+  border-left: 1px solid var(--dark-color);
   background-color: var(--light-color);
+}
+
+.Badge:first-child {
+  border-radius: 0 0.3rem 0 0;
+}
+
+.Badge:last-child {
+  border-bottom: none;
+  border-radius: 0 0 0.3rem 0;
 }
 
 @media (min-width: 900px) {
   .Repo {
     grid: "namelink badges"
-    "description badges"
-        / auto 8rem
+    "description description"
+        / auto 14rem
   }
 
   .Description {
     display: block;
+  }
+
+  .Badge:last-child {
+    border-bottom: 1px solid var(--dark-color);
+    border-radius: 0 0 0 0.3rem;
   }
 }

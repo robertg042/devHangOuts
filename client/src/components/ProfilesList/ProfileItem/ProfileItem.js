@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -29,14 +29,20 @@ class ProfileItem extends Component {
       </div>);
     }
 
+    // ensures there is no double grid gap if location is null
+    const profileItemClasses = [classes.ProfileItem];
+    if (!location) {
+      profileItemClasses.push(classes.GridWithoutLocation);
+    }
+
     return (
-      <div className={classes.ProfileItem}>
+      <div className={profileItemClasses.join(" ")}>
         <div className={classes.Avatar}><img src={avatar} alt="User's avatar"/></div>
-        <div className={classes.Name}>{name}</div>
+        <div className={classes.Name}>{this.props.right}{name}</div>
         <div className={classes.Status}>
-          {capitalizeFirstLetter(status)} {!isEmpty(company) ? <span>at {company}</span> : null}
+          {capitalizeFirstLetter(status)} {!isEmpty(company) ? <Fragment>at {company}</Fragment> : null}
         </div>
-        <div className={classes.Location}>{location}</div>
+        {!isEmpty(location) ? <div className={classes.Location}>{location}</div> : null}
         <div className={classes.LinkToHandle}>
           <Button type={"button"}
             colorType={"highlight"}

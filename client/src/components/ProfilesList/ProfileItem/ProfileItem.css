@@ -3,33 +3,48 @@
   font-size: 1rem;
   line-height: 1rem;
   text-align: left;
-  margin: 1rem;
-  border: 1px solid black;
+  border-bottom: 1px solid var(--dark-color);
+  border-left: none;
+  border-right: none;
   background-color: var(--light-color);
-  border-radius: 0.5rem;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   display: grid;
   grid: "avatar name"
-  "avatar status"
-  "avatar location"
-  "avatar link"
-        / 4rem auto;
-  grid-gap: 0.5rem 1rem
+  "status status"
+  "location location"
+  "link link"
+  / 2rem auto;
+  grid-gap: 0.5rem 1rem;
+  align-items: center;
+}
+
+.ProfileItem:first-child {
+  border-top: 1px solid var(--dark-color);
+}
+
+.GridWithoutLocation {
+  grid: "avatar name"
+  "status status"
+  "link link"
+  / 2rem auto;
 }
 
 .ProfileItem img {
-  width: 100%;
+  height: 2rem;
   border-radius: 50%;
 }
 
 .Avatar {
   grid-area: avatar;
+  align-self: start;
 }
 
 .Name {
   grid-area: name;
   font-size: 1.2rem;
   line-height: 1.2rem;
+  display: flex;
+  align-items: center;
 }
 
 .Status {
@@ -44,6 +59,7 @@
 
 .LinkToHandle {
   grid-area: link;
+  justify-self: center;
 }
 .LinkToHandle button {
   font-size: 0.8rem;
@@ -90,8 +106,27 @@
     grid: "avatar name skills"
     "avatar status skills"
     "avatar location skills"
-    "avatar link skills"
+    "link link skills"
         / 4rem 6fr 4fr;
+    border: 1px solid var(--dark-color);
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .GridWithoutLocation {
+    grid: "avatar name skills"
+    "avatar status skills"
+    "link link skills"
+        / 4rem 6fr 4fr;
+  }
+
+  .ProfileItem img {
+    width: 100%;
+    height: auto;
+  }
+
+  .ProfileItem:first-child {
+    margin-top: 0;
   }
 
   .SkillsOuter {

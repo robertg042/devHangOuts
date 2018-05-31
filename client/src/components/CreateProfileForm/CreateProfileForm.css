@@ -6,8 +6,12 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding: 2rem;
-  font-size: 2rem;
+  font-size: 1rem;
+  line-height: 1rem;
+}
+
+.CreateProfileFormWrapper button {
+  margin: 1rem 0 2rem 0;
 }
 
 .CreateProfileForm {
@@ -15,17 +19,15 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding-bottom: 1.5rem;
-  font-size: 2rem;
-  overflow: auto;
+  padding: 0 0.5rem;
 }
 
 .Title {
   width: 100%;
   text-align: center;
-  font-size: 3rem;
-  line-height: 3rem;
-  padding-bottom: 2rem;
+  font-size: 2rem;
+  line-height: 2rem;
+  padding: 2rem 1rem;
 }
 
 .InfoTip {
@@ -38,26 +40,24 @@
   text-align: left;
 }
 
-@media (min-width: 400px) {
-  .CreateProfileFormWrapper {
-    width: 85%;
-  }
-}
-
 @media (min-width: 31.25rem) {
   .CreateProfileFormWrapper {
+    width: 80%;
     align-items: center;
   }
-}
-
-@media (min-width: 768px) {
-  .CreateProfileFormWrapper {
-    width: 70%;
+  .CreateProfileFormWrapper button {
+    border-radius: 0.5rem;
   }
 }
 
-@media (min-width: 2100px) {
+@media (min-width: 1200px) {
   .CreateProfileFormWrapper {
-    width: 50%;
+    width: 60%;
+  }
+}
+
+@media (min-width: 1800px) {
+  .CreateProfileFormWrapper {
+    width: 40%;
   }
 }

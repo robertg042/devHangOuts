@@ -24,6 +24,7 @@ class Landing extends Component {
 
   updateDimensions() {
     if (
+      this.guardRef.current &&
       document.documentElement.clientWidth >= 400 &&
       document.documentElement.clientHeight > 360
     ) {
@@ -32,6 +33,8 @@ class Landing extends Component {
       this.setState({ displayForm: false });
     }
   }
+
+  guardRef = React.createRef();
 
   render() {
     let signup = (
@@ -45,7 +48,7 @@ class Landing extends Component {
     }
 
     return (
-      <div className={classes.Landing}>
+      <div ref={this.guardRef} className={classes.Landing}>
         <div className={classes.Overlay} />
         <div className={classes.Content}>
           <div className={classes.Header}>

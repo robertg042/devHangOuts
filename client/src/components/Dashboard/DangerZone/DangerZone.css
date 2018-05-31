@@ -1,0 +1,39 @@
+.DangerZone {
+  margin: 2rem 0;
+}
+
+.AccordionToggle {
+  color: var(--error-color);
+  border-top: 2px solid var(--error-color);
+  border-bottom: 2px solid var(--error-color);
+  padding: 0.5rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.AccordionToggle i {
+  margin: 0 0.3rem;
+}
+
+.AccordionBody {
+  height: 0;
+  overflow: hidden;
+  text-align: center;
+  transition: all 0.3s ease-out;
+}
+
+.AccordionBody.Opened {
+  height: 3.5rem;
+  opacity: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+  border-bottom: 1px solid var(--error-color);
+}
+
+.AccordionBody button {;
+  font-size: 1rem;
+  line-height: 1rem;
+  border-radius: 0.3rem;
+  box-shadow: 0 1px 1px 1px black;
+  padding: 0.25rem 0.5rem;
+}

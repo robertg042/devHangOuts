@@ -18,9 +18,6 @@ class LoginForm extends Component {
       prevState.focusedRef.current.focus();
       state = { ...prevState, initiallyFocused: true };
     }
-    // if (nextProps.isAuthenticated) {
-    //   nextProps.history.push("/dashboard");
-    // }
 
     if (nextProps.serverSideErrors) {
       state = updateErrors(nextProps, state);
@@ -34,7 +31,7 @@ class LoginForm extends Component {
     this.state = {
       form: {
         email: {
-          id: `name_${makeId()}`,
+          id: `email_${makeId()}`,
           name: "email",
           inputType: "email",
           labelText: "Email address",

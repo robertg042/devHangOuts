@@ -3,10 +3,8 @@
   font-size: 1rem;
   line-height: 1rem;
   text-align: center;
-  border: 1px solid black;
   background-color: var(--dark-color);
   color: white;
-  border-radius: 0.3rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -61,4 +59,10 @@
 .Smaller {
   font-size: 1.2rem;
   line-height: 1.2rem;
+}
+
+@media (min-width: 31.25rem) {
+  .ProfileHeader {
+    border-radius: 0.3rem;
+  }
 }

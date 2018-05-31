@@ -6,8 +6,12 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding: 2rem;
-  font-size: 2rem;
+  font-size: 1rem;
+  line-height: 1rem;
+}
+
+.AddEducationFormWrapper button {
+  margin: 1rem 0 2rem 0;
 }
 
 .AddEducationForm {
@@ -15,17 +19,15 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding-bottom: 1.5rem;
-  font-size: 2rem;
-  overflow: auto;
+  padding: 0 0.5rem;
 }
 
 .Title {
   width: 100%;
   text-align: center;
-  font-size: 3rem;
-  line-height: 3rem;
-  padding-bottom: 2rem;
+  font-size: 2rem;
+  line-height: 2rem;
+  padding: 2rem 1rem;
 }
 
 .InfoTip {
@@ -38,30 +40,42 @@
   text-align: left;
 }
 
-.AlignStart {
-  align-self: flex-start;
+.BackButton {
+  margin-top: 1rem;
 }
 
-@media (min-width: 400px) {
-  .AddEducationFormWrapper {
-    width: 85%;
-  }
+.BackButton button {
+  width: 100%;
+  margin: 0;
 }
 
 @media (min-width: 31.25rem) {
   .AddEducationFormWrapper {
+    width: 80%;
     align-items: center;
   }
-}
+  .AddEducationFormWrapper button {
+    border-radius: 0.5rem;
+  }
 
-@media (min-width: 768px) {
-  .AddEducationFormWrapper {
-    width: 70%;
+  .BackButton {
+    align-self: flex-start;
+    margin-top: 1rem;
+  }
+
+  .BackButton button {
+    width: auto;
   }
 }
 
-@media (min-width: 2100px) {
+@media (min-width: 1200px) {
   .AddEducationFormWrapper {
-    width: 50%;
+    width: 60%;
+  }
+}
+
+@media (min-width: 1800px) {
+  .AddEducationFormWrapper {
+    width: 40%;
   }
 }

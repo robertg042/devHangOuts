@@ -25,7 +25,7 @@ router.post("/register", (req, res) => {
   User.findOne({ email: req.body.email })
     .then(user => {
       if (user) {
-        return res.status(400).json({ error: msg.fieldAlreadyExists("email") });
+        return res.status(400).json({ email: msg.fieldAlreadyExists("email") });
       } else {
         const avatar = gravatar.url(req.body.email, {
           s: "200", // size

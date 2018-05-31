@@ -8,13 +8,12 @@ class Logout extends Component {
   componentDidMount() {
     this.props.logoutUser();
     const location = {
-      message: "You have been successfully logged out.",
+      message: "You have been successfully logged out",
       to: "home page",
       url: "/"
     };
     this.props.history.replace("/redirect", location);
   }
-
 
   render() {
     return (

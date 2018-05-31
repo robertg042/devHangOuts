@@ -42,10 +42,10 @@ class Profile extends Component {
     if (profile && !loading) {
       profileContents = (
         <div className={classes.ProfileWrapper}>
-          {this.state.showBackButton ? <div className={classes.AlignStart}>
+          {this.state.showBackButton ? <div className={classes.BackButton}>
             <Button type={"button"} colorType={"secondary"} handleClick={history.goBack}>
               <i className={"fas fa-angle-left"}/>
-              Go back
+              Back
             </Button>
           </div> : null}
           <div className={classes.Profile}>

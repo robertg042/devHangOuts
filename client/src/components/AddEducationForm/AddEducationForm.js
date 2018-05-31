@@ -45,7 +45,7 @@ class AddEducationForm extends Component {
           info: "",
           error: "",
           disabled: false,
-          isRequired: false,
+          isRequired: true,
           value: ""
         },
         degree: {
@@ -57,7 +57,7 @@ class AddEducationForm extends Component {
           info: "",
           error: "",
           disabled: false,
-          isRequired: false,
+          isRequired: true,
           value: ""
         },
         fieldofstudy: {
@@ -69,7 +69,7 @@ class AddEducationForm extends Component {
           info: "",
           error: "",
           disabled: false,
-          isRequired: false,
+          isRequired: true,
           value: ""
         },
         from: {
@@ -81,7 +81,7 @@ class AddEducationForm extends Component {
           info: "",
           error: "",
           disabled: false,
-          isRequired: false,
+          isRequired: true,
           value: "",
           max: ""
         },
@@ -94,7 +94,7 @@ class AddEducationForm extends Component {
           info: "",
           error: "",
           disabled: false,
-          isRequired: false,
+          isRequired: true,
           value: "",
           max: "",
           previousValue: ""
@@ -237,7 +237,7 @@ class AddEducationForm extends Component {
       } else {
         formContents = (
           <div className={classes.AddEducationFormWrapper}>
-            <div className={classes.AlignStart}>
+            <div className={classes.BackButton}>
               <Button type={"button"} colorType={"secondary"} handleClick={this.go.bind(this, "/dashboard")}>
                 <i className={"fas fa-angle-left"}/>
                 Go to dashboard

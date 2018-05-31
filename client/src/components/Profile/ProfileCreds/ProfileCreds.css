@@ -1,8 +1,8 @@
 .ProfileCreds {
   padding: 1rem;
-  border: 1px solid var(--dark-color);
-  border-radius: 0.3rem;
   background-color: var(--light-color);
+  border-top: 1px solid var(--dark-color);
+  border-bottom: 1px solid var(--dark-color);
 }
 
 .Header {
@@ -59,4 +59,11 @@
 
 .HighlightedText {
   color: var(--highlight-color);
+}
+
+@media (min-width: 31.25rem) {
+  .ProfileCreds {
+    border: 1px solid var(--dark-color);
+    border-radius: 0.3rem;
+  }
 }

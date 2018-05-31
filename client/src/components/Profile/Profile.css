@@ -6,8 +6,8 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding: 2rem;
-  overflow: auto;
+  font-size: 1rem;
+  line-height: 1rem;
 }
 
 .Profile {
@@ -48,29 +48,38 @@
   grid-area: github;
 }
 
-.AlignStart {
-  align-self: flex-start;
+.BackButton {
+  margin-top: 1rem;
 }
 
-@media (min-width: 400px) {
-  .ProfileWrapper {
-    width: 85%;
-  }
+.BackButton button {
+  width: 100%;
 }
 
 @media (min-width: 31.25rem) {
   .ProfileWrapper {
+    width: 80%;
     align-items: center;
   }
-}
+  .ProfileWrapper button {
+    border-radius: 0.5rem;
+  }
 
-@media (min-width: 768px) {
-  .ProfileWrapper {
-    width: 70%;
+  .BackButton {
+    align-self: flex-start;
+    margin-top: 1rem;
+  }
+
+  .BackButton button {
+    width: auto;
   }
 }
 
 @media (min-width: 1200px) {
+  .ProfileWrapper {
+    width: 60%;
+  }
+
   .Profile {
     grid: "header header"
     "about about"
@@ -80,8 +89,8 @@
   }
 }
 
-@media (min-width: 2100px) {
+@media (min-width: 1800px) {
   .ProfileWrapper {
-    width: 50%;
+    width: 40%;
   }
 }

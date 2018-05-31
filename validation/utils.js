@@ -22,13 +22,13 @@ const validateUrlProps = (urlProps, obj, errorsObj) => {
   urlProps.forEach(prop => {
     if (!Validator.isEmpty(obj[prop]) && !Validator.isURL(obj[prop])) {
       errorsObj[prop] = ERROR_URL_INVALID;
-    }
-  });
 
-  // Check if url starts with http(s)
-  urlProps.forEach(prop => {
-    if (!obj[prop].match("^https?")) {
-      errorsObj[prop] = ERROR_URL_NOT_HTTP;
+      // Check if url starts with http(s)
+      urlProps.forEach(prop => {
+        if (!obj[prop].match("^https?")) {
+          errorsObj[prop] = ERROR_URL_NOT_HTTP;
+        }
+      });
     }
   });
 };

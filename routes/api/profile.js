@@ -116,7 +116,6 @@ router.get("/github/:githubusername", (req, res) => {
       "User-Agent": "robertg042"
     }
   }, (error, response, body) => {
-    console.log(response);
     if (error) {
       console.log(error);
 
@@ -125,8 +124,6 @@ router.get("/github/:githubusername", (req, res) => {
     if (response.statusCode === 200) {
       return res.json(body);
     }
-
-    console.log(error);
 
     return res.status(500).json({ error: "Unexpected error" });
   });

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
@@ -9,6 +9,7 @@ import Button from "../UI/Button/Button";
 import Spinner from "../UI/Spinner/Spinner";
 import DashboardActions from "./DashboardActions/DashboardActions";
 import Table from "./Table/Table";
+import DangerZone from "./DangerZone/DangerZone";
 import { isEmpty, dynamicSort } from "../../shared/utils";
 
 class dashboard extends Component {
@@ -45,9 +46,9 @@ class dashboard extends Component {
     } else {
       if (Object.keys(profile).length > 0) {
         // profile exists
-        content = (<div className={classes.ProfileExists}>
+        content = (<Fragment>
           <div className={classes.Title}>Hi, <Link to={`/profile/${profile.handle}`}>{user.name}</Link> <i className={"fas fa-heart"}/></div>
-          <DashboardActions/>
+          <div style={{ paddingBottom: "1rem" }}><DashboardActions/></div>
           {!isEmpty(profile.experience) ? <Table
             title={"Experience"}
             headers={experienceHeaders}
@@ -58,22 +59,19 @@ class dashboard extends Component {
             headers={educationHeaders}
             rows={profile.education}
             handleDeleteItem={this.handleDeleteEducation}/> : null}
-          <div style={{ marginTop: "5rem" }}>
-            <Button type={"button"} colorType={"danger"} handleClick={this.handleDeleteAccount}>
-              <i className={"fas fa-exclamation-triangle"}/>
-              Delete Account
-            </Button>
+          <div style={{ marginTop: "auto" }}>
+            <DangerZone handleDeleteAccount={this.handleDeleteAccount}/>
           </div>
-        </div>);
+        </Fragment>);
       } else {
         // there's no profile for logged in user
         content = (
-          <div>
+          <Fragment>
             <div className={classes.Title}>Hi, {user.name} <i className={"fas fa-heart"}/></div>
             <p>You have no profile yet.</p>
             <p><i className={"fas fa-fire"}/> Please, create one <i className={"fas fa-fire"}/></p>
             <Button colorType={"secondary"} handleClick={this.handleClick}>Create profile</Button>
-          </div>
+          </Fragment>
         );
       }
     }

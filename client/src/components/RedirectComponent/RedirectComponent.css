@@ -1,7 +1,6 @@
 .RedirectWrapper {
-  height: 100%;
+  height: calc(100vh - 6rem);
   text-align: center;
-  margin: 0.5rem 0;
 }
 
 .Redirect {
