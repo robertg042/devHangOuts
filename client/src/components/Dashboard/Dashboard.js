@@ -47,7 +47,7 @@ class dashboard extends Component {
       if (Object.keys(profile).length > 0) {
         // profile exists
         content = (<Fragment>
-          <div className={classes.Title}>Hi, <Link to={`/profile/${profile.handle}`}>{user.name}</Link> <i className={"fas fa-heart"}/></div>
+          <div className={classes.Title}>Hi, <Link to={`/profile/${profile.handle}`}>{user.name}</Link></div>
           <div style={{ paddingBottom: "1rem" }}><DashboardActions/></div>
           {!isEmpty(profile.experience) ? <Table
             title={"Experience"}
@@ -67,7 +67,7 @@ class dashboard extends Component {
         // there's no profile for logged in user
         content = (
           <Fragment>
-            <div className={classes.Title}>Hi, {user.name} <i className={"fas fa-heart"}/></div>
+            <div className={classes.Title}>Hi, {user.name}</div>
             <p>You have no profile yet.</p>
             <p><i className={"fas fa-fire"}/> Please, create one <i className={"fas fa-fire"}/></p>
             <Button colorType={"secondary"} handleClick={this.handleClick}>Create profile</Button>
